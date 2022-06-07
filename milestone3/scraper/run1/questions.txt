@@ -1,0 +1,203 @@
+What is the use of the yield keyword in Python? What does it do?
+Given the following code, what does the if __name__ == "__main__": do?
+If Python does not have a ternary conditional operator, is it possible to simulate one using other language constructs?
+In Python, what are metaclasses and what do we use them for?
+I have two Python dictionaries, and I want to write a single expression that returns these two dictionaries, merged (i.e. taking the union).  The update() method would be what I need, if it returned its result instead of modifying a dictionary in-place.
+How do you call an external command (as if I'd typed it at the Unix shell or Windows command prompt) from within a Python script?
+What is the most elegant way to check if the directory a file is going to be written to exists, and if not, create the directory using Python? Here is what I tried:
+What is the difference between a function decorated with @staticmethod and one decorated with @classmethod?
+I need a good explanation (references are a plus) on Python's slice notation. 
+I am a bit puzzled by the following code:
+How can I create or use a global variable in a function?
+I'm looking for a string.contains or string.indexof method in Python.
+I know that I can do:
+What is the difference between __str__ and __repr__ in Python?
+How do I concatenate two lists in Python?
+For example, if passed the following:
+What's the difference between the list methods append() and extend()?
+What is __init__.py for in a Python source directory?
+Anyone tinkering with Python long enough has been bitten (or torn to pieces) by the following issue:
+I would like to know how to put a time delay in a Python script.
+The Python documentation seems unclear about whether parameters are passed by reference or value, and the following code produces the unchanged value 'Original'
+While using new_list = my_list, any modifications to new_list changes my_list every time. Why is this, and how can I clone or copy the list to prevent it?
+How can I make two decorators in Python that would do the following?
+I'm trying to understand the use of super(). From the looks of it, both child classes can be created, just fine. 
+In the following method definitions, what does the * and ** do for param2?
+How can I select rows from a DataFrame based on values in some column in Pandas?
+How do you change the size of figure drawn with Matplotlib?
+How can I raise an exception in Python so that it can later be caught via an except block?
+How can I output colored text to the terminal in Python?
+I set an environment variable that I want to access in my Python application. How do I get its value?
+In Python, what commands can I use to find:
+I wanted to test if a key exists in a dictionary before updating the value for the key.
+I wrote the following code:
+pip is a replacement for easy_install. But should I install pip using easy_install on Windows? Is there a better way?
+It is my understanding that the range() function, which is actually an object type in Python 3, generates its contents on the fly, similar to a generator.
+In Python, how do you get the last element of a list?
+When deleting a key from a dictionary, I use:
+Is there a way to convert a string from uppercase, or even part uppercase to lowercase? 
+Is it possible to have static class variables or methods in Python? What syntax is required to do this?
+I'd like to do it in Python. What I'd like to do in this example in C:
+What is the best way to go call a function, given a string with the function's name in a Python program. For example, let's say that I have a module foo, and I have a string whose content is "bar". What is the best way to call foo.bar()?
+Consider the following:
+Assume I have the following list:
+Is there a way in Python to determine if an object has some attribute?  For example:
+I'm using virtualenv and the virtualenvwrapper. I can switch between virtualenv's just fine using the workon command.
+We are working on an S60 version and this platform has a nice Python API..
+I want a to be rounded to 13.95.
+I wanted to compare reading lines of string input from stdin using Python and C++ and was shocked to see my C++ code run an order of magnitude slower than the equivalent Python code. Since my C++ is rusty and I'm not yet an expert Pythonista, please tell me if I'm doing something wrong or if I'm misunderstanding something.
+I have the following folder structure.
+gives me : Key Error: Hello\\
+Is there a simple way to determine if a variable is a list, dictionary, or something else? I am getting an object back that may be either type and I need to be able to tell the difference.
+This has always confused me. It seems like this would be nicer:
+How do I remove an element from a list by index in Python?
+Is it possible to have static methods in Python which I could call without initializing a class, like:
+How do you append to the file instead of overwriting it? Is there a special function that appends to the file?
+When deleting a column in a DataFrame I use:
+What is a Pythonic way to pad a numeric string with zeroes to the left, i.e. so the numeric string has a specific length?
+Could someone explain to me the meaning of @classmethod and @staticmethod in python? I need to know the difference and the meaning. 
+How do I find out a name of class that created an instance of an object in Python if the function I am doing this from is the base class of which the class of the instance has been derived?
+What I want is to start counting time somewhere in my code and then get the passed time, to measure the time it took to execute few function. I think I'm using the timeit module wrong, but the docs are just confusing for me.
+I have a very long query. I would like to split it in several lines in Python. A way to do it in JavaScript would be using several sentences and joining them with a + operator (I know, maybe it's not the most efficient way to do it, but I'm not really concerned about performance in this stage, just code readability). Example:
+How can I generate random integers between 0 and 9 (inclusive) in Python?
+I am trying to install version 1.2.2 of MySQL_python, using a fresh virtualenv created with the --no-site-packages option. The current version shown in PyPi is 1.2.3. Is there a way to install the older version? I have tried:
+I spent most of the day yesterday searching for a clear answer for installing pip (package manager for Python). I can't find a good solution.
+Python 3.3 includes in its standard library the new package venv. What does it do, and how does it differ from all the other packages that seem to match the regex (py)?(v|virtual|pip)?env?
+I'm trying to do some of the code golf challenges, but they all require the input to be taken from stdin. How do I get that in Python?
+There are several ways to write to stderr:
+Can someone please explain the exact meaning of having single and double leading underscores before an object's name in Python, and the difference between both?
+What's the proper way to declare custom exception classes in modern Python? My primary goal is to follow whatever standard other exception classes have, so that (for instance) any extra string I include in the exception is printed out by whatever tool caught the exception.
+What is the best way to check whether a given object is of a given type? How about checking whether the object inherits from a given type?
+I have a JSON file that is a mess that I want to prettyprint. What's the easiest way to do this in Python?
+I am trying to build a shared library using a C extension file but first I have to generate the output file using the command below:
+Is there any reason for a class declaration to inherit from object?
+Project Euler and other coding contests often have a maximum time to run or people boast of how fast their particular solution runs. With Python, sometimes the approaches are somewhat kludgey - i.e., adding timing code to __main__.
+I'm trying to get the number of rows of dataframe df with Pandas, and here is my code.
+How can I load a Python module given its full path?
+So I have difficulty with the concept of *args and **kwargs.
+How can I represent an infinite number in python? No matter which number you enter in the program, no number should be greater than this representation of infinity.
+What is the quickest way to HTTP GET in Python if I know the content will be a string? I am searching the documentation for a quick one-liner like:
+I'm coming from the Java world and reading Bruce Eckels' Python 3 Patterns, Recipes and Idioms. 
+I found some answers online, but I have no experience with regular expressions, which I believe is what is needed here.
+I have a data frame df and I use several columns from it to groupby:
+I've come across situations where a current version of a package seems not to be working and requires reinstallation. But pip install -U won't touch a package that is already up-to-date. I see how to force a reinstallation by first uninstalling (with pip uninstall) and then installing, but is there a way to simply force an "update" to a nominally current version in a single step?
+I want to create a series of lists, all of varying lengths. Each list will contain the same element e, repeated n times (where n = length of the list).
+I have four different files named: main.py, vector.py, entity.py and physics.py. I will not post all the code, just the imports, because I think that's where the error is (If you want, I can post more).
+I've got a dict that has a whole bunch of entries. I'm only interested in a select few of them. Is there an easy way to prune all the other ones out?
+Given the name of a Python package that can be installed with pip, is there any way to find out a list of all the possible versions of it that pip could install? Right now it's trial and error.
+I want to add an item to an existing dictionary in Python. For example, this is my dictionary:
+I am working with code that throws a lot of (for me at the moment) useless warnings using the warnings library. Reading (/scanning) the documentation I only found a way to disable warnings for single functions. But I don't want to change so much of the code.
+How does one round a number UP in Python?
+Is there an easy way with Python f-strings to fix the number of digits after the decimal point? (Specifically f-strings, not other string formatting options like .format or %)
+Is there any way to make pip play well with multiple versions of Python? For example, I want to use pip to explicitly install things to either my site 2.5 installation or my site 2.6 installation.
+I am trying to fix how python plots my data.
+I have a Unicode string in Python, and I would like to remove all the accents (diacritics).
+Does time.time() in the Python time module return the system's time or the time in UTC?
+I need a way to get a dictionary value if its key exists, or simply return None, if it does not.
+How can I get the position of a character inside a string in Python?
+I want to fill out a string with spaces. I know that the following works for zero's:
+Dictionaries are ordered in Python 3.6 (under the CPython implementation at least) unlike in previous incarnations. This seems like a substantial change, but it's only a short paragraph in the documentation. It is described as a CPython implementation detail rather than a language feature, but also implies this may become standard in the future.
+I am trying to pass a list as an argument to a command line program. Is there an argparse option to pass a list as option?
+I'm just trying to streamline one of my classes and have introduced some functionality in the same style as the flyweight design pattern.
+How to set the current working directory in Python?
+After you train a model in Tensorflow: 
+Just like C, you can break a long line into multiple short lines. But in Python, if I do this, there will be an indent error... Is it possible?
+How would one create an iterative function (or iterator object) in python?
+What is the python keyword "with" used for?
+Sometimes I want to just insert some print statements in my code, and see what gets printed out when I exercise it. My usual way to "exercise" it is with existing pytest tests. But when I run these, I don't seem able to see any standard output (at least from within PyCharm, my IDE).
+I understand how this construct works:
+I'm new to Python and I'm just trying to understand how its packages work.  Presumably eggs are some sort of packaging mechanism, but what would be a quick overview of what role they play and may be some information on why they're useful and how to create them?
+My Google-fu has failed me.
+I am interested in knowing how to convert a pandas dataframe into a NumPy array.
+I am using Python 3.1 and can't get the raw_input to "freeze" the dos pop-up. The book I'm reading is for Python 2.5 and I'm using Python 3.1
+I'm using virtualenv and I need to install "psycopg2".
+I'm working on a python script that starts several processes and database connections. Every now and then I want to kill the script with a Ctrl+C signal, and I'd like to do some cleanup.
+I am trying to save a csv to a folder after making some edits to the file. 
+I want to install pip. It should support Python 3, but it requires setuptools, which is available only for Python 2.
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+Is there a built-in function for getting the size of a file object in bytes? I see some people do something like this:
+What is the difference between the search() and match() functions in the Python re module?
+The documentation for the argparse python module, while excellent I'm sure, is too much for my tiny beginner brain to grasp right now. I don't need to do math on the command line or meddle with formatting lines on the screen or change option characters. All I want to do is "If arg is A, do this, if B do that, if none of the above show help and quit".
+I’m trying to port an open-source library to Python 3.  (SymPy, if anyone is wondering.) 
+I've installed a library using the command
+I'm writing a Python application that takes as a command as an argument, for example:
+I have a function that analyzes a CSV file with Pandas and produces a dict with summary information. I want to return the results as a response from a Flask view. How do I return a JSON response?
+I haven't been able to find an understandable explanation of how to actually use Python's itertools.groupby() function.  What I'm trying to do is this:
+I want my Python function to split a sentence (input) and store each word in a list. My current code splits the sentence, but does not store the words as a list. How do I do that?
+I am printing Python exception messages to a log file with logging.error:
+Python has an ordered dictionary. What about an ordered set?
+Is there a Python equivalent for the case statement such as the examples available in VB.NET or C#?
+Is output buffering enabled by default in Python's interpreter for sys.stdout?
+In Python Pandas, what's the best way to check whether a DataFrame has one (or more) NaN values?
+I'm trying to map a list into hex, and then use the list elsewhere. In python 2.6, this was easy:
+I have a list of lists:
+Can you tell me when to use these vectorization methods with basic examples? 
+I'm quite familiar with Django, but I recently noticed there exists an on_delete=models.CASCADE option with the models. I have searched for the documentation for the same, but I couldn't find anything more than:
+It seems that python supports many different commands to stop script execution.The choices I've found are:  quit(), exit(), sys.exit(), os._exit() 
+What is the difference between abstract class and interface in Python?
+I've seen some code samples and tutorials that use
+I'm not sure if this is Flask specific, but when I run an app in dev mode (http://localhost:5000), I cannot access it from other machines on the network (with http://[dev-host-ip]:5000). With Rails in dev mode, for example, it works fine. I couldn't find any docs regarding the Flask dev server configuration. Any idea what should be configured to enable this?
+I'm using the Python bindings to run Selenium WebDriver:
+This code reads thefile.csv, makes changes, and writes results to thefile_subset1.
+Why does the following behave unexpectedly in Python?
+Is there a way to rename a dictionary key, without reassigning its value to a new name and removing the old name key; and without iterating through dict key/value?
+In case of OrderedDict, do the same, while keeping that key's position.
+I'm running a program which is processing 30,000 similar files. A random number of them are stopping and producing this error...
+I noticed a Python script I was writing was acting squirrelly, and traced it to an infinite loop, where the loop condition was while line is not ''. Running through it in the debugger, it turned out that line was in fact ''. When I changed it to !='' rather than is not '', it worked fine. 
+Is there a way to make Python logging using the logging module automatically output things to stdout in addition to the log file where they are supposed to go? For example, I'd like all calls to logger.warning, logger.critical, logger.error to go to their intended places but in addition always be copied to stdout. This is to avoid duplicating messages like:
+Is this correct? Is there a better way to structure this? Will this cover all my bases? 
+Suppose I have:
+What is the best way to extend a dictionary with another one while avoiding the use of a for loop? For instance:
+I am using Python 3.2.1 and I can't import the StringIO module. I use 
+io.StringIO and it works, but I can't use it with numpy's genfromtxt like this:
+I am trying to get a Python script to run on the linux server I'm connected to via ssh. The script uses mysqldb. I have all the other components I need, but when I try to install mySQLdb via setuptools like so:, 
+I have a list l:
+I want to iterate over each line of an entire file. One way to do this is by reading the entire file, saving it to a list, then going over the line of interest. This method uses a lot of memory, so I am looking for an alternative.
+I came across the following header format for Python source files in a document about Python coding guidelines:
+I have a problem with the transfer of variable 'insurance_mode' by the decorator. I would do it by the following decorator statement:
+How do I declare an array in Python?
+I'm new to programming and started with Python about two months ago and am going over Sweigart's Automate the Boring Stuff with Python text. I'm using IDLE and already installed the Selenium module and the Firefox browser.
+Suppose I have a df which has columns of 'ID', 'col_1', 'col_2'. And I define a function :
+Imagine this directory structure:
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+I am writing a project in Django and I see that 80% of the code is in the file models.py. This code is confusing and, after a certain time, I cease to understand what is really happening.
+I have constructed a condition that extract exactly one row from my data frame:
+I have a Pandas Dataframe as below:
+Is there a way to conveniently define a C-like structure in Python? I'm tired of writing stuff like:
+I know there is a method for a Python list to return the first index of something:
+I see people are using any to gather another list to see if an item exists in a list, but is there a quick way to just do something like this?
+Given a Python object of any kind, is there an easy way to get the list of all methods that this object has?
+Suppose the following:
+randrange(start, stop) only takes integer arguments. So how would I get a random number between two float values?
+str.split(//) does not seem to work like Ruby does. Is there a simple way of doing this without looping?
+I need help with setting the limits of y-axis on matplotlib. Here is the code that I tried, unsuccessfully.
+What's all this fuss about Python and CPython (Jython,IronPython), I don't get it:
+I'm using the subprocess module to start a subprocess and connect to its output stream (standard output). I want to be able to execute non-blocking reads on its standard output. Is there a way to make .readline non-blocking or to check if there is data on the stream before I invoke .readline? I'd like this to be portable or at least work under Windows and Linux.
+Is there any benefit in using compile for regular expressions in Python?
+I want to delete the file filename if it exists.  Is it proper to say
+I've been working on a web app using Django, and I'm curious if there is a way to schedule a job to run periodically. 
+I have a list of 2-item tuples and I'd like to convert them to 2 lists where the first contains the first item in each tuple and the second list holds the second item.
+What is the related_name argument useful for on ManyToManyField and ForeignKey fields? For example, given the following code, what is the effect of related_name='maps'?
+How can I use ORDER BY descending in a SQLAlchemy query like the following?
+I have a file called tester.py, located on /project.
+Python is installed in a local directory.  
+I am very new to Python and trying to > pip install linkchecker on Windows 7. Some notes:
+I'm having trouble parsing HTML elements with "class" attribute using Beautifulsoup. The code looks like this
+What the difference is between flush() and commit() in SQLAlchemy?
+I'm having a hard time wrapping my brain around PEP 380.
+How do I learn where the source file for a given Python module is installed? Is the method different on Windows than on Linux?
+Is there a performance or code maintenance issue with using assert as part of the standard code instead of using it just for debugging purposes?
+In C++, I can iterate over an std::string like this:
+[] = empty list
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+In Python, I have an ndarray y
+that is printed as array([0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1])
+Sometimes I come across code such as this:
+I'm trying to use NetworkX to read a Shapefile and use the function write_shp() to generate the Shapefiles that will contain the nodes and edges, but when I try to run the code it gives me the following error:
+__del__(self) above fails with an AttributeError exception.  I understand Python doesn't guarantee the existence of "global variables" (member data in this context?) when __del__() is invoked.  If that is the case and this is the reason for the exception, how do I make sure the object destructs properly?

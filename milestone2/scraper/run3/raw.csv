@@ -1,0 +1,2468 @@
+"
+",<p>How do I get a list of all files (and directories) in a given directory in Python?</p>,"
+"
+"
+",<p>This is a way to traverse every file and directory in a directory tree:</p>,"
+","<pre><code>import os
+
+for dirname, dirnames, filenames in os.walk('.'):
+    # print path to all subdirectories first.
+    for subdirname in dirnames:
+        print(os.path.join(dirname, subdirname))
+
+    # print path to all filenames.
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+
+    # Advanced usage:
+    # editing the 'dirnames' list will stop os.walk() from recursing into there.
+    if '.git' in dirnames:
+        # don't go into any .git directories.
+        dirnames.remove('.git')
+</code></pre>","
+"
+"
+",<p>You can use</p>,"
+","<pre><code>os.listdir(path)
+</code></pre>","
+",<p>For reference and more os functions look here:</p>,"
+","<ul>
+<li>Python 2 docs: <a href=""https://docs.python.org/2/library/os.html#os.listdir"" rel=""noreferrer"">https://docs.python.org/2/library/os.html#os.listdir</a></li>
+<li>Python 3 docs: <a href=""https://docs.python.org/3/library/os.html#os.listdir"" rel=""noreferrer"">https://docs.python.org/3/library/os.html#os.listdir</a></li>
+</ul>","
+"
+"
+",<p>Here's a helper function I use quite often:</p>,"
+","<pre><code>import os
+
+def listdir_fullpath(d):
+    return [os.path.join(d, f) for f in os.listdir(d)]
+</code></pre>","
+"
+"
+","<pre><code>import os
+
+for filename in os.listdir(""C:\\temp""):
+    print  filename
+</code></pre>","
+"
+"
+","<p>If you need globbing abilities, there's a module for that as well. For example:</p>","
+","<pre><code>import glob
+glob.glob('./[0-9].*')
+</code></pre>","
+",<p>will return something like:</p>,"
+","<pre><code>['./1.gif', './2.txt']
+</code></pre>","
+","<p>See the documentation <a href=""http://docs.python.org/library/glob.html"">here</a>.</p>","
+"
+"
+",<p>For files in current working directory without specifying a path</p>,"
+",<p><strong>Python 2.7:</strong></p>,"
+","<pre><code>import os
+os.listdir('.')
+</code></pre>","
+",<p><strong>Python 3.x:</strong></p>,"
+","<pre><code>import os
+os.listdir()
+</code></pre>","
+"
+"
+",<p>Try this:</p>,"
+","<pre><code>import os
+for top, dirs, files in os.walk('./'):
+    for nm in files:       
+        print os.path.join(top, nm)
+</code></pre>","
+"
+"
+",<p>A recursive implementation</p>,"
+","<pre><code>import os
+
+def scan_dir(dir):
+    for name in os.listdir(dir):
+        path = os.path.join(dir, name)
+        if os.path.isfile(path):
+            print path
+        else:
+            scan_dir(path)
+</code></pre>","
+"
+"
+","<p>I wrote a long version, with all the options I might need: <a href=""http://sam.nipl.net/code/python/find.py"" rel=""nofollow"">http://sam.nipl.net/code/python/find.py</a></p>","
+",<p>I guess it will fit here too:</p>,"
+","<pre><code>#!/usr/bin/env python
+
+import os
+import sys
+
+def ls(dir, hidden=False, relative=True):
+    nodes = []
+    for nm in os.listdir(dir):
+        if not hidden and nm.startswith('.'):
+            continue
+        if not relative:
+            nm = os.path.join(dir, nm)
+        nodes.append(nm)
+    nodes.sort()
+    return nodes
+
+def find(root, files=True, dirs=False, hidden=False, relative=True, topdown=True):
+    root = os.path.join(root, '')  # add slash if not there
+    for parent, ldirs, lfiles in os.walk(root, topdown=topdown):
+        if relative:
+            parent = parent[len(root):]
+        if dirs and parent:
+            yield os.path.join(parent, '')
+        if not hidden:
+            lfiles   = [nm for nm in lfiles if not nm.startswith('.')]
+            ldirs[:] = [nm for nm in ldirs  if not nm.startswith('.')]  # in place
+        if files:
+            lfiles.sort()
+            for nm in lfiles:
+                nm = os.path.join(parent, nm)
+                yield nm
+
+def test(root):
+    print ""* directory listing, with hidden files:""
+    print ls(root, hidden=True)
+    print
+    print ""* recursive listing, with dirs, but no hidden files:""
+    for f in find(root, dirs=True):
+        print f
+    print
+
+if __name__ == ""__main__"":
+    test(*sys.argv[1:])
+</code></pre>","
+"
+"
+",<p>Here is another option.</p>,"
+","<pre><code>os.scandir(path='.')
+</code></pre>","
+",<p>It returns an iterator of os.DirEntry objects corresponding to the entries (along with file attribute information) in the directory given by path. </p>,"
+",<p><em>Example:</em></p>,"
+","<pre><code>with os.scandir(path) as it:
+    for entry in it:
+        if not entry.name.startswith('.'):
+            print(entry.name)
+</code></pre>","
+","<p><strong>Using scandir() instead of listdir() can significantly increase the performance of code that also needs file type or file attribute information</strong>, because os.DirEntry objects expose this information if the operating system provides it when scanning a directory. All os.DirEntry methods may perform a system call, but is_dir() and is_file() usually only require a system call for symbolic links; os.DirEntry.stat() always requires a system call on Unix but only requires one for symbolic links on Windows.</p>","
+","<p><a href=""https://docs.python.org/3/library/os.html#os.scandir"" rel=""nofollow noreferrer"">Python Docs</a></p>","
+"
+"
+","<p>While <code>os.listdir()</code> is fine for generating a list of file and dir names, frequently you want to do more once you have those names - and in Python3, <a href=""https://docs.python.org/3/library/pathlib.html"" rel=""nofollow noreferrer"">pathlib</a> makes those other chores simple. Let's take a look and see if you like it as much as I do.</p>","
+","<p>To list dir contents, construct a Path object and grab the iterator:</p>","
+","<pre><code>In [16]: Path('/etc').iterdir()
+Out[16]: &lt;generator object Path.iterdir at 0x110853fc0&gt;
+</code></pre>","
+",<p>If we want just a list of names of things:</p>,"
+","<pre><code>In [17]: [x.name for x in Path('/etc').iterdir()]
+Out[17]:
+['emond.d',
+ 'ntp-restrict.conf',
+ 'periodic',
+</code></pre>","
+",<p>If you want just the dirs: </p>,"
+","<pre><code>In [18]: [x.name for x in Path('/etc').iterdir() if x.is_dir()]
+Out[18]:
+['emond.d',
+ 'periodic',
+ 'mach_init.d',
+</code></pre>","
+",<p>If you want the names of all conf files in that tree:</p>,"
+","<pre><code>In [20]: [x.name for x in Path('/etc').glob('**/*.conf')]
+Out[20]:
+['ntp-restrict.conf',
+ 'dnsextd.conf',
+ 'syslog.conf',
+</code></pre>","
+",<p>If you want a list of conf files in the tree &gt;= 1K:</p>,"
+","<pre><code>In [23]: [x.name for x in Path('/etc').glob('**/*.conf') if x.stat().st_size &gt; 1024]
+Out[23]:
+['dnsextd.conf',
+ 'pf.conf',
+ 'autofs.conf',
+</code></pre>","
+",<p>Resolving relative paths become easy:</p>,"
+","<pre><code>In [32]: Path('../Operational Metrics.md').resolve()
+Out[32]: PosixPath('/Users/starver/code/xxxx/Operational Metrics.md')
+</code></pre>","
+",<p>Navigating with a Path is pretty clear (although unexpected):</p>,"
+","<pre><code>In [10]: p = Path('.')
+
+In [11]: core = p / 'web' / 'core'
+
+In [13]: [x for x in core.iterdir() if x.is_file()]
+Out[13]:
+[PosixPath('web/core/metrics.py'),
+ PosixPath('web/core/services.py'),
+ PosixPath('web/core/querysets.py'),
+</code></pre>","
+"
+"
+",<p>The one worked with me is kind of a modified version from Saleh's answer elsewhere on this page.</p>,"
+",<p>The code is as follows:</p>,"
+","<pre class=""lang-py prettyprint-override""><code>dir = 'given_directory_name'
+filenames = [os.path.abspath(os.path.join(dir,i)) for i in os.listdir(dir)]
+</code></pre>","
+"
+"
+",<p>A nice one liner to list only the files recursively.  I used this in my setup.py package_data directive:</p>,"
+","<pre><code>import os
+
+[os.path.join(x[0],y) for x in os.walk('&lt;some_directory&gt;') for y in x[2]]
+</code></pre>","
+","<p>I know it's not the answer to the question, but may come in handy</p>","
+"
+"
+",<h1>For Python 2</h1>,"
+","<pre><code>#!/bin/python2
+
+import os
+
+def scan_dir(path):
+    print map(os.path.abspath, os.listdir(pwd))
+</code></pre>","
+",<h1>For Python 3</h1>,"
+","<p>For filter and map, you need wrap them with list()</p>","
+","<pre><code>#!/bin/python3
+
+import os
+
+def scan_dir(path):
+    print(list(map(os.path.abspath, os.listdir(pwd))))
+</code></pre>","
+",<p>The recommendation now is that you replace your usage of map and filter with generators expressions or list comprehensions:</p>,"
+","<pre><code>#!/bin/python
+
+import os
+
+def scan_dir(path):
+    print([os.path.abspath(f) for f in os.listdir(path)])
+</code></pre>","
+"
+"
+","<pre><code>#import modules
+import os
+
+_CURRENT_DIR = '.'
+
+
+def rec_tree_traverse(curr_dir, indent):
+    ""recurcive function to traverse the directory""
+    #print ""[traverse_tree]""
+
+    try :
+        dfList = [os.path.join(curr_dir, f_or_d) for f_or_d in os.listdir(curr_dir)]
+    except:
+        print ""wrong path name/directory name""
+        return
+
+    for file_or_dir in dfList:
+
+        if os.path.isdir(file_or_dir):
+            #print ""dir  : "",
+            print indent, file_or_dir,""\\""
+            rec_tree_traverse(file_or_dir, indent*2)
+
+        if os.path.isfile(file_or_dir):
+            #print ""file : "",
+            print indent, file_or_dir
+
+    #end if for loop
+#end of traverse_tree()
+
+def main():
+
+    base_dir = _CURRENT_DIR
+
+    rec_tree_traverse(base_dir,"" "")
+
+    raw_input(""enter any key to exit...."")
+#end of main()
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>","
+"
+"
+","<p>FYI Add a filter of extension or ext file
+    import os</p>","
+","<pre><code>path = '.'
+for dirname, dirnames, filenames in os.walk(path):
+    # print path to all filenames with extension py.
+    for filename in filenames:
+        fname_path = os.path.join(dirname, filename)
+        fext = os.path.splitext(fname_path)[1]
+        if fext == '.py':
+            print fname_path
+        else:
+            continue
+</code></pre>","
+"
+"
+",<p>If figured I'd throw this in.  Simple and dirty way to do wildcard searches.</p>,"
+","<pre><code>import re
+import os
+
+[a for a in os.listdir(""."") if re.search(""^.*\.py$"",a)]
+</code></pre>","
+"
+"
+",<p>Below code will list directories and the files within the dir</p>,"
+","<pre><code>def print_directory_contents(sPath):
+        import os                                       
+        for sChild in os.listdir(sPath):                
+            sChildPath = os.path.join(sPath,sChild)
+            if os.path.isdir(sChildPath):
+                print_directory_contents(sChildPath)
+            else:
+                print(sChildPath)
+</code></pre>","
+"
+"
+",<p>Here is a one line Pythonic version:</p>,"
+","<pre><code>import os
+dir = 'given_directory_name'
+filenames = [os.path.join(os.path.dirname(os.path.abspath(__file__)),dir,i) for i in os.listdir(dir)]
+</code></pre>","
+",<p>This code lists the full path of all files and directories in the given directory name. </p>,"
+"
+"
+",<p>I know this is an old question. This is a neat way I came across if you are on a liunx machine. </p>,"
+","<pre><code>import subprocess
+print(subprocess.check_output([""ls"", ""/""]).decode(""utf8""))
+</code></pre>","
+"
+"
+","<p>If a <code>mydict</code> is not empty, I access an arbitrary element as:</p>","
+","<pre><code>mydict[mydict.keys()[0]]
+</code></pre>","
+",<p>Is there any better way to do this?</p>,"
+"
+"
+","<p>On Python 3, non-destructively and iteratively:</p>","
+","<pre><code>next(iter(mydict.values()))
+</code></pre>","
+","<p>On Python 2, non-destructively and iteratively:</p>","
+","<pre><code>mydict.itervalues().next()
+</code></pre>","
+","<p>If you want it to work in both Python 2 and 3, you can use the <code>six</code> package:</p>","
+","<pre><code>six.next(six.itervalues(mydict))
+</code></pre>","
+",<p>though at this point it is quite cryptic and I'd rather prefer your code.</p>,"
+","<p>If you want to remove any item, do:</p>","
+","<pre><code>key, value = mydict.popitem()
+</code></pre>","
+","<p>Note that ""first"" may not be an appropriate term here because <code>dict</code> is not an ordered type in Python &lt; 3.6. Python 3.6+ <code>dicts</code> are ordered.</p>","
+"
+"
+","<p>If you only need to access one element (being the first by chance, since dicts do not guarantee ordering) you can simply do this in <em>Python 2</em>:</p>","
+","<pre><code>my_dict.keys()[0]     -&gt; key of ""first"" element
+my_dict.values()[0]   -&gt; value of ""first"" element
+my_dict.items()[0]    -&gt; (key, value) tuple of ""first"" element
+</code></pre>","
+",<p>Please note that (at best of my knowledge) Python does not guarantee that 2 successive calls to any of these methods will return list with the same ordering. This is not supported with Python3.</p>,"
+",<p>in <em>Python 3</em>:</p>,"
+","<pre><code>list(my_dict.keys())[0]     -&gt; key of ""first"" element
+list(my_dict.values())[0]   -&gt; value of ""first"" element
+list(my_dict.items())[0]    -&gt; (key, value) tuple of ""first"" element
+</code></pre>","
+"
+"
+","<p>In python3, The way :</p>","
+","<pre><code>dict.keys() 
+</code></pre>","
+","<p>return a value in type : dict_keys(), we'll got an error when got 1st member of keys of dict by this way:</p>","
+","<pre><code>dict.keys()[0]
+TypeError: 'dict_keys' object does not support indexing
+</code></pre>","
+","<p>Finally, I convert dict.keys() to list @1st, and got 1st member by list splice method:</p>","
+","<pre><code>list(dict.keys())[0]
+</code></pre>","
+"
+"
+",<h3>to get a key</h3>,"
+","<pre><code>next(iter(mydict))
+</code></pre>","
+",<h3>to get a value</h3>,"
+","<pre><code>next(iter(mydict.values()))
+</code></pre>","
+",<h3>to get both</h3>,"
+","<pre><code>next(iter(mydict.items())) # or next(iter(mydict.viewitems())) in python 2
+</code></pre>","
+","<p>The first two are Python 2 and 3. The last two are lazy in Python 3, but not in Python 2.</p>","
+"
+"
+","<p>As others mentioned, there is no ""first item"", since dictionaries have no guaranteed order (they're implemented as hash tables).  If you want, for example, the value corresponding to the smallest key, <code>thedict[min(thedict)]</code> will do that.  If you care about the order in which the keys were inserted, i.e., by ""first"" you mean ""inserted earliest"", then in Python 3.1 you can use <a href=""http://docs.python.org/py3k/library/collections.html?highlight=collections#collections.OrderedDict"" rel=""nofollow noreferrer"">collections.OrderedDict</a>, which is also in the forthcoming Python 2.7; for older versions of Python, download, install, and use the ordered dict backport (2.4 and later) which you can find <a href=""http://pypi.python.org/pypi/ordereddict/1.1"" rel=""nofollow noreferrer"">here</a>.</p>","
+","<p><strong>Python 3.7</strong>
+<a href=""https://docs.python.org/3/whatsnew/3.7.html#summary-release-highlights"" rel=""nofollow noreferrer"">Now</a> dicts are insertion ordered.</p>","
+"
+"
+","<p>Ignoring issues surrounding dict ordering, this might be better:</p>","
+","<pre><code>next(dict.itervalues())
+</code></pre>","
+",<p>This way we avoid item lookup and generating a list of keys that we don't use.</p>,"
+",<h2>Python3</h2>,"
+","<pre><code>next(iter(dict.values()))
+</code></pre>","
+"
+"
+","<p>How about, this. Not mentioned here yet.</p>","
+",<p><strong>py 2 &amp; 3</strong></p>,"
+","<pre><code>a = {""a"":2,""b"":3}
+a[list(a)[0]] # the first element is here
+&gt;&gt;&gt; 2
+</code></pre>","
+"
+"
+",<p>In python3 </p>,"
+","<pre><code>list(dict.values())[0]
+</code></pre>","
+"
+"
+",<p>You can always do:</p>,"
+","<pre><code>for k in sorted(d.keys()):
+    print d[k]
+</code></pre>","
+",<p>This will give you a consistently sorted (with respect to <strong>builtin</strong>.hash() I guess) set of keys you can process on if the sorting has any meaning to you. That means for example numeric types are sorted consistently even if you expand the dictionary.</p>,"
+",<p>EXAMPLE</p>,"
+","<pre><code># lets create a simple dictionary
+d = {1:1, 2:2, 3:3, 4:4, 10:10, 100:100}
+print d.keys()
+print sorted(d.keys())
+
+# add some other stuff
+d['peter'] = 'peter'
+d['parker'] = 'parker'
+print d.keys()
+print sorted(d.keys())
+
+# some more stuff, numeric of different type, this will ""mess up"" the keys set order
+d[0.001] = 0.001
+d[3.14] = 'pie'
+d[2.71] = 'apple pie'
+print d.keys()
+print sorted(d.keys())
+</code></pre>","
+",<p>Note that the dictionary is sorted when printed. But the key set is essentially a hashmap!</p>,"
+"
+"
+",<p>For both Python 2 and 3:</p>,"
+","<pre><code>import six
+
+six.next(six.itervalues(d))
+</code></pre>","
+"
+"
+","<pre><code>first_key, *rest_keys = mydict
+</code></pre>","
+"
+"
+","<p>No external libraries, works on both Python 2.7 and 3.x:</p>","
+","<pre><code>&gt;&gt;&gt; list(set({""a"":1, ""b"": 2}.values()))[0]
+1
+</code></pre>","
+",<p>For aribtrary key just leave out .values()</p>,"
+","<pre><code>&gt;&gt;&gt; list(set({""a"":1, ""b"": 2}))[0]
+'a'
+</code></pre>","
+"
+"
+","<p>Subclassing <code>dict</code> is one method, though not efficient. Here if you supply an integer it will return <code>d[list(d)[n]]</code>, otherwise access the dictionary as expected:</p>","
+","<pre><code>class mydict(dict):
+    def __getitem__(self, value):
+        if isinstance(value, int):
+            return self.get(list(self)[value])
+        else:
+            return self.get(value)
+
+d = mydict({'a': 'hello', 'b': 'this', 'c': 'is', 'd': 'a',
+            'e': 'test', 'f': 'dictionary', 'g': 'testing'})
+
+d[0]    # 'hello'
+d[1]    # 'this'
+d['c']  # 'is'
+</code></pre>","
+"
+"
+",<p>I've tried to find a comprehensive guide on whether it is best to use <code>import module</code> or <code>from module import</code>. I've just started with Python and I'm trying to start off with best practices in mind.</p>,"
+","<p>Basically, I was hoping if anyone could share their experiences, what preferences other developers have and what's the best way to avoid any <em>gotchas</em> down the road?</p>","
+"
+"
+",<p>The difference between <code>import module</code> and <code>from module import foo</code> is mainly subjective.  Pick the one you like best and be consistent in your use of it.  Here are some points to help you decide.</p>,"
+",<p><code>import module</code></p>,"
+","<ul>
+<li><strong>Pros:</strong>
+<ul>
+<li>Less maintenance of your <code>import</code> statements. Don't need to add any additional imports to start using another item from the module</li>
+</ul></li>
+<li><strong>Cons:</strong>
+<ul>
+<li>Typing <code>module.foo</code> in your code can be tedious and redundant (tedium can be minimized by using <code>import module as mo</code> then typing <code>mo.foo</code>)</li>
+</ul></li>
+</ul>","
+",<p><code>from module import foo</code></p>,"
+","<ul>
+<li><strong>Pros:</strong>
+<ul>
+<li>Less typing to use <code>foo</code></li>
+<li>More control over which items of a module can be accessed</li>
+</ul></li>
+<li><strong>Cons:</strong>
+<ul>
+<li>To use a new item from the module you have to update your <code>import</code> statement</li>
+<li>You lose context about <code>foo</code>. For example, it's less clear what <code>ceil()</code> does compared to <code>math.ceil()</code></li>
+</ul></li>
+</ul>","
+","<p>Either method is acceptable, but <strong>don't</strong> use <code>from module import *</code>.  </p>","
+","<p>For any reasonable large set of code, if you <code>import *</code> you will likely be cementing it into the module, unable to be removed.  This is because it is difficult to determine what items used in the code are coming from 'module', making it easy to get to the point where you think you don't use the <code>import</code> any more but it's extremely difficult to be sure.</p>","
+"
+"
+","<p>There's another detail here, not mentioned, related to writing to a module. Granted this may not be very common, but I've needed it from time to time.</p>","
+","<p>Due to the way references and name binding works in Python, if you want to update some symbol in a module, say foo.bar, from outside that module, and have other importing code ""see"" that change, you have to import foo a certain way. For example:</p>","
+",<p>module foo:</p>,"
+","<pre><code>bar = ""apples""
+</code></pre>","
+",<p>module a:</p>,"
+","<pre><code>import foo
+foo.bar = ""oranges""   # update bar inside foo module object
+</code></pre>","
+",<p>module b:</p>,"
+","<pre><code>import foo           
+print foo.bar        # if executed after a's ""foo.bar"" assignment, will print ""oranges""
+</code></pre>","
+","<p>However, if you import symbol names instead of module names, this will not work.</p>","
+","<p>For example, if I do this in module a:</p>","
+","<pre><code>from foo import bar
+bar = ""oranges""
+</code></pre>","
+","<p>No code outside of <code>a</code> will see <code>bar</code> as ""oranges"" because my setting of <code>bar</code> merely affected the name ""bar"" inside module <code>a</code>, it did not ""reach into"" the <code>foo</code> module object and update its <code>bar</code>.</p>","
+"
+"
+","<p>Even though many people already explained about <code>import</code> vs <code>import from</code>, I want to try to explain a bit more about what happens under the hood, and where all the places it changes are.</p>","
+",<hr/>,"
+",<h2><code>import foo</code>:</h2>,"
+","<p>Imports <code>foo</code>, and creates a reference to that module in the current namespace. Then you need to define completed module path to access a particular attribute or method from inside the module.</p>","
+",<p>E.g. <code>foo.bar</code> but not <code>bar</code></p>,"
+",<h2><code>from foo import bar</code>:</h2>,"
+","<p>Imports <code>foo</code>, and creates references to all the members listed (<code>bar</code>). Does not set the variable <code>foo</code>.</p>","
+",<p>E.g. <code>bar</code> but not <code>baz</code> or <code>foo.baz</code></p>,"
+",<h2><code>from foo import *</code>:</h2>,"
+","<p>Imports <code>foo</code>, and creates references to all public objects defined by that module in the current namespace (everything listed in <code>__all__</code> if <code>__all__</code> exists, otherwise everything that doesn't start with <code>_</code>). Does not set the variable <code>foo</code>.</p>","
+",<p>E.g. <code>bar</code> and <code>baz</code> but not <code>_qux</code> or <code>foo._qux</code>.</p>,"
+",<hr/>,"
+",<p>Now let’s see when we do <code>import X.Y</code>:</p>,"
+","<pre><code>&gt;&gt;&gt; import sys
+&gt;&gt;&gt; import os.path
+</code></pre>","
+",<p>Check <code>sys.modules</code> with name <code>os</code> and <code>os.path</code>:</p>,"
+","<pre><code>&gt;&gt;&gt; sys.modules['os']
+&lt;module 'os' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc'&gt;
+&gt;&gt;&gt; sys.modules['os.path']
+&lt;module 'posixpath' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/posixpath.pyc'&gt;
+</code></pre>","
+",<p>Check <code>globals()</code> and <code>locals()</code> namespace dicts with <code>os</code> and <code>os.path</code>:</p>,"
+","<pre><code>&gt;&gt;&gt; globals()['os']
+&lt;module 'os' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc'&gt;
+&gt;&gt;&gt; locals()['os']
+&lt;module 'os' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc'&gt;
+&gt;&gt;&gt; globals()['os.path']
+Traceback (most recent call last):
+  File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+KeyError: 'os.path'
+&gt;&gt;&gt;
+</code></pre>","
+","<p>From the above example we found that only <code>os</code> is inserted in the local and global namespace.
+So, we should be able to use:</p>","
+","<pre><code>&gt;&gt;&gt; os
+&lt;module 'os' from
+  '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc'&gt;
+&gt;&gt;&gt; os.path
+&lt;module 'posixpath' from
+ '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/posixpath.pyc'&gt;
+&gt;&gt;&gt;
+</code></pre>","
+",<p>But not <code>path</code>.</p>,"
+","<pre><code>&gt;&gt;&gt; path
+Traceback (most recent call last):
+  File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+NameError: name 'path' is not defined
+&gt;&gt;&gt;
+</code></pre>","
+","<p>Once you delete the <code>os</code> from locals() namespace, you won't be able to access <code>os</code> as well as <code>os.path</code> even though they exist in sys.modules:</p>","
+","<pre><code>&gt;&gt;&gt; del locals()['os']
+&gt;&gt;&gt; os
+Traceback (most recent call last):
+  File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+NameError: name 'os' is not defined
+&gt;&gt;&gt; os.path
+Traceback (most recent call last):
+  File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+NameError: name 'os' is not defined
+&gt;&gt;&gt;
+</code></pre>","
+",<h1>Now let's talk about <code>import from</code>:</h1>,"
+",<h2><code>from</code>:</h2>,"
+","<pre><code>&gt;&gt;&gt; import sys
+&gt;&gt;&gt; from os import path
+</code></pre>","
+",<h2>Check <code>sys.modules</code> with <code>os</code> and <code>os.path</code>:</h2>,"
+","<pre><code>&gt;&gt;&gt; sys.modules['os']
+&lt;module 'os' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc'&gt;
+&gt;&gt;&gt; sys.modules['os.path']
+&lt;module 'posixpath' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/posixpath.pyc'&gt;
+</code></pre>","
+",<p>We found that in <code>sys.modules</code> we found as same as we did before by using <code>import name</code></p>,"
+","<p>OK, let's check how it looks like in <code>locals()</code> and <code>globals()</code> namespace dicts:</p>","
+","<pre><code>&gt;&gt;&gt; globals()['path']
+&lt;module 'posixpath' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/posixpath.pyc'&gt;
+&gt;&gt;&gt; locals()['path']
+&lt;module 'posixpath' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/posixpath.pyc'&gt;
+&gt;&gt;&gt; globals()['os']
+Traceback (most recent call last):
+  File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+KeyError: 'os'
+&gt;&gt;&gt;
+</code></pre>","
+",<p>You can access by using name <code>path</code> not by <code>os.path</code>:</p>,"
+","<pre><code>&gt;&gt;&gt; path
+&lt;module 'posixpath' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/posixpath.pyc'&gt;
+&gt;&gt;&gt; os.path
+Traceback (most recent call last):
+  File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+NameError: name 'os' is not defined
+&gt;&gt;&gt;
+</code></pre>","
+",<p>Let's delete 'path' from <code>locals()</code>:</p>,"
+","<pre><code>&gt;&gt;&gt; del locals()['path']
+&gt;&gt;&gt; path
+Traceback (most recent call last):
+  File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+NameError: name 'path' is not defined
+&gt;&gt;&gt;
+</code></pre>","
+",<p>One final example using an alias:</p>,"
+","<pre><code>&gt;&gt;&gt; from os import path as HELL_BOY
+&gt;&gt;&gt; locals()['HELL_BOY']
+&lt;module 'posixpath' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/posixpath.pyc'&gt;
+&gt;&gt;&gt; globals()['HELL_BOY']
+&lt;module 'posixpath' from /System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/posixpath.pyc'&gt;
+&gt;&gt;&gt;
+</code></pre>","
+",<p>And no path defined:</p>,"
+","<pre><code>&gt;&gt;&gt; globals()['path']
+Traceback (most recent call last):
+ File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+KeyError: 'path'
+&gt;&gt;&gt;
+</code></pre>","
+"
+"
+",<p>Both ways are supported for a reason: there are times when one is more appropriate than the other.</p>,"
+","<ul>
+<li><p><code>import module</code>: nice when you are using many bits from the module. drawback is that you'll need to qualify each reference with the module name.</p></li>
+<li><p><code>from module import ...</code>: nice that imported items are usable directly without module name prefix. The drawback is that you must list each thing you use, and that it's not clear in code where something came from.</p></li>
+</ul>","
+","<p>Which to use depends on which makes the code clear and readable, and has more than a little to do with personal preference. I lean toward <code>import module</code> generally because in the code it's very clear where an object or function came from. I use <code>from module import ...</code> when I'm using some object/function a <em>lot</em> in the code.</p>","
+"
+"
+",<p>I personally always use </p>,"
+","<pre><code>from package.subpackage.subsubpackage import module
+</code></pre>","
+",<p>and then access everything as</p>,"
+","<pre><code>module.function
+module.modulevar
+</code></pre>","
+","<p>etc. The reason is that at the same time you have short invocation, and you clearly define the module namespace of each routine, something that is very useful if you have to search for usage of a given module in your source.</p>","
+","<p>Needless to say, do not use the import *, because it pollutes your namespace and it does not tell you where a given function comes from (from which module)</p>","
+","<p>Of course, you can run in trouble if you have the same module name for two different modules in two different packages, like</p>","
+","<pre><code>from package1.subpackage import module
+from package2.subpackage import module
+</code></pre>","
+","<p>in this case, of course you run into troubles, but then there's a strong hint that your package layout is flawed, and you have to rethink it.</p>","
+"
+"
+","<pre><code>import module
+</code></pre>","
+",<p>Is best when you will use many functions from the module.</p>,"
+","<pre><code>from module import function
+</code></pre>","
+",<p>Is best when you want to avoid polluting the global namespace with all the functions and types from a module when you only need <code>function</code>.</p>,"
+"
+"
+",<p>I've just discovered one more subtle difference between these two methods.</p>,"
+",<p>If module <code>foo</code> uses a following import:</p>,"
+","<pre><code>from itertools import count
+</code></pre>","
+","<p>Then module <code>bar</code> can by mistake use <code>count</code> as though it was defined in <code>foo</code>, not in <code>itertools</code>:</p>","
+","<pre><code>import foo
+foo.count()
+</code></pre>","
+",<p>If <code>foo</code> uses:</p>,"
+","<pre><code>import itertools
+</code></pre>","
+","<p>the mistake is still possible, but less likely to be made. <code>bar</code> needs to:</p>","
+","<pre><code>import foo
+foo.itertools.count()
+</code></pre>","
+","<p>This caused some troubles to me. I had a module that by mistake imported an exception from a module that did not define it, only imported it from other module (using <code>from module import SomeException</code>). When the import was no longer needed and removed, the offending module was broken.</p>","
+"
+"
+","<p>Here is another difference not mentioned.  This is copied verbatim from <a href=""http://docs.python.org/2/tutorial/modules.html"" rel=""noreferrer"">http://docs.python.org/2/tutorial/modules.html</a></p>","
+",<p>Note that when using </p>,"
+","<pre><code>from package import item
+</code></pre>","
+","<p>the item can be either a submodule (or subpackage) of the package, or some other name defined in the package, like a function, class or variable. The import statement first tests whether the item is defined in the package; if not, it assumes it is a module and attempts to load it. If it fails to find it, an ImportError exception is raised.</p>","
+","<p>Contrarily, when using syntax like </p>","
+","<pre><code>import item.subitem.subsubitem
+</code></pre>","
+",<p>each item except for the last must be a package; the last item can be a module or a package but can’t be a class or function or variable defined in the previous item.</p>,"
+"
+"
+","<p>Since I am also a beginner, I will be trying to explain this in a simple way:
+In Python, we have three types of <code>import</code> statements which are:</p>","
+",<p><strong>1. Generic imports:</strong></p>,"
+","<pre><code>import math
+</code></pre>","
+","<p><em>this type of import is my personal favorite, the only downside to this import technique is that if you need use any module's function you must use the following syntax:</em></p>","
+","<pre><code>math.sqrt(4)
+</code></pre>","
+","<p><em>of course, it increases the typing effort but as a beginner, it will help you to keep track of module and function associated with it, (a good text editor will reduce the typing effort significantly and is recommended).</em></p>","
+",<p><em><strong>Typing effort can be further reduced by using this import statement:</strong></em></p>,"
+","<pre><code>import math as m
+</code></pre>","
+","<p><em>now, instead of using <code>math.sqrt()</code> you can use <code>m.sqrt()</code>.</em></p>","
+",<p><strong>2. Function imports:</strong></p>,"
+","<pre><code>from math import sqrt
+</code></pre>","
+","<p><em>this type of import is best suited if your code only needs to access single or few functions from the module, but for using any new item from the module you have to update import statement.</em></p>","
+",<p><strong>3. Universal imports:</strong></p>,"
+","<pre><code>from math import * 
+</code></pre>","
+","<p><em>Although it reduces typing effort significantly but is not recommended because it will fill your code with various functions from the module and their name could conflict with the name of user-defined functions.</em>
+<strong>example:</strong></p>","
+","<h3>If you have a function of your very own named sqrt and you import math, your function is safe: there is your sqrt and there is math.sqrt. If you do from math import *, however, you have a problem: namely, two different functions with the exact same name. Source: <a href=""https://www.codecademy.com"" rel=""nofollow noreferrer"">Codecademy</a></h3>","
+"
+"
+","<pre><code>import package
+import module
+</code></pre>","
+","<p>With <code>import</code>, the token must be a module (a file containing Python commands) or a package (a folder in the <code>sys.path</code> containing a file <code>__init__.py</code>.)</p>","
+",<p>When there are subpackages:</p>,"
+","<pre><code>import package1.package2.package
+import package1.package2.module
+</code></pre>","
+","<p>the requirements for folder (package) or file (module) are the same, but the folder or file must be inside <code>package2</code> which must be inside <code>package1</code>, and both <code>package1</code> and <code>package2</code> must contain <code>__init__.py</code> files. <a href=""https://docs.python.org/2/tutorial/modules.html"" rel=""noreferrer"">https://docs.python.org/2/tutorial/modules.html</a></p>","
+",<p>With the <code>from</code> style of import:</p>,"
+","<pre><code>from package1.package2 import package
+from package1.package2 import module
+</code></pre>","
+",<p>the package or module enters the namespace of the file containing the <code>import</code> statement as <code>module</code> (or <code>package</code>) instead of <code>package1.package2.module</code>. You can always bind to a more convenient name:</p>,"
+","<pre><code>a = big_package_name.subpackage.even_longer_subpackage_name.function
+</code></pre>","
+",<p>Only the <code>from</code> style of import permits you to name a particular function or variable:</p>,"
+","<pre><code>from package3.module import some_function
+</code></pre>","
+","<p>is allowed, but</p>","
+","<pre><code>import package3.module.some_function 
+</code></pre>","
+",<p>is not allowed.</p>,"
+"
+"
+","<p>To add to what people have said about <code>from x import *</code>: besides making it more difficult to tell where names came from, this throws off code checkers like Pylint.  They will report those names as undefined variables.</p>","
+"
+"
+",<p>This is my directory structure of my current directory:</p>,"
+","<blockquote>
+<pre><code>.  
+└─a  
+   └─b  
+     └─c
+</code></pre>
+</blockquote>","
+","<ol>
+<li><p>The <code>import</code> statement remembers <strong>all intermediate names</strong>.<br/>
+These names <strong>have to be</strong> qualified:</p>
+<pre><code>In[1]: import a.b.c
+
+In[2]: a
+Out[2]: &lt;module 'a' (namespace)&gt;
+
+In[3]: a.b
+Out[3]: &lt;module 'a.b' (namespace)&gt;
+
+In[4]: a.b.c
+Out[4]: &lt;module 'a.b.c' (namespace)&gt;
+</code></pre></li>
+<li><p>The <code>from ... import ...</code> statement remembers <strong>only the imported name</strong>.<br/>
+This name <strong>must not</strong> be qualified:</p>
+<pre><code>In[1]: from a.b import c
+
+In[2]: a
+NameError: name 'a' is not defined
+
+In[2]: a.b
+NameError: name 'a' is not defined
+
+In[3]: a.b.c
+NameError: name 'a' is not defined
+
+In[4]: c
+Out[4]: &lt;module 'a.b.c' (namespace)&gt;
+</code></pre></li>
+</ol>","
+",<hr/>,"
+","<ul>
+<li><em>Note:</em> Of course, I restarted my Python console between steps 1 and 2.</li>
+</ul>","
+"
+"
+","<p>My own answer to this depends mostly on first, how many different modules I'll be using.  If i'm only going to use one or two, I'll often use <strong><code>from</code></strong> ... <strong><code>import</code></strong> since it makes for fewer keystrokes in the rest of the file, but if I'm going to make use of many different modules, I prefer just <strong><code>import</code></strong> because that means that each module reference is self-documenting.  I can see where each symbol comes from without having to hunt around.</p>","
+","<p>Usuaully I prefer the self documenting style of plain import and only change to from.. import when the number of times I have to type the module name grows above 10 to 20, even if there's only one module being imported.</p>","
+"
+"
+","<p>One of the significant difference I found out which <em>surprisingly</em> no-one has talked about is that using plain <em>import</em> you can access <code>private variable</code> and <code>private functions</code> from the imported module, which isn't possible with <em>from-import</em> statement. </p>","
+","<p><a href=""https://i.stack.imgur.com/1fqOd.png"" rel=""nofollow noreferrer""><img alt=""enter image description here"" src=""https://i.stack.imgur.com/1fqOd.png""/></a></p>","
+",<p>Code in image:</p>,"
+",<h1>setting.py</h1>,"
+","<pre><code>public_variable = 42
+_private_variable = 141
+def public_function():
+    print(""I'm a public function! yay!"")
+def _private_function():
+    print(""Ain't nobody accessing me from another module...usually"")
+</code></pre>","
+",<h1>plain_importer.py</h1>,"
+","<pre><code>import settings
+print (settings._private_variable)
+print (settings.public_variable)
+settings.public_function()
+settings._private_function()
+
+# Prints:
+# 141
+# 42
+# I'm a public function! yay!
+# Ain't nobody accessing me from another module...usually
+</code></pre>","
+",<h1>from_importer.py</h1>,"
+","<pre><code>from settings import *
+#print (_private_variable) #doesn't work
+print (public_variable)
+public_function()
+#_private_function()   #doesn't work
+</code></pre>","
+"
+"
+",<p>I would like to add to this. It can be useful to understand how Python handles imported modules as attributes if you run into circular imports.</p>,"
+",<p>I have the following structure:</p>,"
+","<pre><code>mod/
+    __init__.py
+    main.py
+    a.py
+    b.py
+    c.py
+    d.py
+</code></pre>","
+",<p>From main.py I will import the other modules using differnt import methods</p>,"
+",<p>main.py:</p>,"
+","<pre><code>import mod.a
+import mod.b as b
+from mod import c
+import d
+</code></pre>","
+","<p>dis.dis shows the difference (note module names, a b c d):</p>","
+","<pre><code>  1           0 LOAD_CONST               0 (-1)
+              3 LOAD_CONST               1 (None)
+              6 IMPORT_NAME              0 (mod.a)
+              9 STORE_NAME               1 (mod)
+
+  2          12 LOAD_CONST               0 (-1)
+             15 LOAD_CONST               1 (None)
+             18 IMPORT_NAME              2 (b)
+             21 STORE_NAME               2 (b)
+
+  3          24 LOAD_CONST               0 (-1)
+             27 LOAD_CONST               2 (('c',))
+             30 IMPORT_NAME              1 (mod)
+             33 IMPORT_FROM              3 (c)
+             36 STORE_NAME               3 (c)
+             39 POP_TOP
+
+  4          40 LOAD_CONST               0 (-1)
+             43 LOAD_CONST               1 (None)
+             46 IMPORT_NAME              4 (mod.d)
+             49 LOAD_ATTR                5 (d)
+             52 STORE_NAME               5 (d)
+             55 LOAD_CONST               1 (None)
+</code></pre>","
+","<p>In the end they look the same (STORE_NAME is result in each example), but this is worth noting if you need to consider the following four circular imports:</p>","
+",<h2>example1</h2>,"
+","<pre><code>foo/
+   __init__.py
+   a.py
+   b.py
+</code></pre>","
+","<pre><code>a.py:
+import foo.b 
+</code></pre>","
+","<pre><code>b.py:
+import foo.a
+</code></pre>","
+","<pre><code>&gt;&gt;&gt; import foo.a
+&gt;&gt;&gt;
+</code></pre>","
+",<p>This works</p>,"
+",<h2>example2</h2>,"
+","<pre><code>bar/
+   __init__.py
+   a.py
+   b.py
+</code></pre>","
+","<pre><code>a.py:
+import bar.b as b
+</code></pre>","
+","<pre><code>b.py:
+import bar.a as a
+</code></pre>","
+","<pre><code>&gt;&gt;&gt; import bar.a
+Traceback (most recent call last):
+  File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+  File ""bar\a.py"", line 1, in &lt;module&gt;
+    import bar.b as b
+  File ""bar\b.py"", line 1, in &lt;module&gt;
+    import bar.a as a
+AttributeError: 'module' object has no attribute 'a'
+</code></pre>","
+",<p>No dice</p>,"
+",<h2>example3</h2>,"
+","<pre><code>baz/
+   __init__.py
+   a.py
+   b.py
+</code></pre>","
+","<pre><code>a.py:
+from baz import b
+</code></pre>","
+","<pre><code>b.py:
+from baz import a
+</code></pre>","
+","<pre><code>&gt;&gt;&gt; import baz.a
+Traceback (most recent call last):
+  File ""&lt;stdin&gt;"", line 1, in &lt;module&gt;
+  File ""baz\a.py"", line 1, in &lt;module&gt;
+    from baz import b
+  File ""baz\b.py"", line 1, in &lt;module&gt;
+    from baz import a
+ImportError: cannot import name a
+</code></pre>","
+",<p>Similar issue... but clearly from x import y is not the same as import import x.y as y</p>,"
+",<h2>example4</h2>,"
+","<pre><code>qux/
+   __init__.py
+   a.py
+   b.py
+</code></pre>","
+","<pre><code>a.py:
+import b 
+</code></pre>","
+","<pre><code>b.py:
+import a
+</code></pre>","
+","<pre><code>&gt;&gt;&gt; import qux.a
+&gt;&gt;&gt;
+</code></pre>","
+",<p>This one also works</p>,"
+"
+"
+","<p>As <em>Jan Wrobel</em> mentions, one aspect of the different imports is in which way the imports are disclosed.</p>","
+",<p>Module <strong>mymath</strong></p>,"
+","<pre class=""lang-py prettyprint-override""><code>from math import gcd
+...
+</code></pre>","
+",<p>Use of <strong>mymath</strong>:</p>,"
+","<pre><code>import mymath
+mymath.gcd(30, 42)  # will work though maybe not expected
+</code></pre>","
+","<p>If I imported <code>gcd</code> only for internal use, not to disclose it to users of <code>mymath</code>, this can be inconvenient. I have this pretty often, and in most cases I want to ""keep my modules clean"".</p>","
+","<p>Apart from the proposal of <em>Jan Wrobel</em> to obscure this a bit more by using <code>import math</code> instead, I have started to hide imports from disclosure by using a leading underscore:</p>","
+","<pre><code># for instance...
+from math import gcd as _gcd
+# or...
+import math as _math
+</code></pre>","
+","<p>In larger projects this ""best practice"" allows my to exactly control what is disclosed to subsequent imports and what isn't. This keeps my modules clean and pays back at a certain size of project.</p>","
+"
+"
+",<p>since many people answered here but i am just trying my best :)</p>,"
+","<ol>
+<li><p><code>import module</code> is best when you don't know which item you have to import from <code>module</code>. In this way it may be difficult to debug when problem raises because
+you don't know which item have problem.</p>
+</li>
+<li><p><code>form module import &lt;foo&gt;</code> is best when you know which item you require to import and also helpful in more controlling using importing specific item according to your need. Using this way debugging may be easy because you know which item you imported.</p>
+</li>
+</ol>","
+"
+"
+",<p>Import Module - You don't need additional efforts to fetch another thing from module. It has disadvantages such as redundant typing </p>,"
+",<p>Module Import From - Less typing &amp;More control over which items of a module can be accessed.To use a new item from the module you have to update your import statement.</p>,"
+"
+"
+","<p>There are some builtin modules that contain mostly bare functions (<a href=""https://docs.python.org/3/library/base64.html"" rel=""nofollow noreferrer"">base64</a>, <a href=""https://docs.python.org/3/library/math.html"" rel=""nofollow noreferrer"">math</a>, <a href=""https://docs.python.org/3/library/os.html"" rel=""nofollow noreferrer"">os</a>, <a href=""https://docs.python.org/3/library/shutil.html"" rel=""nofollow noreferrer"">shutil</a>, <a href=""https://docs.python.org/3/library/sys.html"" rel=""nofollow noreferrer"">sys</a>, <a href=""https://docs.python.org/3/library/time.html"" rel=""nofollow noreferrer"">time</a>, ...) and it is definitely a good practice to have these bare functions <em>bound</em> to some namespace and thus improve the readability of your code. Consider how more difficult is to understand the meaning of these functions without their namespace:</p>","
+","<pre class=""lang-py prettyprint-override""><code>copysign(foo, bar)
+monotonic()
+copystat(foo, bar)
+</code></pre>","
+",<p>than when they are bound to some module:</p>,"
+","<pre class=""lang-py prettyprint-override""><code>math.copysign(foo, bar)
+time.monotonic()
+shutil.copystat(foo, bar)
+</code></pre>","
+","<p>Sometimes you even need the namespace to avoid conflicts between different modules (<a href=""https://docs.python.org/3/library/json.html#json.load"" rel=""nofollow noreferrer"">json.load</a> vs. <a href=""https://docs.python.org/3/library/pickle.html#pickle.load"" rel=""nofollow noreferrer"">pickle.load</a>)
+<hr/>
+On the other hand there are some modules that contain mostly classes (<a href=""https://docs.python.org/3/library/configparser.html"" rel=""nofollow noreferrer"">configparser</a>, <a href=""https://docs.python.org/3/library/datetime.html"" rel=""nofollow noreferrer"">datetime</a>, <a href=""https://docs.python.org/3/library/tempfile.html"" rel=""nofollow noreferrer"">tempfile</a>, <a href=""https://docs.python.org/3/library/zipfile.html"" rel=""nofollow noreferrer"">zipfile</a>, ...) and many of them make their class names self-explanatory enough:</p>","
+","<pre class=""lang-py prettyprint-override""><code>configparser.RawConfigParser()
+datetime.DateTime()
+email.message.EmailMessage()
+tempfile.NamedTemporaryFile()
+zipfile.ZipFile()
+</code></pre>","
+",<p>so there can be a debate whether using these classes with the additional module namespace in your code adds some new information or just lengthens the code.</p>,"
+"
+"
+",<p>I was answering a similar question post but the poster deleted it before i could post. Here is one example to illustrate the differences.</p>,"
+","<p>Python libraries may have one or more files (modules). For exmaples,</p>","
+","<pre><code>package1
+  |-- __init__.py
+</code></pre>","
+",<p>or</p>,"
+","<pre><code>package2
+  |-- __init__.py
+  |-- module1.py
+  |-- module2.py
+</code></pre>","
+",<p>We can define python functions or classes inside <em>any</em> of the files based design requirements.</p>,"
+",<p>Let's define</p>,"
+","<ol>
+<li><code>func1()</code> in  <code>__init__.py</code> under <code>mylibrary1</code>, and</li>
+<li><code>foo()</code> in <code>module2.py</code> under <code>mylibrary2</code>.</li>
+</ol>","
+",<p>We can access <code>func1()</code> using one of these methods</p>,"
+","<pre><code>import package1
+
+package1.func1()
+</code></pre>","
+",<p>or</p>,"
+","<pre><code>import package1 as my
+
+my.func1()
+</code></pre>","
+",<p>or</p>,"
+","<pre><code>from package1 import func1
+
+func1()
+</code></pre>","
+",<p>or</p>,"
+","<pre><code>from package1 import *
+
+func1()
+</code></pre>","
+",<p>We can use one of these methods to access <code>foo()</code>:</p>,"
+","<pre><code>import package2.module2
+
+package2.module2.foo()
+</code></pre>","
+",<p>or</p>,"
+","<pre><code>import package2.module2 as mod2
+
+mod2.foo()
+</code></pre>","
+",<p>or</p>,"
+","<pre><code>from package2 import module2
+
+module2.foo()
+</code></pre>","
+",<p>or</p>,"
+","<pre><code>from package2 import module2 as mod2
+
+mod2.foo()
+</code></pre>","
+",<p>or</p>,"
+","<pre><code>from package2.module2 import *
+
+foo()
+</code></pre>","
+"
+"
+","<p>There have been many answers, but none have mentioned testing (with <code>unittest</code> or <code>pytest</code>).</p>","
+",<h1>tl;dr</h1>,"
+",<p>Use <code>import foo</code> for external modules to simplify testing.</p>,"
+",<h1>The Hard Way</h1>,"
+","<p>Importing classes/functions (<code>from foo import bar</code>) individually from a module makes red-green-refactor cycles tedious. For example, if my file looks like</p>","
+","<pre><code># my_module.py
+
+from foo import bar
+
+
+class Thing:
+    def do_thing(self):
+        bar('do a thing')
+</code></pre>","
+",<p>and my test is</p>,"
+","<pre><code># test_my_module.py
+
+from unittest.mock import patch
+import my_module
+
+
+patch.object(my_module, 'bar')
+def test_do_thing(mock_bar):
+    my_module.Thing().do_thing()
+    mock_bar.assert_called_with('do a thing')
+</code></pre>","
+","<p>At first glance, this seems great. But what happens if I want to implement <code>Thing</code> class in a different file? My structure would have to change like this...</p>","
+","<pre><code># my_module.py
+
+from tools import Thing
+
+
+def do_thing():
+    Thing().do_thing()
+
+
+# tools.py
+
+from foo import bar
+
+
+class Thing:
+    def do_thing(self):
+        bar('do a thing')
+
+
+# test_my_module.py
+
+from unittest.mock import patch
+import my_module
+import tools  # Had to import implementation file...
+
+
+patch.object(tools, 'bar')  # Changed patch
+def test_do_thing(mock_bar):
+    my_module.do_thing()  # Changed test (expected)
+    mock_bar.assert_called_with('do a thing')
+</code></pre>","
+","<p>Unfortunately, since I used <code>from foo import bar</code>, I need to update my patch to reference the <code>tools</code> module. Essentially, since my test knows too much about implementation, much more than expected needs to be changed to do this refactor.</p>","
+",<h1>The Better Approach</h1>,"
+","<p>Using <code>import foo</code>, my tests can ignore how the module is implemented and simply patch the whole module.</p>","
+","<pre><code># my_module.py
+
+from tools import Thing
+
+
+def do_thing():
+    Thing().do_thing()
+
+
+# tools.py
+
+import foo
+
+
+class Thing:
+    def do_thing(self):
+        foo.bar('do a thing')  # Specify 'bar' is from 'foo' module
+
+
+# test_my_module.py
+
+from unittest.mock import patch
+import my_module
+
+
+patch('foo')  # Patch entire foo module
+def test_do_thing(mock_foo):
+    my_module.do_thing()  # Changed test (expected)
+    mock_foo.bar.assert_called_with('do a thing')
+</code></pre>","
+","<p>The less implementation details your tests know, the better. That way, if you come up with a better solution (use classes instead of functions, use additional files to separate ideas, etc.), less needs to be changed in your tests to accommodate the refactor.</p>","
+"
+"
+","<p>I'm using Python's logging module to log some debug strings to a file which works pretty well. Now in addition, I'd like to use this module to also print the strings out to stdout. How do I do this? In order to log my strings to a file I use following code:</p>","
+","<pre><code>import logging
+import logging.handlers
+logger = logging.getLogger("""")
+logger.setLevel(logging.DEBUG)
+handler = logging.handlers.RotatingFileHandler(
+    LOGFILE, maxBytes=(1048576*5), backupCount=7
+)
+formatter = logging.Formatter(""%(asctime)s - %(name)s - %(levelname)s - %(message)s"")
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+</code></pre>","
+",<p>and then call a logger function like</p>,"
+","<pre><code>logger.debug(""I am written to the file"")
+</code></pre>","
+",<p>Thank you for some help here!</p>,"
+"
+"
+","<p>Just get a handle to the root logger and add the <code>StreamHandler</code>. The <code>StreamHandler</code> writes to stderr. Not sure if you really need stdout over stderr, but this is what I use when I setup the Python logger and I also add the <code>FileHandler</code> as well. Then all my logs go to both places (which is what it sounds like you want).</p>","
+","<pre><code>import logging
+logging.getLogger().addHandler(logging.StreamHandler())
+</code></pre>","
+","<p>If you want to output to <code>stdout</code> instead of <code>stderr</code>, you just need to specify it to the <code>StreamHandler</code> constructor.</p>","
+","<pre><code>import sys
+# ...
+logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
+</code></pre>","
+",<p>You could also add a <code>Formatter</code> to it so all your log lines have a common header.</p>,"
+",<p>ie:</p>,"
+","<pre><code>import logging
+logFormatter = logging.Formatter(""%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s"")
+rootLogger = logging.getLogger()
+
+fileHandler = logging.FileHandler(""{0}/{1}.log"".format(logPath, fileName))
+fileHandler.setFormatter(logFormatter)
+rootLogger.addHandler(fileHandler)
+
+consoleHandler = logging.StreamHandler()
+consoleHandler.setFormatter(logFormatter)
+rootLogger.addHandler(consoleHandler)
+</code></pre>","
+",<p>Prints to the format of:</p>,"
+","<pre><code>2012-12-05 16:58:26,618 [MainThread  ] [INFO ]  my message
+</code></pre>","
+"
+"
+","<p><a href=""https://docs.python.org/3/library/logging.html#logging.basicConfig"" rel=""noreferrer""><code>logging.basicConfig()</code></a> can take a keyword argument <code>handlers</code> since Python 3.3, which simplifies logging setup a lot, especially when setting up multiple handlers with the same formatter:</p>","
+","<blockquote>
+<p><strong><code>handlers</code></strong> – If specified, this should be an iterable of already created handlers to add to the root logger. Any handlers which don’t already have a formatter set will be assigned the default formatter created in this function.</p>
+</blockquote>","
+",<p>The whole setup can therefore be done with a single call like this:</p>,"
+","<pre class=""lang-py prettyprint-override""><code>import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format=""%(asctime)s [%(levelname)s] %(message)s"",
+    handlers=[
+        logging.FileHandler(""debug.log""),
+        logging.StreamHandler()
+    ]
+)
+</code></pre>","
+","<p>(Or with <code>import sys</code> + <code>StreamHandler(sys.stdout)</code> per original question's requirements – the default for StreamHandler is to write to stderr. Look at <a href=""https://docs.python.org/3/library/logging.html#logrecord-attributes"" rel=""noreferrer"">LogRecord attributes</a> if you want to customize the log format and add things like filename/line, thread info etc.)</p>","
+",<p>The setup above needs to be done only once near the beginning of the script. You can use the logging from all other places in the codebase later like this:</p>,"
+","<pre class=""lang-py prettyprint-override""><code>logging.info('Useful message')
+logging.error('Something bad happened')
+...
+</code></pre>","
+","<p>Note: If it doesn't work, someone else has probably already initialized the logging system differently. Comments suggest doing <code>logging.root.handlers = []</code> before the call to <code>basicConfig()</code>.</p>","
+"
+"
+","<p>Adding a StreamHandler without arguments goes to stderr instead of stdout. If some other process has a dependency on the stdout dump (i.e. when writing an NRPE plugin), then make sure to specify stdout explicitly or you might run into some unexpected troubles.</p>","
+",<p>Here's a quick example reusing the assumed values and LOGFILE from the question:</p>,"
+","<pre><code>import logging
+from logging.handlers import RotatingFileHandler
+from logging import handlers
+import sys
+
+log = logging.getLogger('')
+log.setLevel(logging.DEBUG)
+format = logging.Formatter(""%(asctime)s - %(name)s - %(levelname)s - %(message)s"")
+
+ch = logging.StreamHandler(sys.stdout)
+ch.setFormatter(format)
+log.addHandler(ch)
+
+fh = handlers.RotatingFileHandler(LOGFILE, maxBytes=(1048576*5), backupCount=7)
+fh.setFormatter(format)
+log.addHandler(fh)
+</code></pre>","
+"
+"
+","<p>Here is a complete, nicely wrapped solution based on <a href=""https://stackoverflow.com/a/13733863/1976617"">Waterboy's answer</a> and various other sources. It supports logging to both console and log file, allows for different log level settings, provides colorized output and is easily configurable (also available as <a href=""https://gist.github.com/fonic/7e5ab76d951a2ab2d5f526a7db3e2004"" rel=""noreferrer"">Gist</a>):</p>","
+","<pre><code>#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+# -------------------------------------------------------------------------------
+#                                                                               -
+#  Python dual-logging setup (console and log file),                            -
+#  supporting different log levels and colorized output                         -
+#                                                                               -
+#  Created by Fonic &lt;https://github.com/fonic&gt;                                  -
+#  Date: 04/05/20                                                               -
+#                                                                               -
+#  Based on:                                                                    -
+#  https://stackoverflow.com/a/13733863/1976617                                 -
+#  https://uran198.github.io/en/python/2016/07/12/colorful-python-logging.html  -
+#  https://en.wikipedia.org/wiki/ANSI_escape_code#Colors                        -
+#                                                                               -
+# -------------------------------------------------------------------------------
+
+# Imports
+import os
+import sys
+import logging
+
+# Logging formatter supporting colorized output
+class LogFormatter(logging.Formatter):
+
+    COLOR_CODES = {
+        logging.CRITICAL: ""\033[1;35m"", # bright/bold magenta
+        logging.ERROR:    ""\033[1;31m"", # bright/bold red
+        logging.WARNING:  ""\033[1;33m"", # bright/bold yellow
+        logging.INFO:     ""\033[0;37m"", # white / light gray
+        logging.DEBUG:    ""\033[1;30m""  # bright/bold black / dark gray
+    }
+
+    RESET_CODE = ""\033[0m""
+
+    def __init__(self, color, *args, **kwargs):
+        super(LogFormatter, self).__init__(*args, **kwargs)
+        self.color = color
+
+    def format(self, record, *args, **kwargs):
+        if (self.color == True and record.levelno in self.COLOR_CODES):
+            record.color_on  = self.COLOR_CODES[record.levelno]
+            record.color_off = self.RESET_CODE
+        else:
+            record.color_on  = """"
+            record.color_off = """"
+        return super(LogFormatter, self).format(record, *args, **kwargs)
+
+# Setup logging
+def setup_logging(console_log_output, console_log_level, console_log_color, logfile_file, logfile_log_level, logfile_log_color, log_line_template):
+
+    # Create logger
+    # For simplicity, we use the root logger, i.e. call 'logging.getLogger()'
+    # without name argument. This way we can simply use module methods for
+    # for logging throughout the script. An alternative would be exporting
+    # the logger, i.e. 'global logger; logger = logging.getLogger(""&lt;name&gt;"")'
+    logger = logging.getLogger()
+
+    # Set global log level to 'debug' (required for handler levels to work)
+    logger.setLevel(logging.DEBUG)
+
+    # Create console handler
+    console_log_output = console_log_output.lower()
+    if (console_log_output == ""stdout""):
+        console_log_output = sys.stdout
+    elif (console_log_output == ""stderr""):
+        console_log_output = sys.stderr
+    else:
+        print(""Failed to set console output: invalid output: '%s'"" % console_log_output)
+        return False
+    console_handler = logging.StreamHandler(console_log_output)
+
+    # Set console log level
+    try:
+        console_handler.setLevel(console_log_level.upper()) # only accepts uppercase level names
+    except:
+        print(""Failed to set console log level: invalid level: '%s'"" % console_log_level)
+        return False
+
+    # Create and set formatter, add console handler to logger
+    console_formatter = LogFormatter(fmt=log_line_template, color=console_log_color)
+    console_handler.setFormatter(console_formatter)
+    logger.addHandler(console_handler)
+
+    # Create log file handler
+    try:
+        logfile_handler = logging.FileHandler(logfile_file)
+    except Exception as exception:
+        print(""Failed to set up log file: %s"" % str(exception))
+        return False
+
+    # Set log file log level
+    try:
+        logfile_handler.setLevel(logfile_log_level.upper()) # only accepts uppercase level names
+    except:
+        print(""Failed to set log file log level: invalid level: '%s'"" % logfile_log_level)
+        return False
+
+    # Create and set formatter, add log file handler to logger
+    logfile_formatter = LogFormatter(fmt=log_line_template, color=logfile_log_color)
+    logfile_handler.setFormatter(logfile_formatter)
+    logger.addHandler(logfile_handler)
+
+    # Success
+    return True
+
+# Main function
+def main():
+
+    # Setup logging
+    script_name = os.path.splitext(os.path.basename(sys.argv[0]))[0]
+    if (not setup_logging(console_log_output=""stdout"", console_log_level=""warning"", console_log_color=True,
+                        logfile_file=script_name + "".log"", logfile_log_level=""debug"", logfile_log_color=False,
+                        log_line_template=""%(color_on)s[%(created)d] [%(threadName)s] [%(levelname)-8s] %(message)s%(color_off)s"")):
+        print(""Failed to setup logging, aborting."")
+        return 1
+
+    # Log some messages
+    logging.debug(""Debug message"")
+    logging.info(""Info message"")
+    logging.warning(""Warning message"")
+    logging.error(""Error message"")
+    logging.critical(""Critical message"")
+
+# Call main function
+if (__name__ == ""__main__""):
+    sys.exit(main())
+</code></pre>","
+",<hr/>,"
+","<p><strong>NOTE regarding Microsoft Windows:</strong><br/>
+For colors to actually appear on Microsoft Windows, additional steps are necessary. There are two options (both successfully tested on Microsoft Windows 10):</p>","
+","<p>1) Enable ANSI terminal mode using the following code (enables terminal to interpret escape sequences by setting flag <code>ENABLE_VIRTUAL_TERMINAL_PROCESSING</code>; more info on this <a href=""https://stackoverflow.com/a/36760881/1976617"">here</a>, <a href=""https://stackoverflow.com/a/37505496/1976617"">here</a>, <a href=""https://docs.microsoft.com/en-us/windows/console/setconsolemode"" rel=""noreferrer"">here</a> and <a href=""https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences"" rel=""noreferrer"">here</a>):</p>","
+","<pre><code># Enable ANSI terminal mode on Microsoft Windows
+def windows_enable_ansi_terminal_mode():
+    if (sys.platform != ""win32""):
+        return None
+    try:
+        import ctypes
+        kernel32 = ctypes.windll.kernel32
+        result = kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
+        if (result == 0): raise Exception
+        return True
+    except:
+        return False
+</code></pre>","
+","<p>2) Use Python package <a href=""https://pypi.org/project/colorama/"" rel=""noreferrer"">colorama</a> (filters output sent to <em>stdout</em> and <em>stderr</em> and translates escape sequences to native Windows API calls):</p>","
+","<pre><code>import colorama
+colorama.init()
+</code></pre>","
+"
+"
+","<p>Either run <code>basicConfig</code> with <code>stream=sys.stdout</code> as the argument prior to setting up any other handlers or logging any messages, or manually add a <code>StreamHandler</code> that pushes messages to stdout to the root logger (or any other logger you want, for that matter).</p>","
+"
+"
+",<p>Logging to <code>stdout</code> and <code>rotating file</code> with different levels and formats:</p>,"
+","<pre><code>import logging
+import logging.handlers
+import sys
+
+if __name__ == ""__main__"":
+
+    # Change root logger level from WARNING (default) to NOTSET in order for all messages to be delegated.
+    logging.getLogger().setLevel(logging.NOTSET)
+
+    # Add stdout handler, with level INFO
+    console = logging.StreamHandler(sys.stdout)
+    console.setLevel(logging.INFO)
+    formater = logging.Formatter('%(name)-13s: %(levelname)-8s %(message)s')
+    console.setFormatter(formater)
+    logging.getLogger().addHandler(console)
+
+    # Add file rotating handler, with level DEBUG
+    rotatingHandler = logging.handlers.RotatingFileHandler(filename='rotating.log', maxBytes=1000, backupCount=5)
+    rotatingHandler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    rotatingHandler.setFormatter(formatter)
+    logging.getLogger().addHandler(rotatingHandler)
+
+    log = logging.getLogger(""app."" + __name__)
+
+    log.debug('Debug message, should only appear in the file.')
+    log.info('Info message, should appear in file and stdout.')
+    log.warning('Warning message, should appear in file and stdout.')
+    log.error('Error message, should appear in file and stdout.')
+</code></pre>","
+"
+"
+","<p>After having used Waterboy's code over and over in multiple Python packages, I finally cast it into a tiny standalone Python package, which you can find here:</p>","
+","<p><a href=""https://github.com/acschaefer/duallog"" rel=""noreferrer"">https://github.com/acschaefer/duallog</a></p>","
+","<p>The code is well documented and easy to use. Simply download the <code>.py</code> file and include it in your project, or install the whole package via <code>pip install duallog</code>. </p>","
+"
+"
+","<p>For 2.7, try the following:  </p>","
+","<pre><code>fh = logging.handlers.RotatingFileHandler(LOGFILE, maxBytes=(1048576*5), backupCount=7)
+</code></pre>","
+"
+"
+",<p>What do these python file extensions mean?</p>,"
+","<ul>
+<li>.pyc</li>
+<li>.pyd</li>
+<li>.pyo</li>
+</ul>","
+",<p>What are the differences between them and how are they generated from a *.py file?</p>,"
+"
+"
+","<ol>
+<li><code>.py</code>: This is normally the input source code that you've written.</li>
+<li><code>.pyc</code>: This is the compiled bytecode. If you import a module, python will build a <code>*.pyc</code> file that contains the bytecode to make importing it again later easier (and faster).</li>
+<li><code>.pyo</code>:  This was a file format used before Python 3.5 for <code>*.pyc</code> files that were created with optimizations (<code>-O</code>) flag. (see the note below)</li>
+<li><code>.pyd</code>: This is basically a windows dll file. <a href=""http://docs.python.org/faq/windows.html#is-a-pyd-file-the-same-as-a-dll"" rel=""noreferrer"">http://docs.python.org/faq/windows.html#is-a-pyd-file-the-same-as-a-dll</a></li>
+</ol>","
+","<p>Also for some further discussion on <code>.pyc</code> vs <code>.pyo</code>, take a look at: <a href=""https://web.archive.org/web/20160130165632/http://www.network-theory.co.uk/docs/pytut/CompiledPythonfiles.html"" rel=""noreferrer"">http://www.network-theory.co.uk/docs/pytut/CompiledPythonfiles.html</a> (I've copied the important part below)</p>","
+","<blockquote>
+<ul>
+<li>When the Python interpreter is invoked with the -O flag, optimized code is generated and stored in ‘.pyo’ files. The optimizer currently doesn't help much; it only removes assert statements. When -O is used, all bytecode is optimized; .pyc files are ignored and .py files are compiled to optimized bytecode.</li>
+<li>Passing two -O flags to the Python interpreter (-OO) will cause the bytecode compiler to perform optimizations that could in some rare cases result in malfunctioning programs. Currently only <code>__doc__</code> strings are removed from the bytecode, resulting in more compact ‘.pyo’ files. Since some programs may rely on having these available, you should only use this option if you know what you're doing.</li>
+<li>A program doesn't run any faster when it is read from a ‘.pyc’ or ‘.pyo’ file than when it is read from a ‘.py’ file; the only thing that's faster about ‘.pyc’ or ‘.pyo’ files is the speed with which they are loaded.</li>
+<li>When a script is run by giving its name on the command line, the bytecode for the script is never written to a ‘.pyc’ or ‘.pyo’ file. Thus, the startup time of a script may be reduced by moving most of its code to a module and having a small bootstrap script that imports that module. It is also possible to name a ‘.pyc’ or ‘.pyo’ file directly on the command line.</li>
+</ul>
+</blockquote>","
+",<p><strong>Note:</strong> </p>,"
+","<p>On 2015-09-15 the <a href=""https://docs.python.org/3/whatsnew/3.5.html#pep-488-elimination-of-pyo-files"" rel=""noreferrer"">Python 3.5 release</a> implemented PEP-488 and eliminated <code>.pyo</code> files. 
+This means that <code>.pyc</code> files represent both unoptimized and optimized bytecode.</p>","
+"
+"
+","<ul>
+<li><strong>.py</strong> - Regular script</li>
+<li><strong>.py3</strong> - (rarely used) Python3 script. Python3 scripts usually end with "".py"" not "".py3"", but I have seen that a few times</li>
+<li><strong>.pyc</strong> - compiled script (Bytecode)</li>
+<li><strong>.pyo</strong> - optimized pyc file (As of Python3.5, Python will only use pyc rather than pyo and pyc)</li>
+<li><strong>.pyw</strong> - Python script to run in Windowed mode, without a console; executed with pythonw.exe</li>
+<li><strong>.pyx</strong> - Cython src to be converted to C/C++</li>
+<li><strong>.pyd</strong> - Python script made as a Windows DLL</li>
+<li><strong>.pxd</strong> - Cython script which is equivalent to a C/C++ header</li>
+<li><strong>.pxi</strong> - MyPy stub</li>
+<li><strong>.pyi</strong> - Stub file (<a href=""https://www.python.org/dev/peps/pep-0484/#stub-files"" rel=""noreferrer"">PEP 484</a>)</li>
+<li><strong>.pyz</strong> - Python script archive (<a href=""https://www.python.org/dev/peps/pep-0441/"" rel=""noreferrer"">PEP 441</a>); this is a script containing compressed Python scripts (ZIP) in binary form after the standard Python script header</li>
+<li><strong>.pywz</strong> - Python script archive for MS-Windows (<a href=""https://www.python.org/dev/peps/pep-0441/"" rel=""noreferrer"">PEP 441</a>); this is a script containing compressed Python scripts (ZIP) in binary form after the standard Python script header</li>
+<li><strong>.py[cod]</strong> - wildcard notation in "".gitignore"" that means the file may be "".pyc"", "".pyo"", or "".pyd"".</li>
+<li><strong>.pth</strong> - a path configuration file; its contents are additional items (one per line) to be added to <code>sys.path</code>. See <a href=""https://docs.python.org/3/library/site.html#module-site"" rel=""noreferrer""><code>site</code></a> module.</li>
+</ul>","
+","<p>A larger list of additional Python file-extensions (mostly rare and unofficial) can be found at <a href=""http://dcjtech.info/topic/python-file-extensions/"" rel=""noreferrer"">http://dcjtech.info/topic/python-file-extensions/</a></p>","
+"
+"
+","<pre><code>r = {'is_claimed': 'True', 'rating': 3.5}
+r = json.dumps(r)
+file.write(str(r['rating']))
+</code></pre>","
+",<p>I am not able to access my data in the JSON. What am I doing wrong?</p>,"
+","<pre><code>TypeError: string indices must be integers, not str
+</code></pre>","
+"
+"
+","<p><code>json.dumps()</code> converts a dictionary to <code>str</code> object, not a <code>json(dict)</code> object! So you have to load your <code>str</code> into a <code>dict</code> to use it by using <a href=""https://docs.python.org/2/library/json.html#json.loads"" rel=""noreferrer""><strong><code>json.loads()</code></strong></a> method</p>","
+",<p>See <code>json.dumps()</code> as a save method and <code>json.loads()</code> as a retrieve method.</p>,"
+",<p>This is the code sample which might help you understand it more:</p>,"
+","<pre><code>import json
+
+r = {'is_claimed': 'True', 'rating': 3.5}
+r = json.dumps(r)
+loaded_r = json.loads(r)
+loaded_r['rating'] #Output 3.5
+type(r) #Output str
+type(loaded_r) #Output dict
+</code></pre>","
+"
+"
+","<p><code>json.dumps()</code> returns the JSON string representation of the python dict. <a href=""https://docs.python.org/2/library/json.html#json.dumps"" rel=""noreferrer"">See the docs</a></p>","
+","<p>You can't do <code>r['rating']</code> because r is a string, not a dict anymore</p>","
+",<p>Perhaps you meant something like</p>,"
+","<pre><code>r = {'is_claimed': 'True', 'rating': 3.5}
+json = json.dumps(r) # note i gave it a different name
+file.write(str(r['rating']))
+</code></pre>","
+"
+"
+","<h3><a href=""https://docs.python.org/3/library/json.html#module-json"" rel=""noreferrer""><code>json.dumps()</code></a> is used to decode JSON data</h3>","
+","<ul>
+<li><code>json.loads</code> take a string as input and returns a dictionary as output.</li>
+<li><code>json.dumps</code> take a dictionary as input and returns a string as output.</li>
+</ul>","
+","<pre class=""lang-py prettyprint-override""><code>import json
+
+# initialize different data
+str_data = 'normal string'
+int_data = 1
+float_data = 1.50
+list_data = [str_data, int_data, float_data]
+nested_list = [int_data, float_data, list_data]
+dictionary = {
+    'int': int_data,
+    'str': str_data,
+    'float': float_data,
+    'list': list_data,
+    'nested list': nested_list
+}
+
+# convert them to JSON data and then print it
+print('String :', json.dumps(str_data))
+print('Integer :', json.dumps(int_data))
+print('Float :', json.dumps(float_data))
+print('List :', json.dumps(list_data))
+print('Nested List :', json.dumps(nested_list, indent=4))
+print('Dictionary :', json.dumps(dictionary, indent=4))  # the json data will be indented
+</code></pre>","
+",<p>output:</p>,"
+","<pre class=""lang-sh prettyprint-override""><code>String : ""normal string""
+Integer : 1
+Float : 1.5
+List : [""normal string"", 1, 1.5]
+Nested List : [
+    1,
+    1.5,
+    [
+        ""normal string"",
+        1,
+        1.5
+    ]
+]
+Dictionary : {
+    ""int"": 1,
+    ""str"": ""normal string"",
+    ""float"": 1.5,
+    ""list"": [
+        ""normal string"",
+        1,
+        1.5
+    ],
+    ""nested list"": [
+        1,
+        1.5,
+        [
+            ""normal string"",
+            1,
+            1.5
+        ]
+    ]
+}
+</code></pre>","
+","<ul>
+<li>Python Object to JSON Data Conversion</li>
+</ul>","
+","<pre class=""lang-sh prettyprint-override""><code>|                 Python                 |  JSON  |
+|:--------------------------------------:|:------:|
+|                  dict                  | object |
+|               list, tuple              |  array |
+|                   str                  | string |
+| int, float, int- &amp; float-derived Enums | number |
+|                  True                  |  true  |
+|                  False                 |  false |
+|                  None                  |  null  |
+</code></pre>","
+",<h2>UPDATE</h2>,"
+",<h3>In the JSON file</h3>,"
+","<pre class=""lang-py prettyprint-override""><code>nested_dictionary = {
+    'one': nested_list,
+    'two': dictionary,
+
+}
+
+json_dict = {'Nested Dictionary': nested_dictionary,
+             'Multiple':[nested_dictionary, nested_dictionary, nested_dictionary]
+            }
+
+with open(""test_nested.json"", ""w"") as outfile:
+    json.dump(json_dict, outfile, indent=4, sort_keys=False)
+
+</code></pre>","
+",<p>chart response</p>,"
+","<p><a href=""https://i.stack.imgur.com/KoAVo.png"" rel=""noreferrer""><img alt=""enter image description here"" src=""https://i.stack.imgur.com/KoAVo.png""/></a></p>","
+",<p>output into <code>test_nested.json</code></p>,"
+","<pre class=""lang-sh prettyprint-override""><code>{
+    ""Nested Dictionary"": {
+        ""one"": [
+            1,
+            1.5,
+            [
+                ""normal string"",
+                1,
+                1.5
+            ]
+        ],
+        ""two"": {
+            ""int"": 1,
+            ""str"": ""normal string"",
+            ""float"": 1.5,
+            ""list"": [
+                ""normal string"",
+                1,
+                1.5
+            ],
+            ""nested list"": [
+                1,
+                1.5,
+                [
+                    ""normal string"",
+                    1,
+                    1.5
+                ]
+            ]
+        }
+    },
+    ""Multiple"": [
+        {
+            ""one"": [
+                1,
+                1.5,
+                [
+                    ""normal string"",
+                    1,
+                    1.5
+                ]
+            ],
+            ""two"": {
+                ""int"": 1,
+                ""str"": ""normal string"",
+                ""float"": 1.5,
+                ""list"": [
+                    ""normal string"",
+                    1,
+                    1.5
+                ],
+                ""nested list"": [
+                    1,
+                    1.5,
+                    [
+                        ""normal string"",
+                        1,
+                        1.5
+                    ]
+                ]
+            }
+        },
+        {
+            ""one"": [
+                1,
+                1.5,
+                [
+                    ""normal string"",
+                    1,
+                    1.5
+                ]
+            ],
+            ""two"": {
+                ""int"": 1,
+                ""str"": ""normal string"",
+                ""float"": 1.5,
+                ""list"": [
+                    ""normal string"",
+                    1,
+                    1.5
+                ],
+                ""nested list"": [
+                    1,
+                    1.5,
+                    [
+                        ""normal string"",
+                        1,
+                        1.5
+                    ]
+                ]
+            }
+        },
+        {
+            ""one"": [
+                1,
+                1.5,
+                [
+                    ""normal string"",
+                    1,
+                    1.5
+                ]
+            ],
+            ""two"": {
+                ""int"": 1,
+                ""str"": ""normal string"",
+                ""float"": 1.5,
+                ""list"": [
+                    ""normal string"",
+                    1,
+                    1.5
+                ],
+                ""nested list"": [
+                    1,
+                    1.5,
+                    [
+                        ""normal string"",
+                        1,
+                        1.5
+                    ]
+                ]
+            }
+        }
+    ]
+}
+</code></pre>","
+",<h3><code>class</code> instance to JSON</h3>,"
+","<ul>
+<li>A simple solution:</li>
+</ul>","
+","<pre class=""lang-py prettyprint-override""><code>class Foo(object):
+    def __init__(
+            self,
+            data_str,
+            data_int,
+            data_float,
+            data_list,
+            data_n_list,
+            data_dict,
+            data_n_dict):
+        self.str_data = data_str
+        self.int_data = data_int
+        self.float_data = data_float
+        self.list_data = data_list
+        self.nested_list = data_n_list
+        self.dictionary = data_dict
+        self.nested_dictionary = data_n_dict
+
+
+foo = Foo(
+    str_data,
+    int_data,
+    float_data,
+    list_data,
+    nested_list,
+    dictionary,
+    nested_dictionary)
+
+# Because the JSON object is a Python dictionary. 
+result = json.dumps(foo.__dict__, indent=4)
+# See table above.
+
+# or with built-in function that accesses .__dict__ for you, called vars()
+# result = json.dumps(vars(foo), indent=4)
+
+print(result) # same as before
+</code></pre>","
+","<ul>
+<li>Even simpler</li>
+</ul>","
+","<pre class=""lang-py prettyprint-override""><code>class Bar:
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=False, indent=4)
+
+
+bar = Bar()
+bar.web = ""Stackoverflow""
+bar.type = ""Knowledge""
+bar.is_the_best = True
+bar.user = Bar()
+bar.user.name = ""Milovan""
+bar.user.age = 34
+
+print(bar.toJSON())
+</code></pre>","
+",<p>chart response</p>,"
+","<p><a href=""https://i.stack.imgur.com/kksty.png"" rel=""noreferrer""><img alt=""enter image description here"" src=""https://i.stack.imgur.com/kksty.png""/></a></p>","
+",<p>output:</p>,"
+","<pre class=""lang-sh prettyprint-override""><code>{
+    ""web"": ""Stackoverflow"",
+    ""type"": ""Knowledge"",
+    ""is_the_best"": true,
+    ""user"": {
+        ""name"": ""Milovan"",
+        ""age"": 34
+    }
+}
+</code></pre>","
+"
+"
+",<p>No need to convert it in a string by using <code>json.dumps()</code></p>,"
+","<pre><code>r = {'is_claimed': 'True', 'rating': 3.5}
+file.write(r['is_claimed'])
+file.write(str(r['rating']))
+</code></pre>","
+",<p>You can get the values directly from the dict object.</p>,"
+"
+"
+",<p>Defining r as a dictionary should do the trick:</p>,"
+","<pre><code>&gt;&gt;&gt; r: dict = {'is_claimed': 'True', 'rating': 3.5}
+&gt;&gt;&gt; print(r['rating'])
+3.5
+&gt;&gt;&gt; type(r)
+&lt;class 'dict'&gt;
+</code></pre>","
+"
+"
+",<p>You can create a nested dictionary in the above example by declaring a new dictionary inside the default dictionary.</p>,"
+","<pre><code>import json 
+dictionary = {
+'fruit':{""Grapes"": ""10"",""color"": ""green""},
+'vegetable':{""chilli"": ""4"",""color"": ""red""},
+}
+result = json.dumps(dictionary, indent = 3)
+</code></pre>","
+",<p>print(result)</p>,"
+","<p>Here, I have used indent=3</p>","
+","<p>Reference: <a href=""https://favtutor.com/blogs/dict-to-json-python"" rel=""nofollow noreferrer"">https://favtutor.com/blogs/dict-to-json-python</a></p>","
+"
+"
+","<p>When I try to use a <code>print</code> statement in Python, it gives me this error:</p>","
+","<pre><code>&gt;&gt;&gt; print ""Hello, World!""
+  File ""&lt;stdin&gt;"", line 1
+    print ""Hello, World!""
+                        ^
+SyntaxError: Missing parentheses in call to 'print'
+</code></pre>","
+",<p>What does that mean?</p>,"
+"
+"
+",<p>This error message means that you are attempting to use Python 3 to follow an example or run a program that uses the Python 2 <code>print</code> statement:</p>,"
+",<p><s></s></p>,"
+","<pre><code>print ""Hello, World!""
+</code></pre>","
+",<p></p>
+"
+","<p>Unfortunately, the old <a href=""http://xkcd.com/353/"" rel=""noreferrer"">xkcd comic</a> isn't completely up to date anymore.</p>","
+","<p><a href=""http://xkcd.com/353/"" rel=""noreferrer""><img alt=""https://imgs.xkcd.com/comics/python.png"" src=""https://imgs.xkcd.com/comics/python.png"" title=""I wrote 20 short programs in Python yesterday. It was wonderful. Perl, I'm leaving you.""/></a></p>","
+",<p>Since Python 3.0 you have to write:</p>,"
+","<pre><code>print(""Hello, World!"")
+</code></pre>","
+",<p>And someone has still to write that <code>antigravity</code> library :(</p>,"
+"
+"
+","<p>There is a change in syntax from Python 2 to Python 3.
+In Python 2,</p>","
+","<pre><code>print ""Hello, World!"" 
+</code></pre>","
+","<p>will work but in Python 3, use parentheses as </p>","
+","<pre><code>print(""Hello, World!"")
+</code></pre>","
+",<p>This is equivalent syntax to Scala and near to Java.</p>,"
+"
+"
+","<p>Basically, since Python 3.x you need to use <code>print</code> with parenthesis.</p>","
+","<p><strong>Python 2.x</strong>: print ""Lord of the Rings""</p>","
+","<p><strong>Python 3.x</strong>: print(""Lord of the Rings"")</p>","
+","<hr>
+<h1>Explanation</h1>
+<p><strong><code>print</code></strong> was a <strong>statement</strong> in <strong>2.x</strong>, but it's a <strong>function</strong> in <strong>3.x</strong>. Now, there are a number of good reasons for this.</p>
+<ol>
+<li>With function format of Python 3.x, more flexibility comes when printing multiple items with comma separated.</li>
+<li>You can't use argument splatting with a statement. In 3.x if you have a list of items that you want to print with a separator, you can do this:</li>
+</ol>
+<pre><code>&gt;&gt;&gt; items = ['foo', 'bar', 'baz']
+&gt;&gt;&gt; print(*items, sep='+')
+foo+bar+baz
+</code></pre>
+<ol start=""3"">
+<li>You can't override a statement. If you want to change the behavior of print, you can do that when it's a function but not when it's a statement.</li>
+</ol>
+</hr>"
+"
+","<p>If your code should work in both Python 2 and 3, you can achieve this by loading this at the beginning of your program:</p>","
+","<pre><code>from __future__ import print_function   # If code has to work in Python 2 and 3!
+</code></pre>","
+",<p>Then you can print in the Python 3 way:</p>,"
+","<pre><code>print(""python"")
+</code></pre>","
+",<p>If you want to print something without creating a new line - you can do this:</p>,"
+","<pre><code>for number in range(0, 10):
+    print(number, end=', ')
+</code></pre>","
+"
+"
+","<p>In Python 3, you can only print as:</p>","
+","<pre><code>print(""STRING"")
+</code></pre>","
+","<p>But in Python 2, the parentheses are not necessary.</p>","
+"
+"
+","<p>I could also just add that I knew everything about the syntax change between <code>Python2.7</code> and <code>Python3</code>, and my code was correctly written as <code>print(""string"")</code> and even 
+<code>print(f""string"")</code>... </p>","
+",<p>But after some time of debugging I realized that my bash script was calling python like: </p>,"
+","<blockquote>
+<p>python file_name.py</p>
+</blockquote>","
+",<p>which had the effect of calling my python script by default using <code>python2.7</code> which gave the error. So I changed my bash script to:</p>,"
+","<blockquote>
+<p>python3 file_name.py</p>
+</blockquote>","
+",<p>which of coarse uses python3 to run the script which fixed the error.</p>,"
+"
+"
+","<p>Outside of the direct answers here, one should note the other key difference between python 2 and 3. The <a href=""https://wiki.python.org/moin/Python2orPython3"" rel=""nofollow noreferrer"">official python wiki</a> goes into almost all of the major differences and focuses on when you should use either of the versions. <a href=""https://learntocodewith.me/programming/python/python-2-vs-python-3/"" rel=""nofollow noreferrer"">This blog post</a> also does a fine job of explaining the current python universe and the somehow unsolved puzzle of moving to python 3.</p>","
+","<p>As far as I can tell, you are beginning to learn the python language. You should consider the aforementioned articles before you continue down the python 3 route. Not only will you have to change some of your syntax, you will also need to think about which packages will be available to you (an advantage of python 2) and potential optimizations that could be made in your code (an advantage of python 3).</p>","
+"
+"
+","<p><code>print('Hello, World!')</code></p>","
+","<p>You're using python 3, where you need brackets when printing.</p>","
+"
+"
+",<p>So I was getting this error</p>,"
+","<pre><code>from trp import BoundingBox, Document
+File ""C:\Users\Kshitij Agarwal\AppData\Roaming\Python\Python39\site-packages\trp\__init__.py"", line 31
+print ip
+      ^ 
+SyntaxError: Missing parentheses in call to 'print'. Did you mean print(ip)?
+</code></pre>","
+","<p>This is a Python package error, in which Python2 has been used and you are probably running this on Python3.</p>","
+","<p>One solution could be to convert Python2 <code>print something</code> to Python3 <code>print(something)</code> for every line in each file in the package folder, which is not a good idea😅. I mean, you can do it but still there are better ways.</p>","
+","<p>To perform the same task, there is a package named <strong>2to3</strong> in Python which converts Python2 scripts to Python3 scripts. To install it, execute the 👇 command in terminal..</p>","
+","<pre><code>pip install 2to3
+</code></pre>","
+","<p>Then change the directory in terminal to the location where the package files are present, in my case - <strong>C:\Users\Kshitij Agarwal\AppData\Roaming\Python\Python39\site-packages\trp</strong></p>","
+",<p>Now execute the command 👇</p>,"
+","<pre><code>2to3 . -w
+</code></pre>","
+","<p>and <strong>voila</strong>, all the <em>Python2</em> files in that directory will be converted to <em>Python3</em>.</p>","
+",<p><strong>Note</strong>:- The above commands hold true for other operating systems as well. Only Python package path will vary as per the system.</p>,"
+"
+"
+",<p>I want to build a query for sunburnt(solr interface) using class inheritance and therefore adding key - value pairs together. The sunburnt interface takes keyword arguments. How can I transform a dict <code>({'type':'Event'})</code> into keyword arguments <code>(type='Event')</code>?</p>,"
+"
+"
+","<p>Use the <a href=""http://docs.python.org/tutorial/controlflow.html#unpacking-argument-lists"" rel=""noreferrer"">double-star</a> (aka <a href=""https://stackoverflow.com/questions/2322355/proper-name-for-python-operator/2322384#2322384"">double-splat?</a>) operator:</p>","
+","<pre><code>func(**{'type':'Event'})
+</code></pre>","
+",<p>is equivalent to</p>,"
+","<pre><code>func(type='Event')
+</code></pre>","
+"
+"
+",<p><code>**</code> operator would be helpful here. </p>,"
+",<p><code>**</code> operator will unpack the dict elements and thus <code>**{'type':'Event'}</code> would be treated as <code>type='Event'</code></p>,"
+",<p><code>func(**{'type':'Event'})</code> is same as <code>func(type='Event')</code> i.e the dict elements would be converted to the <code>keyword arguments</code>. </p>,"
+",<p>FYI</p>,"
+",<p><code>*</code> will unpack the list elements and they would be treated as <code>positional arguments</code>.</p>,"
+","<p><code>func(*['one', 'two'])</code> is same as <code>func('one', 'two')</code></p>","
+"
+"
+",<p>Here is a complete example showing how to use the <code>**</code> operator to pass values from a dictionary as keyword arguments.</p>,"
+","<pre><code>&gt;&gt;&gt; def f(x=2):
+...     print(x)
+... 
+&gt;&gt;&gt; new_x = {'x': 4}
+&gt;&gt;&gt; f()        #    default value x=2
+2
+&gt;&gt;&gt; f(x=3)     #   explicit value x=3
+3
+&gt;&gt;&gt; f(**new_x) # dictionary value x=4 
+4
+</code></pre>","
+"
+"
+","<div>
+<aside class=""s-notice s-notice__info post-notice js-post-notice mb16"" role=""status"">
+<div class=""d-flex fd-column fw-nowrap"">
+<div class=""d-flex fw-nowrap"">
+<div class=""flex--item wmn0 fl1 lh-lg"">
+<div class=""flex--item fl1 lh-lg"">
+<b>This question already has answers here</b>:
+                        
+                    </div>
+</div>
+</div>
+<div class=""flex--item mb0 mt4"">
+<a dir=""ltr"" href=""/questions/1186789/what-is-the-best-way-to-call-a-script-from-another-script"">What is the best way to call a script from another script?</a>
+<span class=""question-originals-answer-count"">
+                                (15 answers)
+                            </span>
+</div>
+<div class=""flex--item mb0 mt8"">Closed <span class=""relativetime"" title=""2015-02-26 14:05:25Z"">7 years ago</span>.</div>
+</div>
+</aside>
+</div>","
+",<p>I want to run a Python script from another Python script. I want to pass variables like I would using the command line.</p>,"
+","<p>For example, I would run my first script that would iterate through a list of values (0,1,2,3) and pass those to the 2nd script <code>script2.py 0</code> then <code>script2.py 1</code>, etc.</p>","
+","<p>I found <a href=""https://stackoverflow.com/questions/1186789/what-is-the-best-way-to-call-a-python-script-from-another-python-script"">Stack Overflow question 1186789</a> which is a similar question, but ars's answer calls a function, where as I want to run the whole script, not just a function, and balpha's answer calls the script but with no arguments. I changed this to something like the below as a test:</p>","
+","<pre><code>execfile(""script2.py 1"")
+</code></pre>","
+","<p>But it is not accepting variables properly. When I print out the <code>sys.argv</code> in script2.py it is the original command call to first script ""['C:\script1.py'].</p>","
+",<p>I don't really want to change the original script (i.e. script2.py in my example) since I don't own it.</p>,"
+",<p>I figure there must be a way to do this; I am just confused how you do it.</p>,"
+"
+"
+","<p>Try using <a href=""http://docs.python.org/library/os.html#os.system""><code>os.system</code></a>:</p>","
+","<pre><code>os.system(""script2.py 1"")
+</code></pre>","
+",<p><code>execfile</code> is different because it is designed to run a sequence of Python statements in the <em>current</em> execution context. That's why <code>sys.argv</code> didn't change for you.</p>,"
+"
+"
+","<p>This is inherently the wrong thing to do. If you are running a Python script from another Python script, you should communicate through Python instead of through the OS:</p>","
+","<pre><code>import script1
+</code></pre>","
+","<p>In an ideal world, you will be able to call a function inside <code>script1</code> directly:</p>","
+","<pre><code>for i in range(whatever):
+    script1.some_function(i)
+</code></pre>","
+","<p>If necessary, you can hack <code>sys.argv</code>. There's a neat way of doing this using a context manager to ensure that you don't make any permanent changes.</p>","
+","<pre><code>import contextlib
+@contextlib.contextmanager
+def redirect_argv(num):
+    sys._argv = sys.argv[:]
+    sys.argv=[str(num)]
+    yield
+    sys.argv = sys._argv
+
+with redirect_argv(1):
+    print(sys.argv)
+</code></pre>","
+",<p>I think this is preferable to passing all your data to the OS and back; that's just silly.</p>,"
+"
+"
+","<p>Ideally, the Python script you want to run will be set up with code like this near the end:</p>","
+","<pre><code>def main(arg1, arg2, etc):
+    # do whatever the script does
+
+
+if __name__ == ""__main__"":
+    main(sys.argv[1], sys.argv[2], sys.argv[3])
+</code></pre>","
+","<p>In other words, <em>if</em> the module is called from the command line, it parses the command line options and then calls another function, <code>main()</code>, to do the actual work. (The actual arguments will vary, and the parsing may be more involved.)</p>","
+","<p>If you want to call such a script from another Python script, however, you can simply <code>import</code> it and call <code>modulename.main()</code> directly, rather than going through the operating system.</p>","
+","<p><code>os.system</code> will work, but it is the roundabout (read ""slow"") way to do it, as you are starting a whole new Python interpreter process each time for no raisin.</p>","
+"
+"
+",<p>I think the good practice may be something like this; </p>,"
+","<pre><code>import subprocess
+cmd = 'python script.py'
+
+p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+out, err = p.communicate() 
+result = out.split('\n')
+for lin in result:
+    if not lin.startswith('#'):
+        print(lin)
+</code></pre>","
+","<p>according to documentation 
+The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes. This module intends to replace several older modules and functions:</p>","
+","<pre><code>os.system
+os.spawn*
+os.popen*
+popen2.*
+commands.*
+</code></pre>","
+","<p>Use communicate() rather than .stdin.write, .stdout.read or .stderr.read to avoid deadlocks due to any of the other OS pipe buffers filling up and blocking the child process.
+<a href=""https://docs.python.org/2/library/subprocess.html#replacing-os-system"" rel=""noreferrer"">Read Here</a></p>","
+"
+"
+","<p>SubProcess module:<br/>
+<a href=""http://docs.python.org/dev/library/subprocess.html#using-the-subprocess-module"" rel=""noreferrer"">http://docs.python.org/dev/library/subprocess.html#using-the-subprocess-module</a></p>","
+","<pre><code>import subprocess
+subprocess.Popen(""script2.py 1"", shell=True)
+</code></pre>","
+","<p>With this, you can also redirect stdin, stdout, and stderr.</p>","
+"
+"
+","<pre><code>import subprocess
+subprocess.call("" python script2.py 1"", shell=True)
+</code></pre>","
+"
+"
+",<p>I want to perform my own complex operations on financial data in dataframes in a sequential manner.</p>,"
+","<p>For example I am using the following MSFT CSV file taken from <a href=""http://finance.yahoo.com/q/hp?s=MSFT"">Yahoo Finance</a>:</p>","
+","<pre><code>Date,Open,High,Low,Close,Volume,Adj Close
+2011-10-19,27.37,27.47,27.01,27.13,42880000,27.13
+2011-10-18,26.94,27.40,26.80,27.31,52487900,27.31
+2011-10-17,27.11,27.42,26.85,26.98,39433400,26.98
+2011-10-14,27.31,27.50,27.02,27.27,50947700,27.27
+
+....
+</code></pre>","
+",<p>I then do the following:</p>,"
+","<pre><code>#!/usr/bin/env python
+from pandas import *
+
+df = read_csv('table.csv')
+
+for i, row in enumerate(df.values):
+    date = df.index[i]
+    open, high, low, close, adjclose = row
+    #now perform analysis on open/close based on date, etc..
+</code></pre>","
+","<p>Is that the most efficient way? Given the focus on speed in pandas, I would assume there must be some special function to iterate through the  values in a manner that one also retrieves the index (possibly through a generator to be memory efficient)? <code>df.iteritems</code> unfortunately only iterates column by column.</p>","
+"
+"
+",<p>The newest versions of pandas now include a built-in function for iterating over rows. </p>,"
+","<pre><code>for index, row in df.iterrows():
+
+    # do some logic here
+</code></pre>","
+","<p>Or, if you want it faster use <code>itertuples()</code></p>","
+","<p>But, unutbu's suggestion to use numpy functions to avoid iterating over rows will produce the fastest code. </p>","
+"
+"
+","<p>Pandas is based on NumPy arrays.
+The key to speed with NumPy arrays is to perform your operations on the whole array at once, never row-by-row or item-by-item.</p>","
+","<p>For example, if <code>close</code> is a 1-d array, and you want the day-over-day percent change,</p>","
+","<pre><code>pct_change = close[1:]/close[:-1]
+</code></pre>","
+","<p>This computes the entire array of percent changes as one statement, instead of </p>","
+","<pre><code>pct_change = []
+for row in close:
+    pct_change.append(...)
+</code></pre>","
+","<p>So try to avoid the Python loop <code>for i, row in enumerate(...)</code> entirely, and
+think about how to perform your calculations with operations on the entire array (or dataframe) as a whole, rather than row-by-row.</p>","
+"
+"
+","<p>Like what has been mentioned before, pandas object is most efficient when process the whole array at once. However for those who really need to loop through a pandas DataFrame to perform something, like me, I found at least three ways to do it. I have done a short test to see which one of the three is the least time consuming.</p>","
+","<pre><code>t = pd.DataFrame({'a': range(0, 10000), 'b': range(10000, 20000)})
+B = []
+C = []
+A = time.time()
+for i,r in t.iterrows():
+    C.append((r['a'], r['b']))
+B.append(time.time()-A)
+
+C = []
+A = time.time()
+for ir in t.itertuples():
+    C.append((ir[1], ir[2]))    
+B.append(time.time()-A)
+
+C = []
+A = time.time()
+for r in zip(t['a'], t['b']):
+    C.append((r[0], r[1]))
+B.append(time.time()-A)
+
+print B
+</code></pre>","
+",<p>Result:</p>,"
+","<pre><code>[0.5639059543609619, 0.017839908599853516, 0.005645036697387695]
+</code></pre>","
+",<p>This is probably not the best way to measure the time consumption but it's quick for me.</p>,"
+",<p>Here are some pros and cons IMHO:</p>,"
+","<ul>
+<li>.iterrows(): return index and row items in separate variables, but significantly slower</li>
+<li>.itertuples(): faster than .iterrows(), but return index together with row items, ir[0] is the index</li>
+<li>zip: quickest, but no access to index of the row</li>
+</ul>","
+",<h2>EDIT 2020/11/10</h2>,"
+","<p>For what it is worth, here is an updated benchmark with some other alternatives (perf with MacBookPro 2,4 GHz Intel Core i9 8 cores 32 Go 2667 MHz DDR4)</p>","
+","<pre class=""lang-py prettyprint-override""><code>import sys
+import tqdm
+import time
+import pandas as pd
+
+B = []
+t = pd.DataFrame({'a': range(0, 10000), 'b': range(10000, 20000)})
+for _ in tqdm.tqdm(range(10)):
+    C = []
+    A = time.time()
+    for i,r in t.iterrows():
+        C.append((r['a'], r['b']))
+    B.append({""method"": ""iterrows"", ""time"": time.time()-A})
+
+    C = []
+    A = time.time()
+    for ir in t.itertuples():
+        C.append((ir[1], ir[2]))
+    B.append({""method"": ""itertuples"", ""time"": time.time()-A})
+
+    C = []
+    A = time.time()
+    for r in zip(t['a'], t['b']):
+        C.append((r[0], r[1]))
+    B.append({""method"": ""zip"", ""time"": time.time()-A})
+
+    C = []
+    A = time.time()
+    for r in zip(*t.to_dict(""list"").values()):
+        C.append((r[0], r[1]))
+    B.append({""method"": ""zip + to_dict('list')"", ""time"": time.time()-A})
+
+    C = []
+    A = time.time()
+    for r in t.to_dict(""records""):
+        C.append((r[""a""], r[""b""]))
+    B.append({""method"": ""to_dict('records')"", ""time"": time.time()-A})
+
+    A = time.time()
+    t.agg(tuple, axis=1).tolist()
+    B.append({""method"": ""agg"", ""time"": time.time()-A})
+
+    A = time.time()
+    t.apply(tuple, axis=1).tolist()
+    B.append({""method"": ""apply"", ""time"": time.time()-A})
+
+print(f'Python {sys.version} on {sys.platform}')
+print(f""Pandas version {pd.__version__}"")
+print(
+    pd.DataFrame(B).groupby(""method"").agg([""mean"", ""std""]).xs(""time"", axis=1).sort_values(""mean"")
+)
+
+## Output
+
+Python 3.7.9 (default, Oct 13 2020, 10:58:24) 
+[Clang 12.0.0 (clang-1200.0.32.2)] on darwin
+Pandas version 1.1.4
+                           mean       std
+method                                   
+zip + to_dict('list')  0.002353  0.000168
+zip                    0.003381  0.000250
+itertuples             0.007659  0.000728
+to_dict('records')     0.025838  0.001458
+agg                    0.066391  0.007044
+apply                  0.067753  0.006997
+iterrows               0.647215  0.019600
+</code></pre>","
+"
+"
+",<p>You can loop through the rows by transposing and then calling iteritems:</p>,"
+","<pre><code>for date, row in df.T.iteritems():
+   # do some logic here
+</code></pre>","
+","<p>I am not certain about efficiency in that case. To get the best possible performance in an iterative algorithm, you might want to explore writing it in <a href=""http://cython.org"">Cython</a>, so you could do something like:</p>","
+","<pre><code>def my_algo(ndarray[object] dates, ndarray[float64_t] open,
+            ndarray[float64_t] low, ndarray[float64_t] high,
+            ndarray[float64_t] close, ndarray[float64_t] volume):
+    cdef:
+        Py_ssize_t i, n
+        float64_t foo
+    n = len(dates)
+
+    for i from 0 &lt;= i &lt; n:
+        foo = close[i] - open[i] # will be extremely fast
+</code></pre>","
+","<p>I would recommend writing the algorithm in pure Python first, make sure it works and see how fast it is-- if it's not fast enough, convert things to Cython like this with minimal work to get something that's about as fast as hand-coded C/C++.</p>","
+"
+"
+",<p>You have three options:</p>,"
+","<p>By <a href=""https://www.neural-networks.io/en/python/dataframes.php#iterate-over-rows-by-index"" rel=""noreferrer"">index</a> (simplest):</p>","
+","<pre><code>&gt;&gt;&gt; for index in df.index:
+...     print (""df["" + str(index) + ""]['B']="" + str(df['B'][index]))
+</code></pre>","
+","<p>With <a href=""https://www.neural-networks.io/en/python/dataframes.php#iterate-over-rows-with-iterrows"" rel=""noreferrer"">iterrows</a> (most used):</p>","
+","<pre><code>&gt;&gt;&gt; for index, row in df.iterrows():
+...     print (""df["" + str(index) + ""]['B']="" + str(row['B']))
+</code></pre>","
+","<p>With <a href=""https://www.neural-networks.io/en/python/dataframes.php#iterate-over-rows-with-itertuples"" rel=""noreferrer"">itertuples</a> (fastest):</p>","
+","<pre><code>&gt;&gt;&gt; for row in df.itertuples():
+...     print (""df["" + str(row.Index) + ""]['B']="" + str(row.B))
+</code></pre>","
+",<p>Three options display something like:</p>,"
+","<pre><code>df[0]['B']=125
+df[1]['B']=415
+df[2]['B']=23
+df[3]['B']=456
+df[4]['B']=189
+df[5]['B']=456
+df[6]['B']=12
+</code></pre>","
+","<p>Source: <a href=""https://alphons.io/2101/what-is-the-most-efficient-way-to-loop-through-dataframes-with-pandas/"" rel=""noreferrer"">alphons.io</a></p>","
+"
+"
+","<p>I checked out <code>iterrows</code> after noticing <a href=""https://stackoverflow.com/users/475872/nick-crawford"">Nick Crawford's</a> answer, but found that it yields (index, Series) tuples. Not sure which would work best for you, but I ended up using the <code>itertuples</code> method for my problem, which yields (index, row_value1...) tuples.</p>","
+","<p>There's also <code>iterkv</code>, which iterates through (column, series) tuples.</p>","
+"
+"
+","<p>Just as a small addition, you can also do an apply if you have a complex function that you apply to a single column:</p>","
+","<p><a href=""http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.apply.html"">http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.apply.html</a></p>","
+","<pre><code>df[b] = df[a].apply(lambda col: do stuff with col here)
+</code></pre>","
+"
+"
+","<p>As <a href=""https://stackoverflow.com/users/653364/joris"">@joris</a> pointed out, <code>iterrows</code> is much slower than <code>itertuples</code> and <code>itertuples</code> is approximately 100 times fater than <code>iterrows</code>, and I tested speed of both methods in a DataFrame with 5027505 records the result is for <code>iterrows</code>, it is 1200it/s, and  <code>itertuples</code> is 120000it/s.</p>","
+","<p>If you use <code>itertuples</code>, note that every element in the for loop is a namedtuple, so to get the value in each column, you can refer to the following example code</p>","
+","<pre><code>&gt;&gt;&gt; df = pd.DataFrame({'col1': [1, 2], 'col2': [0.1, 0.2]},
+                      index=['a', 'b'])
+&gt;&gt;&gt; df
+   col1  col2
+a     1   0.1
+b     2   0.2
+&gt;&gt;&gt; for row in df.itertuples():
+...     print(row.col1, row.col2)
+...
+1, 0.1
+2, 0.2
+</code></pre>","
+"
+"
+","<p>For sure, the fastest way to iterate over a dataframe is to access the underlying numpy ndarray either via <code>df.values</code> (as you do) or by accessing each column separately <code>df.column_name.values</code>. Since you want to have access to the index too, you can use <code>df.index.values</code> for that.</p>","
+","<pre><code>index = df.index.values
+column_of_interest1 = df.column_name1.values
+...
+column_of_interestk = df.column_namek.values
+
+for i in range(df.shape[0]):
+   index_value = index[i]
+   ...
+   column_value_k = column_of_interest_k[i]
+</code></pre>","
+",<p>Not pythonic? Sure. But fast.</p>,"
+","<p>If you want to squeeze more juice out of the loop you will want to look into <a href=""http://cython.org/"" rel=""noreferrer"">cython</a>. Cython will let you gain huge speedups (think 10x-100x). For maximum performance check <a href=""http://cython.readthedocs.io/en/latest/src/userguide/memoryviews.html"" rel=""noreferrer"">memory views for cython</a>.</p>","
+"
+"
+",<p>Another suggestion would be to combine groupby with vectorized calculations if subsets of the rows shared characteristics which allowed you to do so. </p>,"
+"
+"
+",<p>look at last one</p>,"
+","<pre><code>t = pd.DataFrame({'a': range(0, 10000), 'b': range(10000, 20000)})
+B = []
+C = []
+A = time.time()
+for i,r in t.iterrows():
+    C.append((r['a'], r['b']))
+B.append(round(time.time()-A,5))
+
+C = []
+A = time.time()
+for ir in t.itertuples():
+    C.append((ir[1], ir[2]))    
+B.append(round(time.time()-A,5))
+
+C = []
+A = time.time()
+for r in zip(t['a'], t['b']):
+    C.append((r[0], r[1]))
+B.append(round(time.time()-A,5))
+
+C = []
+A = time.time()
+for r in range(len(t)):
+    C.append((t.loc[r, 'a'], t.loc[r, 'b']))
+B.append(round(time.time()-A,5))
+
+C = []
+A = time.time()
+[C.append((x,y)) for x,y in zip(t['a'], t['b'])]
+B.append(round(time.time()-A,5))
+B
+
+0.46424
+0.00505
+0.00245
+0.09879
+0.00209
+</code></pre>","
+"
+"
+","<p>I believe the most simple and efficient way to loop through DataFrames is using numpy and numba.  In that case, looping can be approximately as fast as vectorized operations in many cases.  If numba is not an option, plain numpy is likely to be the next best option.  As has been noted many times, your default should be vectorization, but this answer merely considers efficient looping, given the decision to loop, for whatever reason.</p>","
+","<p>For a test case, let's use the example from @DSM's answer of calculating a percentage change.  This is a very simple situation and as a practical matter you would not write a loop to calculate it, but as such it provides a reasonable baseline for timing vectorized approaches vs loops.</p>","
+","<p>Let's set up the 4 approaches with a small DataFrame, and we'll time them on a larger dataset below.</p>","
+","<pre><code>import pandas as pd
+import numpy as np
+import numba as nb
+
+df = pd.DataFrame( { 'close':[100,105,95,105] } )
+
+pandas_vectorized = df.close.pct_change()[1:]
+
+x = df.close.to_numpy()
+numpy_vectorized = ( x[1:] - x[:-1] ) / x[:-1]
+        
+def test_numpy(x):
+    pct_chng = np.zeros(len(x))
+    for i in range(1,len(x)):
+        pct_chng[i] = ( x[i] - x[i-1] ) / x[i-1]
+    return pct_chng
+
+numpy_loop = test_numpy(df.close.to_numpy())[1:]
+
+@nb.jit(nopython=True)
+def test_numba(x):
+    pct_chng = np.zeros(len(x))
+    for i in range(1,len(x)):
+        pct_chng[i] = ( x[i] - x[i-1] ) / x[i-1]
+    return pct_chng
+    
+numba_loop = test_numba(df.close.to_numpy())[1:]
+</code></pre>","
+","<p>And here are the timings on a DataFrame with 100,000 rows (timings performed with Jupyter's <code>%timeit</code> function, collapsed to a summary table for readability):</p>","
+","<pre><code>pandas/vectorized   1,130 micro-seconds
+numpy/vectorized      382 micro-seconds
+numpy/looped       72,800 micro-seconds
+numba/looped          455 micro-seconds
+</code></pre>","
+","<p>Summary:  for simple cases, like this one, you would go with (vectorized) pandas for simplicity and readability, and (vectorized) numpy for speed.  If you really need to use a loop, do it in numpy.  If numba is available, combine it with numpy for additional speed.  In this case, numpy + numba is almost as fast as vectorized numpy code.</p>","
+",<p>Other details:</p>,"
+","<ul>
+<li>Not shown are various options like iterrows, itertuples, etc. which are orders of magnitude slower and really should never be used.</li>
+<li>The timings here are fairly typical: numpy is faster than pandas and vectorized is faster than loops, but adding numba to numpy will often speed numpy up dramatically.</li>
+<li>Everything except the pandas option requires converting the DataFrame column to a numpy array.  That conversion is included in the timings.</li>
+<li>The time to define/compile the numpy/numba functions was not included in the timings, but would generally be a negligible component of the timing for any large dataframe.</li>
+</ul>","
+"

@@ -1,0 +1,7 @@
+uvicorn==0.17.6
+fastapi==0.75.0
+numpy
+pandas==1.3.2
+elasticsearch-dsl
+nltk
+elasticsearch

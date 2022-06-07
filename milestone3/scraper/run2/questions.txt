@@ -1,0 +1,126 @@
+Reading the changes in Python 3.1, I found something... unexpected:
+What is the difference between old style and new style classes in Python?  When should I use one or the other?
+Should I put the shebang in my Python scripts? In what form?
+How can I print the error/exception in my except: block?
+I need to get the location of the home directory of the current logged-on user. Currently, I've been using the following on Linux:
+The community reviewed whether to reopen this question last month and left it closed:
+Let’s say I have the following Pandas dataframe:
+I wonder what is better to do:
+How does one write a unittest that fails only if a function doesn't throw an expected exception?
+How do I import other files in Python?
+I am looking for minimum and maximum values for integers in python. For eg., in Java, we have Integer.MIN_VALUE and Integer.MAX_VALUE. Is there something like this in python?
+
+Want to improve this question? Update the question so it's on-topic for Stack Overflow.
+                
+What is the purpose of __slots__ in Python — especially with respect to when I would want to use it, and when not?
+Does anyone know how to do convert from a string to a boolean in Python? I found this link. But it doesn't look like a proper way to do it.  I.e. using built-in functionality, etc.
+I happened to find myself having a basic filtering need: I have a list and I have to filter it by an attribute of the items.
+I am trying to print an integer in Python 2.6.1 with commas as thousands separators. For example, I want to show the number 1234567 as 1,234,567. How would I go about doing this? I have seen many examples on Google, but I am looking for the simplest practical way.
+I have a list of dictionaries like this:
+I notice that a pre-increment/decrement operator can be applied on a variable (like ++count). It compiles, but it does not actually change the value of the variable!
+Here's my code:
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+I work with Series and DataFrames on the terminal a lot. The default __repr__ for a Series returns a reduced sample, with some head and tail values, but the rest missing.
+I'm helping a veterinary clinic measuring pressure under a dogs paw. I use Python for my data analysis and now I'm stuck trying to divide the paws into (anatomical) subregions.
+A tweet reads: 
+I have the list [0, 1, 2, 3, 4] I'd like to make it into [1, 2, 3, 4]. How do I go about this? 
+In Python, how do I get a function name as a string, without calling the function?
+Using pip, is it possible to figure out which version of a package is currently installed?
+I know pip is a package manager for python packages. However, I saw the installation on IPython's website use conda to install IPython.
+I am trying to understand the advantages of multiprocessing over threading. I know that multiprocessing gets around the Global Interpreter Lock, but what other advantages are there, and can threading not do the same thing?
+How do I create a GUID in Python that is platform independent? I hear there is a method using ActivePython on Windows but it's Windows only because it uses COM. Is there a method using plain Python?
+I'm iterating over a list of tuples in Python, and am attempting to remove them if they meet certain criteria. 
+Given a path such as "mydir/myfile.txt", how do I find the file's absolute path relative to the current working directory in Python? E.g. on Windows, I might end up with:
+Coming from a C# background the naming convention for variables and method names are usually either camelCase or PascalCase:
+I'm building a Python application and don't want to force my clients to install Python and modules.
+Today, I came across the dict method get which, given a key in the dictionary, returns the associated value.
+How can I write a try/except block that catches all exceptions?
+I've always laughed to myself when I've looked back at my VB6 days and thought, "What modern language doesn't allow incrementing with double plus signs?":
+I have a dataframe in pandas which I would like to write to a CSV file.
+What is the related_name argument useful for on ManyToManyField and ForeignKey fields? For example, given the following code, what is the effect of related_name='maps'?
+How can I use ORDER BY descending in a SQLAlchemy query like the following?
+I have a file called tester.py, located on /project.
+Python is installed in a local directory.  
+What the difference is between flush() and commit() in SQLAlchemy?
+How do I learn where the source file for a given Python module is installed? Is the method different on Windows than on Linux?
+Is there a performance or code maintenance issue with using assert as part of the standard code instead of using it just for debugging purposes?
+In C++, I can iterate over an std::string like this:
+[] = empty list
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+In Python, I have an ndarray y
+that is printed as array([0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1])
+Sometimes I come across code such as this:
+I'm trying to use NetworkX to read a Shapefile and use the function write_shp() to generate the Shapefiles that will contain the nodes and edges, but when I try to run the code it gives me the following error:
+__del__(self) above fails with an AttributeError exception.  I understand Python doesn't guarantee the existence of "global variables" (member data in this context?) when __del__() is invoked.  If that is the case and this is the reason for the exception, how do I make sure the object destructs properly?
+How can I print the version number of the current Python installation from my script?
+
+Want to improve this question? Update the question so it can be answered with facts and citations by editing this post.
+                
+What is the most efficient way to map a function over a numpy array? The way I've been doing it in my current project is as follows:
+I activated a virtualenv which has pip installed. I did
+I'm trying to get the name of the Python script that is currently running.
+What is the proper way to use **kwargs in Python when it comes to default values?
+Suppose I have a Python function as defined below:
+I have a Python pandas DataFrame rpt:
+Here's my code:
+I'm trying to use pandas to manipulate a .csv file but I get this error:
+I've seen a lot of posts about stack trace and exceptions in Python. But haven't found what I need.
+Is there a mechanism to comment out large blocks of Python code?
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+I am creating a program that reads a file and if the first line of the file is not blank, it reads the next four lines.  Calculations are performed on those lines and then the next line is read.  If that line is not empty it continues.  However, I am getting this error:
+I know the obvious answer is to use virtualenv and virtualenvwrapper, but for various reasons I can't/don't want to do that.
+How do you convert a Unicode string (containing extra characters like £ $, etc.) into a Python string?
+What is the proper indentation for Python multiline strings within a function?
+When the user accesses this URL running on my flask app, I want the web service to be able to handle the parameters specified after the question mark:
+I've tried to find a comprehensive guide on whether it is best to use import module or from module import. I've just started with Python and I'm trying to start off with best practices in mind.
+I'm getting a datetime string in a format like "2009-05-28T16:15:00" (this is ISO 8601, I believe). One hackish option seems to be to parse the string using time.strptime and passing the first six elements of the tuple into the datetime constructor, like:
+How do I find the full path of the currently running Python interpreter from within the currently executing Python script?
+What is the most basic definition of "iterable", "iterator" and "iteration" in Python?
+Which types of objects fall into the domain of "subscriptable"?
+I'm trying to convert a server side Ajax response script into a Django HttpResponse, but apparently it's not working.
+From time to time in Python, I see the block:
+I've been looking at dynamic evaluation of Python code, and come across the eval() and compile() functions, and the exec statement.
+I wrote a Python program that acts on a large input file to create a few million objects representing triangles.  The algorithm is:
+I am curious as to why df[2] is not supported, while df.ix[2] and df[2:3] both work. 
+Is there a way to get all attributes/methods/fields/etc. of an object in Python?
+I've been testing out Selenium with Chromedriver and I noticed that some pages can detect that you're using Selenium even though there's no automation at all. Even when I'm just browsing manually just using Chrome through Selenium and Xephyr I often get a page saying that suspicious activity was detected. I've checked my user agent, and my browser fingerprint, and they are all exactly identical to the normal Chrome browser.
+I want to apply my custom function (it uses an if-else ladder) to these six columns (ERI_Hispanic, ERI_AmerInd_AKNatv, ERI_Asian, ERI_Black_Afr.Amer, ERI_HI_PacIsl, ERI_White) in each row of my dataframe.
+I'm deploying a Django app to a dev server and am hitting this error when I run pip install -r requirements.txt:
+The function foo below returns a string 'foo'. How can I get the value 'foo' which is returned from the thread's target?
+How can I get a list of the values in a dict in Python?
+I've seen a lot of questions that ask about pivot tables.  Even if they don't know that they are asking about pivot tables, they usually are.  It is virtually impossible to write a canonical question and answer that encompasses all aspects of pivoting...
+I have issue after installing the matplotlib package unable to import matplotlib.pyplot as plt. Any suggestion will be greatly appreciate.  
+Is it possible to declare more than one variable using a with statement in Python?
+I have a pandas DataFrame and I want to delete rows from it where the length of the string in a particular column is greater than 2.
+While reading up the documentation for dict.copy(), it says that it makes a shallow copy of the dictionary. Same goes for the book I am following (Beazley's Python Reference), which says: 
+In Python, when should you use lists and when tuples?
+I need a way to tell what mode the shell is in from within the shell.
+I have a list of strings like this:
+I am trying to understand when to use __getattr__ or __getattribute__.  The documentation mentions __getattribute__ applies to new-style classes. What are new-style classes?  
+I want to change the key of an entry in a Python dictionary.
+I would like to know how to check whether a string starts with "hello" in Python.
+Whenever I am trying to install any package using pip, I am getting this import error:
+What exactly are the Python scoping rules?
+I have a try...except block in my code and When an exception is throw. I really just want to continue with the code because in that case, everything is still able to run just fine. The problem is if you leave the except: block empty or with a #do nothing, it gives you a syntax error. I can't use continue because its not in a loop. Is there a keyword i can use that tells the code to just keep going?
+I have a list of tuples that looks something like this:
+How would I create a list with values between two values I put in? 
+For example, the following list is generated for values from 11 to 16:
+I have a dictionary which looks like this: di = {1: "A", 2: "B"}
+I'm using Python's logging module to log some debug strings to a file which works pretty well. Now in addition, I'd like to use this module to also print the strings out to stdout. How do I do this? In order to log my strings to a file I use following code:
+Is there a way to expand a Python tuple into a function - as actual parameters?
+How to fix it?
+I have a parameter file of the form:
+This "underscoring" seems to occur a lot, and I was wondering if this was a requirement in the Python language, or merely a matter of convention?
+I need to print some stuff only when a boolean variable is set to True. So, after looking at this, I tried with a simple example:
+I want to plot a graph with one logarithmic axis using matplotlib. 
+When writing custom classes it is often important to allow equivalence by means of the == and != operators. In Python, this is made possible by implementing the __eq__ and __ne__ special methods, respectively. The easiest way I've found to do this is the following method:
+Let's say I have two lists, l1 and l2.  I want to perform l1 - l2, which returns all elements of l1 not in l2.
+I have a set like this:
+Is it possible to read binary MATLAB .mat files in Python?
+Why are there no ++ and -- operators in Python?

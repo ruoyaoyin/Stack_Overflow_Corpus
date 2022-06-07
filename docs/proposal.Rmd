@@ -1,0 +1,85 @@
+---
+title: "proposal"
+author: "Ahsan Ghani"
+date: "14/02/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Note to Students
+
+This proposal encompasses the following:
+
+1. idea
+2. idea
+3. idea
+4. idea
+
+# Preliminaries
+
+```{r setup, echo=FALSE, cache=FALSE}
+## recommended libraries
+library(knitr)
+library(rmdformats)
+## Global options
+options(max.print="100")
+opts_chunk$set(comment=NA)
+opts_knit$set(width=75)
+```
+
+## My R Packages
+
+```{r load_packages_here, message = FALSE}
+library(janitor)
+library(magrittr)
+library(naniar)
+library(tidyverse)
+```
+
+## Data Ingest
+
+notes about the dataset.
+
+The code below actually loads in the data. 
+
+```{r read_in_data_here, message = FALSE}
+data_url <- "h"
+chr_2019_raw <- read_csv(data_url, skip = 1, guess_max = 4000)
+```
+
+# Preprocessing
+
+## ETL
+
+
+## EDA
+
+
+### Final Dataframes
+
+
+## Creating Binary Categorical Variables
+
+
+# Code Repository
+
+Variable | Description
+--------- | ------------------------------------------------
+x | x is x
+y | y is y
+z | z is z
+
+## Proposal Requirement 1 
+
+## Proposal Requirement 2
+
+## Proposal Requirement 3
+
+## Proposal Requirement 4
+
+## Proposal Requirement 5
+
+# Analyses

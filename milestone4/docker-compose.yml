@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  frontend:
+    image: mahsanghani/523-stack-frontend
+    pull_policy: always
+    container_name: frontend
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+
+  backend:
+    image: mahsanghani/523-stack-backend
+    pull_policy: always
+    container_name: backend
+    ports:
+      - 9999:9999
+
+  elasticsearch:
+    image: elasticsearch:7.16.3
+    container_name: elasticsearch
+    environment:
+       - discovery.type=single-node
+    ports: 
+       - 9200:9200
+    volumes:
+       - esdata:/usr/share/elasticsearch/data
+
+volumes:
+  esdata:
+    driver: local

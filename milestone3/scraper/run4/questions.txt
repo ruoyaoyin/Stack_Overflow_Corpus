@@ -1,0 +1,299 @@
+I'm using Python's logging module to log some debug strings to a file which works pretty well. Now in addition, I'd like to use this module to also print the strings out to stdout. How do I do this? In order to log my strings to a file I use following code:
+Is there a way to expand a Python tuple into a function - as actual parameters?
+How to fix it?
+I have a parameter file of the form:
+This "underscoring" seems to occur a lot, and I was wondering if this was a requirement in the Python language, or merely a matter of convention?
+I need to print some stuff only when a boolean variable is set to True. So, after looking at this, I tried with a simple example:
+I want to plot a graph with one logarithmic axis using matplotlib. 
+When writing custom classes it is often important to allow equivalence by means of the == and != operators. In Python, this is made possible by implementing the __eq__ and __ne__ special methods, respectively. The easiest way I've found to do this is the following method:
+Let's say I have two lists, l1 and l2.  I want to perform l1 - l2, which returns all elements of l1 not in l2.
+I have a set like this:
+Is it possible to read binary MATLAB .mat files in Python?
+Why are there no ++ and -- operators in Python?
+How to make pytest print traceback, so I would see where in the whatever function an exception was raised?
+Consider three functions:
+It seems there are already quite some questions here about relative import in python 3, but after going through many of them I still didn't find the answer for my issue. 
+so here is the question. 
+How do I tell the time difference in minutes between two datetime objects?
+If I do this:
+I use python to create my project settings setup, but I need help getting the command line arguments.
+How to check whether a pandas DataFrame is empty? In my case I want to print some message in terminal if the DataFrame is empty. 
+I saw this in someone's code:
+PEP 8 states:
+How do I accomplish variable variables in Python?
+I came across the Python with statement for the first time today.  I've been using Python lightly for several months and didn't even know of its existence!  Given its somewhat obscure status, I thought it would be worth asking:
+I have the following string: "aaaabbbb"
+What will happen if two modules import each other?
+In Python, there are two similarly-named functions, exit() and sys.exit(). What's the difference and when should I use one over the other?
+When should you use generator expressions and when should you use list comprehensions in Python?
+I saw this in someone's code. What does it mean?
+I'm running into a weird error when trying to install Django on my computer.
+I'm trying to plot a figure without tickmarks or numbers on either of the axes (I use axes in the traditional sense, not the matplotlib nomenclature!). An issue I have come across is where matplotlib adjusts the x(y)ticklabels by subtracting a value N, then adds N at the end of the axis.
+I have this code:
+I would like to make a deep copy of a dict in python. Unfortunately the .deepcopy() method doesn't exist for the dict. How do I do that?
+If I have a function like this:
+Is there a way to check if a column exists in a Pandas DataFrame?
+I want to remove a certain environment created with conda. How can I achieve that? Let's say I have an active testenv environment. I tried, by following documentation, with:
+What do these python file extensions mean?
+I would like to increase the width of the ipython notebook in my browser. I have a high-resolution screen, and I would like to expand the cell width/size to make use of this extra space.
+How can I check if a Python object is a string (either regular or Unicode)?
+I have two existing dictionaries, and I wish to 'append' one of them to the other. By that I mean that the key,values of the other dictionary should be made into the first dictionary. For example:
+When debugging in PHP, I frequently find it useful to simply stick a var_dump() in my code to show me what a variable is, what its value is, and the same for anything that it contains.
+Given a datetime.time value in Python, is there a standard way to add an integer number of seconds to it, so that 11:34:59 + 3 = 11:35:02, for example?
+I'm a little bit confused with JSON in Python.
+To me, it seems like a dictionary, and for that reason
+I'm trying to do that:
+In all other languages I've worked with the super constructor is invoked implicitly. How does one invoke it in Python? I would expect super(self) but this doesn't work.
+Are there situations in which sys.stdout.write() is preferable to print? 
+I'm trying to download and save an image from the web using python's requests module.
+I am trying to install a Python package from a private GitHub repository. For a public repository, I can issue the following command which works fine:
+Why or why not?
+In Python remove() will remove the first occurrence of value in a list.
+Here's the Python code to run an arbitrary command returning its stdout data, or raise an exception on non-zero exit codes:
+For example, I have a string like this(return value of subprocess.check_output):
+
+Want to improve this question? Update the question so it's on-topic for Stack Overflow.
+                
+I'm trying to port a shell script to the much more readable python version. The original shell script starts several processes (utilities, monitors, etc.) in the background with "&". How can I achieve the same effect in python? I'd like these processes not to die when the python scripts complete. I am sure it's related to the concept of a daemon somehow, but I couldn't find how to do this easily.
+What's the "Bad magic number" ImportError in python, and how do I fix it?
+I'm thinking about putting the virtualenv for a Django web app I am making inside my git repository for the app. It seems like an easy way to keep deploy's simple and easy. Is there any reason why I shouldn't do this?
+Why is cls sometimes used instead of self as an argument in Python classes?
+I'm using the python requests module to send a RESTful GET to a server, for which I get a response in JSON. The JSON response is basically just a list of lists.
+I need to join a list of items.  Many  of the items in the list are integer values returned  from a function;  i.e.,
+I'm building a simple helper script for work that will copy a couple of template files in our code base to the current directory. I don't, however, have the absolute path to the directory where the templates are stored. I do have a relative path from the script but when I call the script it treats that as a path relative to the current working directory. Is there a way to specify that this relative url is from the location of the script instead?
+I have not seen clear examples with use-cases for Pool.apply, Pool.apply_async and Pool.map. I am mainly using Pool.map; what are the advantages of others?
+The above outputs on my Terminal. I am on Mac OS 10.7.x. I have Python 2.7.1, and followed this tutorial to get Beautiful Soup and lxml, which both installed successfully and work with a separate test file located here. In the Python script that causes this error, I have included this line:
+    from pageCrawler import comparePages
+And in the pageCrawler file I have included the following two lines:
+    from bs4 import BeautifulSoup
+from urllib2 import urlopen
+I am using
+I know that I can use something like string[3:4] to get a substring in Python, but what does the 3 mean in somesequence[::3]?
+Is there any other way to delete an item in a dictionary only if the given key exists, other than:
+How do I get the index column name in python pandas?  Here's an example dataframe:
+What's the cleanest way to test if a dictionary contains a key?
+I have a scatter plot graph with a bunch of random x, y coordinates. Currently the Y-Axis starts at 0 and goes up to the max value. I would like the Y-Axis to start at the max value and go up to 0.
+I have a small python project that has the following structure - 
+Does * have a special meaning in Python as it does in C? I saw a function like this in the Python Cookbook:
+filter, map, and reduce work perfectly in Python 2. Here is an example:
+How do I get user's IP in django?
+I want to append a newline to my string every time I call file.write(). What's the easiest way to do this in Python?
+I have two simple one-dimensional arrays in NumPy. I should be able to concatenate them using numpy.concatenate. But I get this error for the code below:
+I'm currently working on a computation in python shell. What I want to have is Matlab style listout where you can see all the variables that have been defined up to a point (so I know which names I've used, their values and such).
+I am trying to get my program to print out "banana" from the dictionary. What would be the simplest way to do this?
+actual output: [1,3,5,6]
+expected output: [1,3,5]
+I have two Series s1 and s2 with the same (non-consecutive) indices. How do I combine s1 and s2 to being two columns in a DataFrame and keep one of the indices as a third column?
+I am learning Python and creating a database connection.
+While trying to add to the DB, I am thinking of creating tuples out of information and then add them to the DB. 
+I am dealing with dates in Python and I need to convert them to UTC timestamps to be used
+inside Javascript. The following code does not work:
+I have a loop starting with for i in range(0, 100). Normally it runs correctly, but sometimes it fails due to network conditions. Currently I have it set so that on failure, it will continue in the except clause (continue on to the next number for i).
+I'm trying to read a .csv file into Python (Spyder) but I keep getting an error. My code:
+I am opening a file which has 100,000 URL's.  I need to send an HTTP request to each URL and print the status code. I am using Python 2.6, and so far looked at the many confusing ways Python implements threading/concurrency.  I have even looked at the python concurrence library, but cannot figure out how to write this program correctly.  Has anyone come across a similar problem?  I guess generally I need to know how to perform thousands of tasks in Python as fast as possible - I suppose that means 'concurrently'.
+To my shame, I can't figure out how to handle exception for python 'with' statement. If I have a code:
+I have a Python function which takes several arguments. Some of these arguments could be omitted in some scenarios.
+What are the differences between shell languages like bash, zsh, fish and the scripting languages above that makes them more suitable for the shell?
+Now that it's clear what a metaclass is, there is an associated concept that I use all the time without knowing what it really means. 
+Why doesn't list have a safe "get" method like dictionary?
+Say I have a Python function that returns multiple values in a tuple:
+I want to loop over the contents of a text file and do a search and replace on some lines and write the result back to the file. I could first load the whole file in memory and then write it back, but that probably is not the best way to do it.
+What is the Pythonic approach to achieve the following?
+I have a very big file 4GB and when I try to read it my computer hangs.
+So I want to read it piece by piece and after processing each piece store the processed piece into another file and read next piece.
+I'm new to Python, so this is probably a simple scoping question. The following code in a Python file (module) is confusing me slightly:
+I have a list of sets:
+I've never used SOAP before and I'm sort of new to Python.  I'm doing this to get myself acquainted with both technologies.  I've installed SOAPlib and I've tried to read their Client documentation, but I don't understand it too well.  Is there anything else I can look into which is more suited for being a SOAP Client library for Python?
+A colleague is looking to generate UML class diagrams from heaps of Python source code. 
+He's primarily interested in the inheritance relationships, and mildly interested in compositional relationships, and doesn't care much about class attributes that are just Python primitives.
+I have this code which calculates the distance between two coordinates. The two functions are both within the same class.
+The following use of super() raises a TypeError: why?
+I am calling different processes with the subprocess module. However, I have a question.
+I'm wondering if there's any difference between the code fragment
+I need to know if a variable in Python is a string or a dict.  Is there anything wrong with the following code?
+I have the below db model:
+What does for row_number, row in enumerate(cursor): do in Python?
+Is there any significant difference between the two python keywords continue and pass like in the examples
+I can't get past the error:
+Just opened a file with Sublime Text (with Sublime Linter) and noticed a PEP8 formatting error that I'd never seen before. Here's the text:
+I'm trying to disable warning C0321 ("more than one statement on a single line" -- I often put if statements with short single-line results on the same line), in Pylint 0.21.1 (if it matters: astng 0.20.1, common 0.50.3, and Python 2.6.6 (r266:84292, Sep 15 2010, 16:22:56)).
+How can I install the MySQLdb module for Python using pip?
+I'm trying to do this query in sqlalchemy
+What is the recommended way of handling settings for local development and the production server? Some of them (like constants, etc) can be changed/accessed in both, but some of them (like paths to static files) need to remain different, and hence should not be overwritten every time the new code is deployed.
+In my case, I'm using the requests library to call PayPal's API over HTTPS. Unfortunately, I'm getting an error from PayPal, and PayPal support cannot figure out what the error is or what's causing it. They want me to "Please provide the entire request, headers included".
+I would like to know how to simply reverse the color order of a given colormap in order to use it with plot_surface.
+If I've got a multi-level column index:
+In R when you need to retrieve a column index based on the name of the column you could do
+I am using PyCharm on Windows and want to change the settings to limit the maximum line length to 79 characters, as opposed to the default limit of 120 characters.
+Believe it or not, after profiling my current code, the repetitive operation of numpy array reversion ate a giant chunk of the running time. What I have right now is the common view-based method:
+I have a Dataframe, df, with the following column:
+I am using this data frame:
+Tried to perform REST GET through python requests with the following code and I got error.
+In Python, is there a portable and simple way to test if an executable program exists?
+The docs show how to apply multiple functions on a groupby object at a time using a dict with the output column names as the keys:
+In our team, we define most test cases like this:
+I've got list of objects. I want to find one (first or whatever) object in this list that has attribute (or method result - whatever) equal to value.
+How can I read in a .csv file (with no headers) and when I only want a subset of the columns (say 4th and 7th out of a total of 20 columns), using pandas? I cannot seem to be able to do usecols
+I use pandas.to_datetime to parse the dates in my data. Pandas by default represents the dates with datetime64[ns] even though the dates are all daily only.
+I wonder whether there is an elegant/clever way to convert the dates to datetime.date or datetime64[D] so that, when I write the data to CSV, the dates are not appended with 00:00:00. I know I can convert the type manually element-by-element:
+What is the difference between ndarray and array in Numpy? And where can I find the implementations in the numpy source code?
+I am trying to use networkx with Python. When I run this program it get this error. Is there anything missing?
+I'm parsing some HTML with Beautiful Soup 3, but it contains HTML entities which Beautiful Soup 3 doesn't automatically decode for me:
+I know I should avoid using global variables in the first place due to confusion like this, but if I were to use them, is the following a valid way to go about using them? (I am trying to call the global copy of a variable created in a separate function.)
+Apply function to every item of iterable and return a list of the results. If additional iterable arguments are passed, function must take that many arguments and is applied to the items from all iterables in parallel. 
+I'm basically looking for a python version of Combination of List<List<int>>
+Is it possible? When installing pip, install the python packages inside my $HOME folder. (for example, I want to install mercurial, using pip, but inside $HOME instead of /usr/local)
+I'm building a web application that will is going to manipulate (pad, mix, merge etc) sound files and I've found that sox does exactly what I want. Sox is a linux command line program and I'm feeling a little uncomfortable with having the python web app starting new sox processes on my server on a per request basis. 
+I need to add two subplots to a figure. One subplot needs to be about three times as wide as the second (same height). I accomplished this using GridSpec and the colspan argument but I would like to do this using figure so I can save to PDF. I can adjust the first figure using the figsize argument in the constructor, but how do I change the size of the second plot?
+My project is currently receiving a JSON message in python which I need to get bits of information out of. For the purposes of this, let's set it to some simple JSON in a string:
+I have spent plenty of time as far as I am newbie in Python.
+How could I ever decode such a URL:
+In the book that I am reading on Python, it keeps using the code eval(input('blah')) 
+I'm trying out Python's type annotations with abstract base classes to write some interfaces. Is there a way to annotate the possible types of *args and **kwargs?
+I am trying to import Tkinter. However, I get an error stating that Tkinter has not been installed:
+I know how to generate a random number within a range in Python.
+I'm using python3.3 and I'm having a cryptic error when trying to pickle a simple dictionary. 
+I want to display:
+Is there a way in python to programmatically determine the width of the console? I mean the number of characters that fits in one line without wrapping, not the pixel width of the window.
+I have been searching and tried various alternatives without success and spent several days on it now - driving me mad.
+I load some machine learning data from a CSV file. The first 2 columns are observations and the remaining columns are features.
+I want to find out my Python installation path on Windows. For example:
+I am working with a library which returns a byte string and I need to convert this to a string. 
+Run the following code from a directory that contains a directory named bar (containing one or more files) and a directory named baz (also containing one or more files).  Make sure there is not a directory named foo.
+I have a series of images that I want to create a video from.  Ideally I could specify a frame duration for each frame but a fixed frame rate would be fine too.  I'm doing this in wxPython, so I can render to a wxDC or I can save the images to files, like PNG.  Is there a Python library that will allow me to create either a video (AVI, MPG, etc) or an animated GIF from these frames?
+I'm new to Python and Flask and I'm trying to do the equivalent of Response.redirect as in C# - ie: redirect to a specific URL - how do I go about this?
+Can I insert a column at a specific column index in pandas? 
+For example I have simple DF:
+I'd like to create a file with path x using python. I've been using os.system(y) where y = 'touch %s' % (x). I've looked for a non-directory version of os.mkdir, but I haven't been able to find anything. Is there a tool like this to create a file without opening it, or using system or popen/subprocess?
+I can't understand why Python doesn't have a sign function. It has an abs builtin (which I consider sign's sister), but no sign.
+How can I see what's inside a bucket in S3 with boto3? (i.e. do an "ls")?
+PIL does support JPEG in my system.
+When I try
+I've spent entirely too long researching how to get two subplots to share the same y-axis with a single colorbar shared between the two in Matplotlib. 
+The above code generates a file, test.csv, with an extra \r at each row, like so:
+I have a function called by the main program:
+I've recently become interested in algorithms and have begun exploring them by writing a naive implementation and then optimizing it in various ways.
+Say I have a function:
+I have a DataFrame with four columns. I want to convert this DataFrame to a python dictionary. I want the elements of first column be keys and the elements of other columns in same row be values. 
+I would like to know how can I set a variable with another variable in jinja. I will explain, I have got a submenu and I would like show which link is active. I tried this:
+I have a pandas dataframe in which one column of text strings contains comma-separated values. I want to split each CSV field and create a new row per entry (assume that CSV are clean and need only be split on ','). For example, a should become b:
+I have a script reading in a csv file with very huge fields:
+Given a dictionary { k1: v1, k2: v2 ... } I want to get { k1: f(v1), k2: f(v2) ... } provided I pass a function f.
+In the Anaconda repository, there are two types of installers:
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+I am sketching the architecture for a set of programs that share various interrelated objects stored in a database. I want one of the programs to act as a service which provides a higher level interface for operations on these objects, and the other programs to access the objects through that service.
+I need to choose some elements from the given list, knowing their index. Let say I would like to create a new list, which contains element with index 1, 2, 5, from given list [-2, 1, 5, 3, 8, 5, 6]. What I did is:
+Recently I started using Python3 and it's lack of xrange hurts.
+I have a Decimal('3.9') as part of an object, and wish to encode this to a JSON string which should look like {'x': 3.9}. I don't care about precision on the client side, so a float is fine.
+Here is my code,
+Is there a way to open a file for both reading and writing?
+What do I have to do in Python to figure out which encoding a string has?
+I want to call a C library from a Python application. I don't want to wrap the whole API, only the functions and datatypes that are relevant to my case. As I see it, I have three choices:
+I have an integer value x, and I need to check if it is between a start and end values, so I write the following statements:
+I am new to Jupyter Notebook, what is the key difference between the Jupyter Notebook and JupyterLab, suggest me to choose the best one, which should be used in future.
+I have a Flask server running through port 5000, and it's fine. I can access it at http://example.com:5000
+I have a large spreadsheet file (.xlsx) that I'm processing using python pandas. It happens that I need data from two tabs (sheets) in that large file. One of the tabs has a ton of data and the other is just a few square cells.
+I am looking over this website but just can't seem to figure out how to do this as it's not working. I need to check if the current site user is logged in (authenticated), and am trying:
+The following code gives the error UnboundLocalError: local variable 'Var1' referenced before assignment:
+When I try to install the Cryptography package for Python through either pip install cryptography or by downloading the package from their site and running python setup.py, I get the following error:
+I have an existing dataframe which I need to add an additional column to which will contain the same value for every row.
+Given the Python function:
+I am using pyplot. I have 4 subplots. How to set a single, main title above all the subplots? title() sets it above the last subplot.
+Is there a way of reading one single character from the user input? For instance, they press one key at the terminal and it is returned (sort of like getch()). I know there's a function in Windows for it, but I'd like something that is cross-platform.
+Suppose I have a function:
+I am new to Django and pretty new to Ajax. I am working on a project where I need to integrate the two. I believe that I understand the principles behind them both, but have not found a good explanation of the two together. 
+I've come across links that say Python is a strongly typed language.
+
+Want to improve this question? Update the question so it can be answered with facts and citations by editing this post.
+                
+I have a dataframe with ~300K rows and ~40 columns.
+I want to find out if any rows contain null values - and put these 'null'-rows into a separate dataframe so that I could explore them easily.
+I've seen there are actually two (maybe more) ways to concatenate lists in Python:
+One way is to use the extend() method:
+From pip install --help:
+I have a pandas Series object containing boolean values. How can I get a series containing the logical NOT of each value?
+Python works on multiple platforms and can be used for desktop and web applications, thus I conclude that there is some way to compile it into an executable for Mac, Windows and Linux.
+I am trying to find a simple way of getting a count of the number of elements in a list:
+I am having trouble with some of pandas functionalities. How do I check what is my installation version?
+I want to use input from a user as a regex pattern for a search over some text.  It works, but how I can handle cases where user puts characters that have meaning in regex?
+I am using Python-2.6 CGI scripts but found this error in server log while doing json.dumps(),
+I am using selenium with python and have downloaded the chromedriver for my windows computer from this site: http://chromedriver.storage.googleapis.com/index.html?path=2.15/ 
+By debugging information I mean what TensorFlow shows in my terminal about loaded libraries and found devices etc. not Python errors.
+I'm using Python 2 to parse JSON from ASCII encoded text files. 
+I need to replace all non-ASCII (\x00-\x7F) characters with a space. I'm surprised that this is not dead-easy in Python, unless I'm missing something. The following function simply removes all non-ASCII characters:
+According to http://www.faqs.org/docs/diveintopython/fileinfo_private.html:
+I have a pandas DataFrame with 4 columns and I want to create a new DataFrame that only has three of the columns.  This question is similar to: Extracting specific columns from a data frame but for pandas not R.  The following code does not work, raises an error, and is certainly not the pandasnic way to do it. 
+I want to use a new feature of httpie. This feature is in the github repo https://github.com/jkbr/httpie but not in the release on the python package index https://pypi.python.org/pypi/httpie 
+I'm using the Requests: HTTP for Humans library and I got this weird error and I don't know what is mean.
+How can I remove some specific elements from a numpy array? Say I have
+I installed the latest version of Python (3.6.4 64-bit) and the latest version of PyCharm (2017.3.3 64-bit). Then I installed some modules in PyCharm (Numpy, Pandas, etc), but when I tried installing Tensorflow it didn't install, and I got the error message: 
+Consider this - a base class A, class B inheriting from A, class C inheriting from B. What is a generic way to call a parent class initialiser in an initialiser? If this still sounds too vague, here's some code.
+Does anyone know why Python's list.append function is not called list.push given that there's already a list.pop that removes and returns the last element (that indexed at -1) and list.append semantic is consistent with that use?
+How do I implement Python equivalent of this C# code ?
+
+Want to improve this question? Update the question so it can be answered with facts and citations by editing this post.
+                
+How to do this in pandas:
+I am trying to use pip behind a proxy at work.
+Assume I have a program that uses argparse to process command line arguments/options. The following will print the 'help' message:
+I need to read a large file, line by line. Lets say that file has more than 5GB and I need to read each line, but obviously I do not want to use readlines() because it will create a very large list in the memory.
+I have some Python code that have inconsistent indentation. There is a lot of mixture of tabs and spaces to make the matter even worse, and even space indentation is not preserved.
+I have the following soup:
+I would like to create a copy of an object. I want the new object to possess all properties of the old object (values of the fields). But I want to have independent objects. So, if I change values of the fields of the new object, the old object should not be affected by that.
+I have the following DataFrame from a SQL query:
+I'm bit confused about how the global variables work. I have a large project, with around 50 files, and I need to define global variables for all those files.
+I've been trying to round long float numbers like:
+Here is my code:
+What is the name of the method to override the [] operator (subscript notation) for a class in Python?
+I have a a dictionary mapping keywords to the repetition of the keyword, but I only want a list of distinct words so I wanted to count the number of keywords. Is there a way to count the number of keywords or is there another way I should look for distinct words?
+In Python, is it possible to have multiple except statements for one try statement? Such as :
+Right now I have a central module in a framework that spawns multiple processes using the Python 2.6 multiprocessing module. Because it uses multiprocessing, there is module-level multiprocessing-aware log, LOG = multiprocessing.get_logger(). Per the docs, this logger has process-shared locks so that you don't garble things up in sys.stderr (or whatever filehandle) by having multiple processes writing to it simultaneously.
+When comparing floats to integers, some pairs of values take much longer to be evaluated than other values of a similar magnitude.
+I want to loop through a Python list and process 2 list items at a time. Something like this in another language:
+In C#, I can say x ?? "", which will give me x if x is not null, and the empty string if x is null. I've found it useful for working with databases. 
+I am new to django-1.6. When I run the django server with DEBUG = True, it's running perfectly. But when I change DEBUG to False in the settings file, then the server stopped and it gives the following error on the command prompt:
+When selecting a sub dataframe from a parent dataframe, I noticed that some programmers make a copy of the data frame using the .copy() method. For example,
+Like in:
+I'm making a website where users can log on and download files, using the Flask micro-framework (based on Werkzeug) which uses Python (2.6 in my case).
+I have an Express Node.js application, but I also have a machine learning algorithm to use in Python. Is there a way I can call Python functions from my Node.js application to make use of the power of machine learning libraries?
+The community reviewed whether to reopen this question 6 months ago and left it closed:
+How can I find the row for which the value of a specific column is maximal?
+I tried searching internet but could not find the meaning of hashable.
+I'm trying to use scikit-learn's LabelEncoder to encode a pandas DataFrame of string labels. As the dataframe has many (50+) columns, I want to avoid creating a LabelEncoder object for each column; I'd rather just have one big LabelEncoder objects that works across all my columns of data.  
+I have a C++/Obj-C background and I am just discovering Python (been writing it for about an hour).
+I am writing a script to recursively read the contents of text files in a folder structure.
+I am trying to run a Django management command from cron. I am using virtualenv to keep my project sandboxed.
+I want to send a value for "User-agent" while requesting a webpage using Python Requests.  I am not sure is if it is okay to send this as a part of the header, as in the code below:
+How do you execute raw SQL in SQLAlchemy?
+Possible Duplicate: 
+What is a clean, pythonic way to have multiple constructors in Python?
+I'm having a problem with deleting empty directories. Here is my code:
+What is the pythonic way of writing the following code?
+I am confused about the method view() in the following code snippet.
+What is the best way to represent and solve a maze given an image?
+I'm trying to display a grayscale image using matplotlib.pyplot.imshow().  My problem is that the grayscale image is displayed as a colormap.  I need the grayscale because I want to draw on top of the image with color.
+I have a generator that generates a series, for example:
+I'd like to extract the text from an HTML file using Python.  I want essentially the same output I would get if I copied the text from a browser and pasted it into notepad.  
+I need a working approach of getting all classes that are inherited from a base class in Python.
+https://github.com/affinelayer/pix2pix-tensorflow/tree/master/tools
+
+Want to improve this question? Update the question so it's on-topic for Stack Overflow.
+                
+I have a generator function like the following:
+Is it possible to append to an empty data frame that doesn't contain any indices or columns?
+I recently upgrade Django from v1.3.1 to v1.4.
+While using the requests module, is there any way to print the raw HTTP request? 
+What exactly do *args and **kwargs mean?
+Python provides different packages (datetime, time, calendar) as can be seen here in order to deal with time. I made a big mistake by using the following to get current GMT time time.mktime(datetime.datetime.utcnow().timetuple())
+I'm struggling to understand exactly how einsum works. I've looked at the documentation and a few examples, but it's not seeming to stick.
+I am trying to save plots I make using matplotlib; however, the images are saving blank.
+
+Want to improve this question? Update the question so it can be answered with facts and citations by editing this post.
+                
+If I add a subtitle to my matplotlib figure it gets overlaid by the subplot's titles. Does anybody know how to easily take care of that? I tried the tight_layout() function, but it only makes things worse.
+While searching through a Python project, I found a few lines commented with # noqa.
+How can I set the y axis range of the second subplot to e.g. [0,1000] ?
+The FFT plot of my data (a column in a text file) results in a (inf.?) spike so that the actual data is not visible.
+I have been programming in python for about two years; mostly data stuff (pandas, mpl, numpy), but also automation scripts and small web apps.  I'm trying to become a better programmer and increase my python knowledge and one of the things that bothers me is that I have never used a class (outside of copying random flask code for small web apps).  I generally understand what they are, but I can't seem to wrap my head around why I would need them over a simple function.  

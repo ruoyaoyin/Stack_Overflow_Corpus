@@ -1,0 +1,134 @@
+How to set the current working directory in Python?
+After you train a model in Tensorflow: 
+Just like C, you can break a long line into multiple short lines. But in Python, if I do this, there will be an indent error... Is it possible?
+How would one create an iterative function (or iterator object) in python?
+What is the python keyword "with" used for?
+Sometimes I want to just insert some print statements in my code, and see what gets printed out when I exercise it. My usual way to "exercise" it is with existing pytest tests. But when I run these, I don't seem able to see any standard output (at least from within PyCharm, my IDE).
+I understand how this construct works:
+I'm new to Python and I'm just trying to understand how its packages work.  Presumably eggs are some sort of packaging mechanism, but what would be a quick overview of what role they play and may be some information on why they're useful and how to create them?
+My Google-fu has failed me.
+I am interested in knowing how to convert a pandas dataframe into a NumPy array.
+I am using Python 3.1 and can't get the raw_input to "freeze" the dos pop-up. The book I'm reading is for Python 2.5 and I'm using Python 3.1
+I'm using virtualenv and I need to install "psycopg2".
+I'm working on a python script that starts several processes and database connections. Every now and then I want to kill the script with a Ctrl+C signal, and I'd like to do some cleanup.
+I am trying to save a csv to a folder after making some edits to the file. 
+I want to install pip. It should support Python 3, but it requires setuptools, which is available only for Python 2.
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+Is there a built-in function for getting the size of a file object in bytes? I see some people do something like this:
+What is the difference between the search() and match() functions in the Python re module?
+The documentation for the argparse python module, while excellent I'm sure, is too much for my tiny beginner brain to grasp right now. I don't need to do math on the command line or meddle with formatting lines on the screen or change option characters. All I want to do is "If arg is A, do this, if B do that, if none of the above show help and quit".
+I’m trying to port an open-source library to Python 3.  (SymPy, if anyone is wondering.) 
+I'm writing a Python application that takes as a command as an argument, for example:
+I've installed a library using the command
+I have a function that analyzes a CSV file with Pandas and produces a dict with summary information. I want to return the results as a response from a Flask view. How do I return a JSON response?
+I haven't been able to find an understandable explanation of how to actually use Python's itertools.groupby() function.  What I'm trying to do is this:
+I am printing Python exception messages to a log file with logging.error:
+I want my Python function to split a sentence (input) and store each word in a list. My current code splits the sentence, but does not store the words as a list. How do I do that?
+Python has an ordered dictionary. What about an ordered set?
+Is there a Python equivalent for the case statement such as the examples available in VB.NET or C#?
+Is output buffering enabled by default in Python's interpreter for sys.stdout?
+In Python Pandas, what's the best way to check whether a DataFrame has one (or more) NaN values?
+I'm trying to map a list into hex, and then use the list elsewhere. In python 2.6, this was easy:
+I have a list of lists:
+Can you tell me when to use these vectorization methods with basic examples? 
+I'm quite familiar with Django, but I recently noticed there exists an on_delete=models.CASCADE option with the models. I have searched for the documentation for the same, but I couldn't find anything more than:
+It seems that python supports many different commands to stop script execution.The choices I've found are:  quit(), exit(), sys.exit(), os._exit() 
+What is the difference between abstract class and interface in Python?
+I've seen some code samples and tutorials that use
+I'm not sure if this is Flask specific, but when I run an app in dev mode (http://localhost:5000), I cannot access it from other machines on the network (with http://[dev-host-ip]:5000). With Rails in dev mode, for example, it works fine. I couldn't find any docs regarding the Flask dev server configuration. Any idea what should be configured to enable this?
+I'm using the Python bindings to run Selenium WebDriver:
+This code reads thefile.csv, makes changes, and writes results to thefile_subset1.
+Why does the following behave unexpectedly in Python?
+In Python, how do I read in a binary file and loop over each byte of that file?
+I have a Python program that uses YAML.  I attempted to install it on a new server using pip install yaml and it returns the following:
+Given a DataFrame with a column "BoolCol", we want to find the indexes of the DataFrame in which the values for "BoolCol" == True
+If you are creating a 1d array, you can implement it as a List, or else use the 'array' module in the standard library.  I have always used Lists for 1d arrays.
+I have this string:
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+I am trying to implement a "Digit Recognition OCR" in OpenCV-Python (cv2). It is just for learning purposes. I would like to learn both KNearest and SVM features in OpenCV. 
+I need to install a package from PyPi straight within my script.
+Maybe there's some module or distutils (distribute, pip etc.) feature which allows me to just execute something like pypi.install('requests') and requests will be installed into my virtualenv.
+Is there a simple way to flatten a list of iterables with a list comprehension, or failing that, what would you all consider to be the best way to flatten a shallow list like this, balancing performance and readability?
+I have a dataframe with over 200 columns. The issue is as they were generated the order is
+I want to iterate through the methods in a class, or handle class or instance objects differently based on the methods present. How do I get a list of class methods?
+I am in the process of learning Python and I have reached the section about the pass statement. The guide I'm using defines it as being a null statement that is commonly used as a placeholder.
+How do I get the number of elements in a list in jinja2 template?
+Since Python's string can't be changed, I was wondering how to concatenate a string more efficiently?
+In Django doc,
+It seems they canceled in Python 3 all the easy way to quickly load a script by removing execfile() 
+I am trying to subtract one date value from the value of datetime.datetime.today() to calculate how long ago something was. But it complains:
+Does Python support short-circuiting in boolean expressions?
+I'm new to Python and Matplotlib, I would like to simply apply colormap to an image and write the resulting image, without using axes, labels, titles or anything usually automatically added by matplotlib. Here is what I did:
+I have a script named test1.py which is not in a module. It just has code that should execute when the script itself is run. There are no functions, classes, methods, etc. I have another script which runs as a service. I want to call test1.py from the script running as a service.
+I want to build a query for sunburnt(solr interface) using class inheritance and therefore adding key - value pairs together. The sunburnt interface takes keyword arguments. How can I transform a dict ({'type':'Event'}) into keyword arguments (type='Event')?
+I have a directory that contains my Python unit tests. Each unit test module is of the form test_*.py. I am attempting to make a file called all_test.py that will, you guessed it, run all files in the aforementioned test form and return the result. I have tried two methods so far; both have failed. I will show the two methods, and I hope someone out there knows how to actually do this correctly.
+In a program I'm writing I have Python use the re.search() function to find matches in a block of text and print the results. However, the program exits once it finds the first match in the block of text.
+What are the advantages and disadvantages of each?
+I've been making Python scripts for simple tasks at work and never really bothered packaging them for others to use. Now I have been assigned to make a Python wrapper for a REST API. I have absolutely no idea on how to start and I need help.
+I have a Python file which might have to support Python versions < 3.x and >= 3.x. Is there a way to introspect the Python runtime to know the version which it is running (for example, 2.6 or 3.2.x)?
+What's the easiest way to add an empty column to a pandas DataFrame object?  The best I've stumbled upon is something like
+
+Want to improve this question? Update the question so it's on-topic for Stack Overflow.
+                
+How can I convert a DataFrame column of strings (in dd/mm/yyyy format) to datetimes?
+On my local machine, I run a python script which contains this line
+Right now I'm importing a fairly large CSV as a dataframe every time I run the script. Is there a good solution for keeping that dataframe constantly available in between runs so I don't have to spend all that time waiting for the script to run?
+Is there a way to have a defaultdict(defaultdict(int)) in order to make the following code work?
+I'm curious, whether there is any way to print formatted numpy.arrays, e.g., in a way similar to this:
+I am getting a ValueError: cannot reindex from a duplicate axis when I am trying to set an index to a certain value. I tried to reproduce this with a simple example, but I could not do it.
+In C# there's a null-coalescing operator (written as ??) that allows for easy (short) null checking during assignment:
+I have a list of tuples in Python, and I have a conditional where I want to take the branch ONLY if the tuple is not in the list (if it is in the list, then I don't want to take the if branch)
+In comparison to Java (in a string), you would do something like "First Line\r\nSecond Line".
+I want to send a datetime.datetime object in serialized form from Python using JSON and de-serialize in JavaScript using JSON. What is the best way to do this?
+I would like to get some feedback on these tools on:
+How can I order by descending my query set in django by date?
+I want to delete a particular record. Such as
+In order to test some functionality I would like to create a DataFrame from a string. Let's say my test data looks like:
+In Python, I've seen two variable values swapped using this syntax:
+I have seen many projects using simplejson module instead of json module from the Standard Library. Also, there are many different simplejson modules. Why would use these alternatives, instead of the one in the Standard Library?
+Most operations in pandas can be accomplished with operator chaining (groupby, aggregate, apply, etc), but the only way I've found to filter rows is via normal bracket indexing
+In Python for *nix, does time.sleep() block the thread or the process?
+What is the difference between 'SAME' and 'VALID' padding in tf.nn.max_pool of tensorflow?
+Is there a Pool class for worker threads, similar to the multiprocessing module's Pool class?
+I have a timezone aware timestamptz field in PostgreSQL. When I pull data from the table, I then want to subtract the time right now so I can get it's age.
+I can't figure out how to use an array or matrix in the way that I would normally use a list. I want to create an empty array (or matrix) and then add one column (or row) to it at a time.
+Unless I'm mistaken, creating a function in Python works like this:
+How can I sort this list in descending order?
+Two options in setup.py develop and install are confusing me. According to this site, using develop creates a special link to site-packages directory.
+This is probably a trivial question, but how do I parallelize the following loop in python?
+I recently discovered pytest. It seems great. However, I feel the documentation could be better.
+I'm sure this is a trivial operation, but I can't figure out how it's done.
+I would like to install scipy-0.15.1-cp33-none-win_amd64.whl that I have saved to the local drive. I am using:
+If you read an entire file with content = open('Path/to/file', 'r').read() is the file handle left open until the script exits?  Is there a more concise method to read a whole file? 
+In numpy, some of the operations return in shape (R, 1) but some return (R,). This will make matrix multiplication more tedious since explicit reshape is required. For example, given a matrix M, if we want to do numpy.dot(M[:,0], numpy.ones((1, R))) where R is the number of rows (of course, the same issue also occurs column-wise). We will get matrices are not aligned error since M[:,0] is in shape (R,) but numpy.ones((1, R)) is in shape (1, R).
+Both function return the same list.
+Then what is the need of two different functions performing same job.
+I am trying to install PIL (the Python Imaging Library) using the command:
+How do I convert a numpy.datetime64 object to a datetime.datetime (or Timestamp)?
+Suppose I have a dataframe with columns a, b and c, I want to sort the dataframe by column b in ascending order, and by column c in descending order, how do I do this?
+Which image processing techniques could be used to implement an application that detects the Christmas trees displayed in the following images?
+What is the difference between Numpy's array() and asarray() functions? When should you use one rather than the other? They seem to generate identical output for all the inputs I can think of.
+How do I change the size of my image so it's suitable for printing?
+Let’s say I have a NumPy array, a:
+Suppose I have the following argparse snippet:
+I'm learning to use matplotlib by studying examples, and a lot of examples seem to include a line like the following before creating a single plot...
+How do I get the probability of a string being similar to another string in Python?
+I see a lot on converting a date string to an datetime object in Python, but I want to go the other way.
+I've got 
+How do I make Python dictionary members accessible via a dot "."?
+I have a plot with two y-axes, using twinx(). I also give labels to the lines, and want to show them with legend(), but I only succeed to get the labels of one axis in the legend:
+What is the difference between raw_input() and input() in Python 3?
+I have one field in a pandas DataFrame that was imported as string format. 
+It should be a datetime variable.
+How do I convert it to a datetime column and then filter based on date.
+I want to write a Django query equivalent to this SQL query:
+In a similar way to using varargs in C or C++:
+This is the best algorithm I could come up.
+I am trying to reconcile my understand of LSTMs and pointed out here in this post by Christopher Olah implemented in Keras. I am following the blog written by Jason Brownlee for the Keras tutorial. What I am mainly confused about is,
+gives you
+I'm launching a subprocess with the following command:
+How do I convert a NumPy array to a Python List (for example [[1,2,3],[4,5,6]] ), and do it reasonably fast?

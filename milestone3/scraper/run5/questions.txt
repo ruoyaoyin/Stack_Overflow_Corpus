@@ -1,0 +1,126 @@
+I have a directory that contains my Python unit tests. Each unit test module is of the form test_*.py. I am attempting to make a file called all_test.py that will, you guessed it, run all files in the aforementioned test form and return the result. I have tried two methods so far; both have failed. I will show the two methods, and I hope someone out there knows how to actually do this correctly.
+In a program I'm writing I have Python use the re.search() function to find matches in a block of text and print the results. However, the program exits once it finds the first match in the block of text.
+What are the advantages and disadvantages of each?
+I've been making Python scripts for simple tasks at work and never really bothered packaging them for others to use. Now I have been assigned to make a Python wrapper for a REST API. I have absolutely no idea on how to start and I need help.
+I have a Python file which might have to support Python versions < 3.x and >= 3.x. Is there a way to introspect the Python runtime to know the version which it is running (for example, 2.6 or 3.2.x)?
+What's the easiest way to add an empty column to a pandas DataFrame object?  The best I've stumbled upon is something like
+
+Want to improve this question? Update the question so it's on-topic for Stack Overflow.
+                
+On my local machine, I run a python script which contains this line
+How can I convert a DataFrame column of strings (in dd/mm/yyyy format) to datetimes?
+Right now I'm importing a fairly large CSV as a dataframe every time I run the script. Is there a good solution for keeping that dataframe constantly available in between runs so I don't have to spend all that time waiting for the script to run?
+Is there a way to have a defaultdict(defaultdict(int)) in order to make the following code work?
+I'm curious, whether there is any way to print formatted numpy.arrays, e.g., in a way similar to this:
+I am getting a ValueError: cannot reindex from a duplicate axis when I am trying to set an index to a certain value. I tried to reproduce this with a simple example, but I could not do it.
+In C# there's a null-coalescing operator (written as ??) that allows for easy (short) null checking during assignment:
+I have a list of tuples in Python, and I have a conditional where I want to take the branch ONLY if the tuple is not in the list (if it is in the list, then I don't want to take the if branch)
+In comparison to Java (in a string), you would do something like "First Line\r\nSecond Line".
+I want to send a datetime.datetime object in serialized form from Python using JSON and de-serialize in JavaScript using JSON. What is the best way to do this?
+I would like to get some feedback on these tools on:
+How can I order by descending my query set in django by date?
+I want to delete a particular record. Such as
+In order to test some functionality I would like to create a DataFrame from a string. Let's say my test data looks like:
+In Python, I've seen two variable values swapped using this syntax:
+I have seen many projects using simplejson module instead of json module from the Standard Library. Also, there are many different simplejson modules. Why would use these alternatives, instead of the one in the Standard Library?
+Most operations in pandas can be accomplished with operator chaining (groupby, aggregate, apply, etc), but the only way I've found to filter rows is via normal bracket indexing
+In Python for *nix, does time.sleep() block the thread or the process?
+What is the difference between 'SAME' and 'VALID' padding in tf.nn.max_pool of tensorflow?
+Is there a Pool class for worker threads, similar to the multiprocessing module's Pool class?
+I have a timezone aware timestamptz field in PostgreSQL. When I pull data from the table, I then want to subtract the time right now so I can get it's age.
+I can't figure out how to use an array or matrix in the way that I would normally use a list. I want to create an empty array (or matrix) and then add one column (or row) to it at a time.
+Unless I'm mistaken, creating a function in Python works like this:
+How can I sort this list in descending order?
+Two options in setup.py develop and install are confusing me. According to this site, using develop creates a special link to site-packages directory.
+This is probably a trivial question, but how do I parallelize the following loop in python?
+I recently discovered pytest. It seems great. However, I feel the documentation could be better.
+I'm sure this is a trivial operation, but I can't figure out how it's done.
+I would like to install scipy-0.15.1-cp33-none-win_amd64.whl that I have saved to the local drive. I am using:
+If you read an entire file with content = open('Path/to/file', 'r').read() is the file handle left open until the script exits?  Is there a more concise method to read a whole file? 
+In numpy, some of the operations return in shape (R, 1) but some return (R,). This will make matrix multiplication more tedious since explicit reshape is required. For example, given a matrix M, if we want to do numpy.dot(M[:,0], numpy.ones((1, R))) where R is the number of rows (of course, the same issue also occurs column-wise). We will get matrices are not aligned error since M[:,0] is in shape (R,) but numpy.ones((1, R)) is in shape (1, R).
+Both function return the same list.
+Then what is the need of two different functions performing same job.
+I am trying to install PIL (the Python Imaging Library) using the command:
+This is the first time I've really sat down and tried python 3, and seem to be failing miserably. I have the following two files:
+How are "keyword arguments" different from regular arguments? Can't all arguments be passed as name=value instead of using positional syntax?
+I am currently using Beautiful Soup to parse an HTML file and calling get_text(), but it seems like I'm being left with a lot of \xa0 Unicode representing spaces. Is there an efficient way to remove all of them in Python 2.7, and change them into spaces? I guess the more generalized question would be, is there a way to remove Unicode formatting?
+I noticed that in Python, people initialize their class attributes in two different ways.
+I've created an object like this:
+If I have a numpy dtype, how do I automatically convert it to its closest python data type?  For example,
+I'm looking for an easy (and quick) way to determine if two unordered lists contain the same elements:
+How can I get a string after a specific substring?
+What is the quickest/simplest way to drop nan and inf/-inf values from a pandas.DataFrame without resetting mode.use_inf_as_null?
+With PEP 557 data classes are introduced into python standard library. 
+I used easy_install to install pytest on a mac and started writing tests for a project with a file structure likes so:
+Python will not run in git bash (Windows). When I type python in the command line, it takes me to a blank line without saying that it has entered python 2.7.10 like its does in Powershell. It doesn't give me an error message, but python just doesn't run.
+If I want to use the results of argparse.ArgumentParser(), which is a Namespace object, with a method that expects a dictionary or mapping-like object (see collections.Mapping), what is the right way to do it?
+I got a lot of errors with the message :
+What's the difference between raise and raise from in Python?
+What named colors are available in matplotlib for use in plots?  I can find a list on the matplotlib documentation that claims that these are the only names:
+I have a string which is like this:
+I am trying to plot a simple graph using pyplot, e.g.:
+In a comment on this question, I saw a statement that recommended using
+I've tried reading through questions about sibling imports and even the
+package documentation, but I've yet to find an answer.
+I noticed that the Python 2.7 documentation includes yet another command-line parsing module.  In addition to getopt and optparse we now have argparse.
+Possible Duplicate:
+Python: What OS am I running on? 
+If I have that code:
+You know how in Linux when you try some Sudo stuff it tells you to enter the password and, as you type, nothing is shown in the terminal window (the password is not shown)?
+models.py:
+I want to figure out how to remove nan values from my array. My array looks something like this: 
+I use the following simple code to parse some arguments; note that one of them is required. Unfortunately, when the user runs the script without providing the argument, the displayed usage/help text does not indicate that there is a non-optional argument, which I find very confusing. How can I get python to indicate that an argument is not optional?
+I'm trying to install a new Python environment on my shared hosting. I follow the steps written in this post:
+I am trying to use Pythons mock package to mock Pythons requests module. What are the basic calls to get me working in below scenario?
+I'm trying to get a better understanding of the difference. I've found a lot of explanations online, but they tend towards the abstract differences rather than the practical implications.
+How can I get the output of a process run using subprocess.call()?
+I am trying to plot some data from a camera in real time using OpenCV. However, the real-time plotting (using matplotlib) doesn't seem to be working.
+Following this python example, I encode a string as Base64 with:
+The time module can be initialized using seconds since epoch:
+I'm investigating how to develop a decent web app with Python. Since I don't want some high-order structures to get in my way, my choice fell on the lightweight Flask framework. Time will tell if this was the right choice.
+I have read the official definition of "raise", but I still don't quite understand what it does. 
+I want to use type hints in my current Python 3.5 project. My function should receive a function as parameter. 
+Imagine a python script that will take a long time to run, what will happen if I modify it while it's running? Will the result be different?
+Inspired by the question series 'Hidden features of ...', I am curious to hear about your favorite Django tips or lesser known but useful features you know of.
+I created a histogram plot using data from a file and no problem. Now I wanted to superpose data from another file in the same histogram, so I do something like this
+How can I send the HTML content in an email using Python? I can send simple text.
+I know how to generate a random number within a range in Python.
+I'm using python3.3 and I'm having a cryptic error when trying to pickle a simple dictionary. 
+I want to display:
+Is there a way in python to programmatically determine the width of the console? I mean the number of characters that fits in one line without wrapping, not the pixel width of the window.
+I have been searching and tried various alternatives without success and spent several days on it now - driving me mad.
+I load some machine learning data from a CSV file. The first 2 columns are observations and the remaining columns are features.
+I want to find out my Python installation path on Windows. For example:
+I am working with a library which returns a byte string and I need to convert this to a string. 
+Run the following code from a directory that contains a directory named bar (containing one or more files) and a directory named baz (also containing one or more files).  Make sure there is not a directory named foo.
+I have a series of images that I want to create a video from.  Ideally I could specify a frame duration for each frame but a fixed frame rate would be fine too.  I'm doing this in wxPython, so I can render to a wxDC or I can save the images to files, like PNG.  Is there a Python library that will allow me to create either a video (AVI, MPG, etc) or an animated GIF from these frames?
+I'm new to Python and Flask and I'm trying to do the equivalent of Response.redirect as in C# - ie: redirect to a specific URL - how do I go about this?
+Can I insert a column at a specific column index in pandas? 
+For example I have simple DF:
+I'd like to create a file with path x using python. I've been using os.system(y) where y = 'touch %s' % (x). I've looked for a non-directory version of os.mkdir, but I haven't been able to find anything. Is there a tool like this to create a file without opening it, or using system or popen/subprocess?
+I can't understand why Python doesn't have a sign function. It has an abs builtin (which I consider sign's sister), but no sign.
+How can I see what's inside a bucket in S3 with boto3? (i.e. do an "ls")?
+PIL does support JPEG in my system.
+When I try
+I've spent entirely too long researching how to get two subplots to share the same y-axis with a single colorbar shared between the two in Matplotlib. 
+The above code generates a file, test.csv, with an extra \r at each row, like so:
+I have a function called by the main program:
+I've recently become interested in algorithms and have begun exploring them by writing a naive implementation and then optimizing it in various ways.
+Say I have a function:
+I have a DataFrame with four columns. I want to convert this DataFrame to a python dictionary. I want the elements of first column be keys and the elements of other columns in same row be values. 
+I would like to know how can I set a variable with another variable in jinja. I will explain, I have got a submenu and I would like show which link is active. I tried this:
+I have a pandas dataframe in which one column of text strings contains comma-separated values. I want to split each CSV field and create a new row per entry (assume that CSV are clean and need only be split on ','). For example, a should become b:
+I have a script reading in a csv file with very huge fields:
+Given a dictionary { k1: v1, k2: v2 ... } I want to get { k1: f(v1), k2: f(v2) ... } provided I pass a function f.
+In the Anaconda repository, there are two types of installers:
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+I am sketching the architecture for a set of programs that share various interrelated objects stored in a database. I want one of the programs to act as a service which provides a higher level interface for operations on these objects, and the other programs to access the objects through that service.
+I need to choose some elements from the given list, knowing their index. Let say I would like to create a new list, which contains element with index 1, 2, 5, from given list [-2, 1, 5, 3, 8, 5, 6]. What I did is:
+Recently I started using Python3 and it's lack of xrange hurts.
+I have a Decimal('3.9') as part of an object, and wish to encode this to a JSON string which should look like {'x': 3.9}. I don't care about precision on the client side, so a float is fine.
+Here is my code,
+Is there a way to open a file for both reading and writing?
+What do I have to do in Python to figure out which encoding a string has?
+I want to call a C library from a Python application. I don't want to wrap the whole API, only the functions and datatypes that are relevant to my case. As I see it, I have three choices:

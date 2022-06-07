@@ -1,0 +1,116 @@
+What is the difference between iterators and generators? Some examples for when you would use each case would be helpful.
+Set_up: I have a .py file for each function I need to use in a program.
+list.append() is the obvious choice for adding to the end of a list.  Here's a reasonable explanation for the missing list.prepend().  Assuming my list is short and performance concerns are negligible, is 
+I have the following DataFrame:
+I read through the zipfile documentation, but couldn't understand how to unzip a file, only how to zip a file. How do I unzip all the contents of a zip file into the same directory?
+How can I achieve the equivalents of SQL's IN and NOT IN?
+NumPy proposes a way to get the index of the maximum value of an array via np.argmax.
+How can I represent an infinite number in python? No matter which number you enter in the program, no number should be greater than this representation of infinity.
+What's the difference between:
+What is the quickest way to HTTP GET in Python if I know the content will be a string? I am searching the documentation for a quick one-liner like:
+I have created a Pandas DataFrame
+I'm coming from the Java world and reading Bruce Eckels' Python 3 Patterns, Recipes and Idioms. 
+What I need to do
+I found some answers online, but I have no experience with regular expressions, which I believe is what is needed here.
+Having issue filtering my result dataframe with an or condition. I want my result df to extract all column var values that are above 0.25 and below -0.25.
+I have a data frame df and I use several columns from it to groupby:
+I've come across situations where a current version of a package seems not to be working and requires reinstallation. But pip install -U won't touch a package that is already up-to-date. I see how to force a reinstallation by first uninstalling (with pip uninstall) and then installing, but is there a way to simply force an "update" to a nominally current version in a single step?
+I want to create a series of lists, all of varying lengths. Each list will contain the same element e, repeated n times (where n = length of the list).
+I have four different files named: main.py, vector.py, entity.py and physics.py. I will not post all the code, just the imports, because I think that's where the error is (If you want, I can post more).
+I've got a dict that has a whole bunch of entries. I'm only interested in a select few of them. Is there an easy way to prune all the other ones out?
+Given the name of a Python package that can be installed with pip, is there any way to find out a list of all the possible versions of it that pip could install? Right now it's trial and error.
+I want to add an item to an existing dictionary in Python. For example, this is my dictionary:
+I am working with code that throws a lot of (for me at the moment) useless warnings using the warnings library. Reading (/scanning) the documentation I only found a way to disable warnings for single functions. But I don't want to change so much of the code.
+How does one round a number UP in Python?
+Is there an easy way with Python f-strings to fix the number of digits after the decimal point? (Specifically f-strings, not other string formatting options like .format or %)
+Is there any way to make pip play well with multiple versions of Python? For example, I want to use pip to explicitly install things to either my site 2.5 installation or my site 2.6 installation.
+I am trying to fix how python plots my data.
+I have a Unicode string in Python, and I would like to remove all the accents (diacritics).
+Does time.time() in the Python time module return the system's time or the time in UTC?
+I need a way to get a dictionary value if its key exists, or simply return None, if it does not.
+How can I get the position of a character inside a string in Python?
+I want to fill out a string with spaces. I know that the following works for zero's:
+Dictionaries are ordered in Python 3.6 (under the CPython implementation at least) unlike in previous incarnations. This seems like a substantial change, but it's only a short paragraph in the documentation. It is described as a CPython implementation detail rather than a language feature, but also implies this may become standard in the future.
+I am trying to pass a list as an argument to a command line program. Is there an argparse option to pass a list as option?
+I'm just trying to streamline one of my classes and have introduced some functionality in the same style as the flyweight design pattern.
+How to set the current working directory in Python?
+After you train a model in Tensorflow: 
+Just like C, you can break a long line into multiple short lines. But in Python, if I do this, there will be an indent error... Is it possible?
+How would one create an iterative function (or iterator object) in python?
+Very similar to this question but with the difference that my figure can be as large as it needs to be.
+Is there a way to select pytest tests to run from a file?
+For example, a file foo.txt containing a list of tests to be executed:
+I have both python2.7 and python3.2 installed in Ubuntu 12.04.
+The symbolic link python links to python2.7.
+As we all know, there's list comprehension, like
+I have a function in python that can either return a bool or a list. Is there a way to specify the return types using type hints?
+Simple question here:  I'm trying to get the size of my legend using matplotlib.pyplot to be smaller (i.e., the text to be smaller). The code I'm using goes something like this:
+In the tensorflow API docs they use a keyword called logits. What is it? A lot of methods are written like:
+
+I'm running Mountain Lion and the basic default Python version is 2.7. I downloaded Python 3.3 and want to set it as default.
+It's well known that comparing floats for equality is a little fiddly due to rounding and precision issues.
+
+Want to improve this question? Update the question so it's on-topic for Stack Overflow.
+                
+I have a dataframe along the lines of the below:
+I would like to include image in a jupyter notebook.
+I have a directory which hosts all of my Django apps (C:\My_Projects). I want to add this directory to my PYTHONPATH so I can call the apps directly.
+How do I format a floating number to a fixed width with the following requirements:
+I query a model:
+I'm using argparse in Python 2.7 for parsing input options. One of my options is a multiple choice. I want to make a list in its help text, e.g.
+I am not sure why we need finally in try...except...finally statements. In my opinion, this code block
+I want to completely remove Python 2.7 from my Mac OS X 10.6.4. I managed to remove the entry from the PATH variable by reverting my .bash_profile. But I also want to remove all directories, files, symlinks, and entries that got installed by the Python 2.7 install package. I've got the install package from http://www.python.org/. What directories/files/configuration file entries do I need to remove? Is there a list somewhere?
+I need to produce a screencast of an ipython session, and to avoid confusing viewers, I want to disable all warnings emitted by warnings.warn calls from different packages. Is there a way to configure the ipythonrc file to automatically disable all such warnings?
+How would you say does not equal?
+When I try to use a print statement in Python, it gives me this error:
+Like most Python developers, I typically keep a console window open with the Python interpreter running to test commands, dir() stuff, help() stuff, etc.
+What does np.random.seed do in the below code from a Scikit-Learn tutorial? I'm not very familiar with NumPy's random state generator stuff, so I'd really appreciate a layman's terms explanation of this.
+I have a dataset
+What is the way to update a package using pip?
+those do not work:
+I've heard it said that multiline lambdas can't be added in Python because they would clash syntactically with the other syntax constructs in Python.  I was thinking about this on the bus today and realized I couldn't think of a single Python construct that multiline lambdas clash with.  Given that I know the language pretty well, this surprised me.
+Do you know if there is a built-in function to build a dictionary from an arbitrary object? I'd like to do something like this:
+If I have a class...
+In Python, how do I read in a binary file and loop over each byte of that file?
+Is there a way to find all Python PyPI packages that were installed with easy_install or pip?  I mean, excluding everything that was/is installed with the distributions tools (in this case apt-get on Debian).
+I'd like to call a function in python using a dictionary.
+I used to use perl -c programfile to check the syntax of a Perl program and then exit without executing it. Is there an equivalent way to do this for a Python script?
+Given a DataFrame with a column "BoolCol", we want to find the indexes of the DataFrame in which the values for "BoolCol" == True
+I have a Python program that uses YAML.  I attempted to install it on a new server using pip install yaml and it returns the following:
+If you are creating a 1d array, you can implement it as a List, or else use the 'array' module in the standard library.  I have always used Lists for 1d arrays.
+I have this string:
+
+Want to improve this question? Update the question so it focuses on one problem only by editing this post.
+                
+I am trying to implement a "Digit Recognition OCR" in OpenCV-Python (cv2). It is just for learning purposes. I would like to learn both KNearest and SVM features in OpenCV. 
+I need to install a package from PyPi straight within my script.
+Maybe there's some module or distutils (distribute, pip etc.) feature which allows me to just execute something like pypi.install('requests') and requests will be installed into my virtualenv.
+Is there a simple way to flatten a list of iterables with a list comprehension, or failing that, what would you all consider to be the best way to flatten a shallow list like this, balancing performance and readability?
+I have a dataframe with over 200 columns. The issue is as they were generated the order is
+I want to iterate through the methods in a class, or handle class or instance objects differently based on the methods present. How do I get a list of class methods?
+I am in the process of learning Python and I have reached the section about the pass statement. The guide I'm using defines it as being a null statement that is commonly used as a placeholder.
+How do I get the number of elements in a list in jinja2 template?
+Since Python's string can't be changed, I was wondering how to concatenate a string more efficiently?
+In Django doc,
+It seems they canceled in Python 3 all the easy way to quickly load a script by removing execfile() 
+I am trying to subtract one date value from the value of datetime.datetime.today() to calculate how long ago something was. But it complains:
+Does Python support short-circuiting in boolean expressions?
+I'm new to Python and Matplotlib, I would like to simply apply colormap to an image and write the resulting image, without using axes, labels, titles or anything usually automatically added by matplotlib. Here is what I did:
+I have a script named test1.py which is not in a module. It just has code that should execute when the script itself is run. There are no functions, classes, methods, etc. I have another script which runs as a service. I want to call test1.py from the script running as a service.
+I want to build a query for sunburnt(solr interface) using class inheritance and therefore adding key - value pairs together. The sunburnt interface takes keyword arguments. How can I transform a dict ({'type':'Event'}) into keyword arguments (type='Event')?
+I have a directory that contains my Python unit tests. Each unit test module is of the form test_*.py. I am attempting to make a file called all_test.py that will, you guessed it, run all files in the aforementioned test form and return the result. I have tried two methods so far; both have failed. I will show the two methods, and I hope someone out there knows how to actually do this correctly.
+In a program I'm writing I have Python use the re.search() function to find matches in a block of text and print the results. However, the program exits once it finds the first match in the block of text.
+What are the advantages and disadvantages of each?
+I've been making Python scripts for simple tasks at work and never really bothered packaging them for others to use. Now I have been assigned to make a Python wrapper for a REST API. I have absolutely no idea on how to start and I need help.
+I have a Python file which might have to support Python versions < 3.x and >= 3.x. Is there a way to introspect the Python runtime to know the version which it is running (for example, 2.6 or 3.2.x)?
+What's the easiest way to add an empty column to a pandas DataFrame object?  The best I've stumbled upon is something like
+
+Want to improve this question? Update the question so it's on-topic for Stack Overflow.
+                
+On my local machine, I run a python script which contains this line
+How can I convert a DataFrame column of strings (in dd/mm/yyyy format) to datetimes?
+Right now I'm importing a fairly large CSV as a dataframe every time I run the script. Is there a good solution for keeping that dataframe constantly available in between runs so I don't have to spend all that time waiting for the script to run?
+Is there a way to have a defaultdict(defaultdict(int)) in order to make the following code work?
+I'm curious, whether there is any way to print formatted numpy.arrays, e.g., in a way similar to this:
+I am getting a ValueError: cannot reindex from a duplicate axis when I am trying to set an index to a certain value. I tried to reproduce this with a simple example, but I could not do it.
+In C# there's a null-coalescing operator (written as ??) that allows for easy (short) null checking during assignment:

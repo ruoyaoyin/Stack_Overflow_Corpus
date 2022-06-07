@@ -1,0 +1,30 @@
+Front-end documentation
+
+The frontend is implemented with react-js and provides several search/filter functionalities for clients to search 
+question-answer token pairs in the Stack Exchange Corpus. Below contains some brief descriptions of the functionalities
+as well as how we are implementing them at a technical level.
+
+A search box is provided at the top for clients to perform token-based filtering in the question-answer pairs. We utilized
+an <InputGroup> component from the React libary with boostrapped styling. As the client typed in keywords in our input box,
+the onchange function of the compoent is triggered and it dynamically updates our state 'searchBoxInput'.
+
+There are also three dropboxes for different annotation filters. These are <Form.Select> components also styled by react-
+boostrap. The options available in those boxes are predefined according to our annotation manual, and select the first 
+element in the list by default. An option to include all elements in the dropdown box is also provided. As the client 
+select one specific tag from the dropdown box, the states 'selectedClass', 'selectedComplexity', and 'selectedDirectness' 
+are updated accordingly.
+
+Finally, there are also four toggle switches that determines whether the questions, answers, complexity annotation or 
+directness annotation should be displayed in the final table. These are <Form.Check> components from the react libary. 
+As the client turns them on or off, the states 'questions', 'answers', 'showComplexity', or 'showDirectness' are updated 
+to true or false.
+
+Once the client is satsfied with the set of filters, they can click on the 'SEARCH' button, then the frontend, together
+with the backend select data according to the filters through a GET route and renders the table at the bottom of the webpage
+with a <Table> component. These filters are set according to the state values as stored at the moment. To avoid updating
+the table too frequently, we only rerender table as the client clicks the 'SEARCH' button.
+
+By default, we are displaying only the text annotations. However, the client can click on the 'Complexity' and 'Directness' 
+toggle switches to decide whether or not to show the two corresponding annotations in new column(s).
+
+The header of the react web app is styled by the App.css file.
